@@ -1,0 +1,2245 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Job Application Tracker</title>-->
+<!--    &lt;!&ndash; Fonts &ndash;&gt;-->
+<!--    <link rel="preconnect" href="https://fonts.googleapis.com">-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">-->
+<!--    &lt;!&ndash; Tailwind CSS Setup &ndash;&gt;-->
+<!--    <script src="https://cdn.tailwindcss.com"></script>-->
+<!--    <script>-->
+<!--        tailwind.config = {-->
+<!--            theme: {-->
+<!--                extend: {-->
+<!--                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Sora', 'sans-serif'] }-->
+<!--                }-->
+<!--            }-->
+<!--        }-->
+<!--    </script>-->
+<!--    <link rel="stylesheet" href="css/style.css">-->
+<!--    &lt;!&ndash; Chart.js & Lucide Icons CDNs &ndash;&gt;-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>-->
+<!--</head>-->
+<!--<body class="bg-slate-50 font-sans text-slate-900 antialiased h-screen overflow-hidden">-->
+
+<!--<div class="flex h-full w-full">-->
+
+<!--    &lt;!&ndash; Mobile top display menu strip header links bar layout settings configurations &ndash;&gt;-->
+<!--    <header class="lg:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b border-slate-200 z-40 flex items-center justify-between px-4">-->
+<!--        <div class="flex items-center gap-2">-->
+<!--            <div class="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-display font-extrabold text-xs">JT</div>-->
+<!--            <h3 class="font-display font-bold text-sm tracking-tight">Job Tracker</h3>-->
+<!--        </div>-->
+<!--        <button class="p-2 text-slate-600 hover:text-slate-900 focus:outline-none" id="mobileMenuBtn">-->
+<!--            <i data-lucide="menu" class="w-6 h-6"></i>-->
+<!--        </button>-->
+<!--    </header>-->
+
+<!--    &lt;!&ndash; Sidebar Master Layout Component &ndash;&gt;-->
+<!--    <aside class="fixed lg:static top-0 bottom-0 left-0 w-64 bg-slate-900 text-slate-300 flex flex-col h-full z-50 p-4 border-r border-slate-800 -translate-x-full lg:translate-x-0 transition-transform duration-200" id="sidebar">-->
+<!--        <div class="flex items-center gap-3 px-2 py-3 border-b border-slate-800 mb-6">-->
+<!--            <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-amber-400 to-amber-500 flex items-center justify-center text-slate-950 font-display font-extrabold text-xs">JT</div>-->
+<!--            <h2 class="font-display font-bold text-base text-white tracking-tight">Job Tracker</h2>-->
+<!--        </div>-->
+
+<!--        <nav class="flex-1 space-y-1">-->
+<!--            <a href="#/dashboard" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all hover:bg-slate-800/60 hover:text-white" data-view="dashboard">-->
+<!--                <i data-lucide="layout-dashboard" class="w-4 h-4"></i><span>Dashboard</span>-->
+<!--            </a>-->
+<!--            &lt;!&ndash; Added Search Jobs Sidebar Menu Option Line &ndash;&gt;-->
+<!--            <a href="#/jobs" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all hover:bg-slate-800/60 hover:text-white" data-view="jobs">-->
+<!--                <i data-lucide="search" class="w-4 h-4"></i><span>Search Jobs</span>-->
+<!--            </a>-->
+<!--            &lt;!&ndash; Added AI Job Search Sidebar Menu Option Line &ndash;&gt;-->
+<!--            <a href="#/ai-jobs" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all hover:bg-slate-800/60 hover:text-white" data-view="ai-jobs">-->
+<!--                <i data-lucide="sparkles" class="w-4 h-4"></i><span>AI Job Search</span>-->
+<!--            </a>-->
+<!--            <a href="#/analytics" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all hover:bg-slate-800/60 hover:text-white" data-view="analytics">-->
+<!--                <i data-lucide="line-chart" class="w-4 h-4"></i><span>Analytics</span>-->
+<!--            </a>-->
+<!--            <a href="#/documents" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all hover:bg-slate-800/60 hover:text-white" data-view="documents">-->
+<!--                <i data-lucide="files" class="w-4 h-4"></i><span>Documents</span>-->
+<!--            </a>-->
+<!--            &lt;!&ndash; Added Resume Builder Sidebar Menu Option Line &ndash;&gt;-->
+<!--            <a href="#/resume-builder" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all hover:bg-slate-800/60 hover:text-white" data-view="resume-builder">-->
+<!--                <i data-lucide="file-edit" class="w-4 h-4"></i><span>Resume Builder</span>-->
+<!--            </a>-->
+<!--            &lt;!&ndash; Added AI Cover Letter Builder Sidebar Menu Option Line &ndash;&gt;-->
+<!--            <a href="#/cover-letter" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all hover:bg-slate-800/60 hover:text-white" data-view="cover-letter">-->
+<!--                <i data-lucide="file-signature" class="w-4 h-4"></i><span>Cover Letter Builder</span>-->
+<!--            </a>-->
+<!--            <a href="#/calendar" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all hover:bg-slate-800/60 hover:text-white" data-view="calendar">-->
+<!--                <i data-lucide="calendar" class="w-4 h-4"></i><span>Calendar</span>-->
+<!--            </a>-->
+<!--            <a href="#/settings" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all hover:bg-slate-800/60 hover:text-white" data-view="settings">-->
+<!--                <i data-lucide="settings" class="w-4 h-4"></i><span>Settings</span>-->
+<!--            </a>-->
+<!--            &lt;!&ndash; Added Admin Panel Option (Hidden Default to protect unauthorized candidates entry) &ndash;&gt;-->
+<!--            <a href="#/admin" class="nav-item hidden flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all hover:bg-slate-800/60 hover:text-white" data-view="admin" id="adminSidebarLink">-->
+<!--                <i data-lucide="shield-check" class="w-4 h-4"></i><span>Admin Panel</span>-->
+<!--            </a>-->
+<!--        </nav>-->
+
+<!--        <div class="border-t border-slate-800 pt-4 mt-auto space-y-3">-->
+<!--            <div class="flex items-center gap-3 px-2 py-1">-->
+<!--                <div class="w-9 h-9 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center font-bold text-sm text-indigo-400" id="userAvatar">U</div>-->
+<!--                <div class="flex flex-col min-w-0 flex-1">-->
+<!--                    <span class="text-xs font-semibold text-white truncate" id="userName">User Profile</span>-->
+<!--                    <span class="text-[10px] text-slate-500 font-medium tracking-wide uppercase">Candidate</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <button class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-slate-800/40 hover:bg-rose-900/20 hover:text-rose-400 border border-slate-800 rounded-xl font-semibold text-xs transition-all" id="logoutBtn">-->
+<!--                <i data-lucide="log-out" class="w-3.5 h-3.5"></i><span>Log Out</span>-->
+<!--            </button>-->
+<!--        </div>-->
+<!--    </aside>-->
+
+<!--    &lt;!&ndash; Main Content Workspace Frame &ndash;&gt;-->
+<!--    <main class="flex-1 h-full overflow-y-auto pt-16 lg:pt-0 flex flex-col min-w-0">-->
+
+<!--        &lt;!&ndash; 1. APPLICATION BOARD VIEW &ndash;&gt;-->
+<!--        <div id="dashboard-view" class="view-container p-6 sm:p-8 flex flex-col">-->
+<!--            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">-->
+<!--                <div>-->
+<!--                    <h1 class="font-display text-2xl font-bold text-slate-900 tracking-tight">Application Board</h1>-->
+<!--                    <p class="text-sm text-slate-500 mt-0.5">Track pipeline velocity and application staging positions</p>-->
+<!--                </div>-->
+<!--                <div class="flex gap-2">-->
+<!--                    <button class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-semibold text-sm rounded-xl transition-all shadow-sm" id="quickAddBtn">-->
+<!--                        <i data-lucide="bookmark-plus" class="w-4 h-4"></i> Save Job-->
+<!--                    </button>-->
+<!--                    <button class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm rounded-xl transition-all shadow-sm" id="addBtn">-->
+<!--                        <i data-lucide="plus" class="w-4 h-4"></i> Add Application-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash; Filter Controls &ndash;&gt;-->
+<!--            <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">-->
+<!--                <div class="w-full sm:max-w-xs relative">-->
+<!--                    <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>-->
+<!--                    <input type="text" id="searchBar" placeholder="Search company or role..." class="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-slate-900">-->
+<!--                </div>-->
+<!--                <div class="w-full sm:w-auto">-->
+<!--                    <select id="filterPlatform" class="w-full sm:w-44 px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none text-slate-700 cursor-pointer">-->
+<!--                        <option value="">All Platforms</option>-->
+<!--                        <option value="LINKEDIN">LinkedIn</option>-->
+<!--                        <option value="INDEED">Indeed</option>-->
+<!--                        <option value="COMPANY_WEBSITE">Company Website</option>-->
+<!--                        <option value="REFERRAL">Referral</option>-->
+<!--                        <option value="GLASSDOOR">Glassdoor</option>-->
+<!--                        <option value="OTHER">Other</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash; Kanban Staging Pipeline System Column Arrays &ndash;&gt;-->
+<!--            <div class="overflow-x-auto pb-4 flex-1">-->
+<!--                <div class="flex gap-4 h-full items-start min-w-max" id="board">-->
+
+<!--                    <div class="bg-slate-100/70 border border-slate-200/60 rounded-2xl p-3 w-72 flex flex-col" data-status="WISHLIST">-->
+<!--                        <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center justify-between mb-3 pb-2 border-b-2 border-slate-400/30">-->
+<!--                            <span>Wishlist</span><span class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 font-extrabold text-[10px]" id="count-WISHLIST">0</span>-->
+<!--                        </h3>-->
+<!--                        <div class="space-y-2 overflow-y-auto min-h-[420px]" id="cards-WISHLIST"></div>-->
+<!--                    </div>-->
+
+<!--                    <div class="bg-slate-100/70 border border-slate-200/60 rounded-2xl p-3 w-72 flex flex-col" data-status="APPLIED">-->
+<!--                        <h3 class="text-xs font-bold text-blue-600 uppercase tracking-wider flex items-center justify-between mb-3 pb-2 border-b-2 border-blue-500/30">-->
+<!--                            <span>Applied</span><span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-extrabold text-[10px]" id="count-APPLIED">0</span>-->
+<!--                        </h3>-->
+<!--                        <div class="space-y-2 overflow-y-auto min-h-[420px]" id="cards-APPLIED"></div>-->
+<!--                    </div>-->
+
+<!--                    <div class="bg-slate-100/70 border border-slate-200/60 rounded-2xl p-3 w-72 flex flex-col" data-status="ASSESSMENT">-->
+<!--                        <h3 class="text-xs font-bold text-purple-600 uppercase tracking-wider flex items-center justify-between mb-3 pb-2 border-b-2 border-purple-500/30">-->
+<!--                            <span>Assessment</span><span class="px-2 py-0.5 rounded-full bg-purple-100 text-purple-700 font-extrabold text-[10px]" id="count-ASSESSMENT">0</span>-->
+<!--                        </h3>-->
+<!--                        <div class="space-y-2 overflow-y-auto min-h-[420px]" id="cards-ASSESSMENT"></div>-->
+<!--                    </div>-->
+
+<!--                    <div class="bg-slate-100/70 border border-slate-200/60 rounded-2xl p-3 w-72 flex flex-col" data-status="INTERVIEW">-->
+<!--                        <h3 class="text-xs font-bold text-amber-600 uppercase tracking-wider flex items-center justify-between mb-3 pb-2 border-b-2 border-amber-500/30">-->
+<!--                            <span>Interview</span><span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-extrabold text-[10px]" id="count-INTERVIEW">0</span>-->
+<!--                        </h3>-->
+<!--                        <div class="space-y-2 overflow-y-auto min-h-[420px]" id="cards-INTERVIEW"></div>-->
+<!--                    </div>-->
+
+<!--                    <div class="bg-slate-100/70 border border-slate-200/60 rounded-2xl p-3 w-72 flex flex-col" data-status="OFFER">-->
+<!--                        <h3 class="text-xs font-bold text-emerald-600 uppercase tracking-wider flex items-center justify-between mb-3 pb-2 border-b-2 border-emerald-500/30">-->
+<!--                            <span>Offer</span><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-extrabold text-[10px]" id="count-OFFER">0</span>-->
+<!--                        </h3>-->
+<!--                        <div class="space-y-2 overflow-y-auto min-h-[420px]" id="cards-OFFER"></div>-->
+<!--                    </div>-->
+
+<!--                    <div class="bg-slate-100/70 border border-slate-200/60 rounded-2xl p-3 w-72 flex flex-col" data-status="REJECTED">-->
+<!--                        <h3 class="text-xs font-bold text-rose-600 uppercase tracking-wider flex items-center justify-between mb-3 pb-2 border-b-2 border-rose-500/30">-->
+<!--                            <span>Rejected</span><span class="px-2 py-0.5 rounded-full bg-rose-100 text-rose-700 font-extrabold text-[10px]" id="count-REJECTED">0</span>-->
+<!--                        </h3>-->
+<!--                        <div class="space-y-2 overflow-y-auto min-h-[420px]" id="cards-REJECTED"></div>-->
+<!--                    </div>-->
+
+<!--                    <div class="bg-slate-100/70 border border-slate-200/60 rounded-2xl p-3 w-72 flex flex-col" data-status="WITHDRAWN">-->
+<!--                        <h3 class="text-xs font-bold text-zinc-500 uppercase tracking-wider flex items-center justify-between mb-3 pb-2 border-b-2 border-zinc-400/30">-->
+<!--                            <span>Withdrawn</span><span class="px-2 py-0.5 rounded-full bg-zinc-200 text-zinc-600 font-extrabold text-[10px]" id="count-WITHDRAWN">0</span>-->
+<!--                        </h3>-->
+<!--                        <div class="space-y-2 overflow-y-auto min-h-[420px]" id="cards-WITHDRAWN"></div>-->
+<!--                    </div>-->
+
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 2. JOBS SEARCH & DISCOVERY ENGINE VIEW (Fixed ID template hook) &ndash;&gt;-->
+<!--        <div id="jobs-view" class="view-container p-6 sm:p-8 flex-1">-->
+<!--            <div class="mb-6">-->
+<!--                <h1 class="font-display text-2xl font-bold text-slate-900 tracking-tight">Job Search & Discovery</h1>-->
+<!--                <p class="text-sm text-slate-500 mt-0.5">Explore active roles stream and connect applications automatically</p>-->
+<!--            </div>-->
+
+<!--            <div class="grid grid-cols-1 xl:grid-cols-4 gap-6 items-start">-->
+<!--                <div class="xl:col-span-3 space-y-3" id="externalJobsFeedContainer">-->
+<!--                    &lt;!&ndash; Cards populate dynamically &ndash;&gt;-->
+<!--                </div>-->
+
+<!--                <div class="xl:col-span-1 bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">-->
+<!--                    <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider border-b border-slate-100 pb-2 flex items-center gap-2">-->
+<!--                        <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5 text-indigo-600"></i> Job Filters-->
+<!--                    </h3>-->
+<!--                    <div class="space-y-3">-->
+<!--                        <div>-->
+<!--                            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Keywords</label>-->
+<!--                            <input type="text" id="jobSearchKeywords" placeholder="Profession or title keywords" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-indigo-600 focus:bg-white text-slate-900 font-medium">-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Company</label>-->
+<!--                            <input type="text" id="jobSearchCompany" placeholder="Company name" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-indigo-600 focus:bg-white text-slate-900 font-medium">-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Country Location</label>-->
+<!--                            <input type="text" id="jobSearchCountry" placeholder="e.g. Germany, Remote" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-indigo-600 focus:bg-white text-slate-900 font-medium">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="pt-1 flex gap-2">-->
+<!--                        <button onclick="clearJobFilters()" class="flex-1 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-all">Reset</button>-->
+<!--                        <button onclick="fetchExternalJobsFeed()" class="flex-1 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all shadow-sm">Filter</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 2b. AI JOB SEARCH VIEW (live web results via Gemini + Google Search grounding) &ndash;&gt;-->
+<!--        <div id="ai-jobs-view" class="view-container p-6 sm:p-8 flex-1">-->
+<!--            <div class="mb-6">-->
+<!--                <h1 class="font-display text-2xl font-bold text-slate-900 tracking-tight">AI Job Search</h1>-->
+<!--                <p class="text-sm text-slate-500 mt-0.5">Describe what you want — Gemini searches the live web for real, current job postings</p>-->
+<!--            </div>-->
+
+<!--            <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm mb-6">-->
+<!--                <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-3 flex items-center gap-2">-->
+<!--                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-600"></i> Search the web with AI-->
+<!--                </h3>-->
+<!--                <div class="flex flex-col sm:flex-row gap-2">-->
+<!--                    <input type="text" id="aiLiveJobSearchInput" placeholder='Try &quot;java backend remote&quot; or &quot;marketing jobs at Google in Germany&quot;' class="flex-1 px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-purple-500 focus:bg-white transition-all text-slate-900">-->
+<!--                    <button type="button" onclick="runLiveAiJobSearch()" id="aiLiveJobSearchBtn" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white font-bold text-xs rounded-xl transition-all shadow-sm">-->
+<!--                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> AI Search-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--                <p class="text-[10px] text-slate-400 font-medium mt-2">Describe the job you want in plain language — AI searches the live web and returns real postings, not just your saved listings.</p>-->
+<!--            </div>-->
+
+<!--            <div class="space-y-3" id="aiJobsResultsContainer">-->
+<!--                <div class="bg-white border border-slate-200 rounded-2xl p-8 text-center text-slate-400 text-xs font-medium">Search above to find real, current job postings from across the web.</div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 3. ANALYTICS & INSIGHTS SHIELD LAYER (Fixed ID template hook) &ndash;&gt;-->
+<!--        <div id="analytics-view" class="view-container p-6 sm:p-8">-->
+<!--            <div class="mb-6">-->
+<!--                <h1 class="font-display text-2xl font-bold text-slate-900 tracking-tight">Analytics & Insights</h1>-->
+<!--                <p class="text-sm text-slate-500 mt-0.5">Automated KPIs and conversion logging maps</p>-->
+<!--            </div>-->
+
+<!--            <div class="bg-amber-50 border border-amber-200 text-amber-800 p-4 rounded-2xl items-center justify-between gap-4 text-xs font-medium mb-6 flex" id="mockDataWarning">-->
+<!--                <span>Showing <strong>Showcase Mock Data</strong> due to an empty data profile logs context list.</span>-->
+<!--                <button onclick="toggleMockData(false)" class="bg-white border border-amber-300 text-amber-900 px-3 py-1.5 rounded-xl font-bold shadow-sm hover:bg-slate-50 transition-all">Switch to Real Data</button>-->
+<!--            </div>-->
+
+<!--            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">-->
+<!--                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm relative overflow-hidden before:absolute before:top-0 before:left-0 before:right-0 before:h-1 before:bg-indigo-600">-->
+<!--                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Total Applications</div>-->
+<!--                    <div class="font-display text-2xl font-bold text-slate-900" id="kpiTotal">0</div>-->
+<!--                </div>-->
+<!--                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm relative overflow-hidden before:absolute before:top-0 before:left-0 before:right-0 before:h-1 before:bg-amber-500">-->
+<!--                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Active Pipeline</div>-->
+<!--                    <div class="font-display text-2xl font-bold text-slate-900" id="kpiActive">0</div>-->
+<!--                </div>-->
+<!--                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm relative overflow-hidden before:absolute before:top-0 before:left-0 before:right-0 before:h-1 before:bg-purple-500">-->
+<!--                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Response Rate</div>-->
+<!--                    <div class="font-display text-2xl font-bold text-slate-900" id="kpiResponseRate">0%</div>-->
+<!--                </div>-->
+<!--                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm relative overflow-hidden before:absolute before:top-0 before:left-0 before:right-0 before:h-1 before:bg-emerald-500">-->
+<!--                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Offer Success Rate</div>-->
+<!--                    <div class="font-display text-2xl font-bold text-slate-900" id="kpiOfferRate">0%</div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-6">-->
+<!--                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">-->
+<!--                    <h3 class="text-sm font-bold text-slate-900 mb-4 tracking-tight">Goals Tracker</h3>-->
+<!--                    <div class="space-y-4">-->
+<!--                        <div class="bg-slate-50 border border-slate-100 p-4 rounded-xl">-->
+<!--                            <div class="flex justify-between text-xs font-semibold text-slate-600 mb-2">-->
+<!--                                <span>Weekly Goal</span><span id="weeklyGoalPercent" class="text-indigo-600">Progress</span>-->
+<!--                            </div>-->
+<!--                            <div class="h-4 bg-slate-200 rounded-full overflow-hidden relative">-->
+<!--                                <div class="h-full bg-indigo-600 font-bold text-[9px] text-white flex items-center justify-end pr-2 transition-all duration-500" id="weeklyGoalBar" style="width: 0%;"></div>-->
+<!--                            </div>-->
+<!--                            <p class="text-[11px] text-slate-500 font-medium mt-2" id="weeklyGoalText"></p>-->
+<!--                        </div>-->
+<!--                        <div class="bg-slate-50 border border-slate-100 p-4 rounded-xl">-->
+<!--                            <div class="flex justify-between text-xs font-semibold text-slate-600 mb-2">-->
+<!--                                <span>Monthly Goal</span><span id="monthlyGoalPercent" class="text-indigo-600">Progress</span>-->
+<!--                            </div>-->
+<!--                            <div class="h-4 bg-slate-200 rounded-full overflow-hidden relative">-->
+<!--                                <div class="h-full bg-indigo-600 font-bold text-[9px] text-white flex items-center justify-end pr-2 transition-all duration-500" id="monthlyGoalBar" style="width: 0%;"></div>-->
+<!--                            </div>-->
+<!--                            <p class="text-[11px] text-slate-500 font-medium mt-2" id="monthlyGoalText"></p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm xl:col-span-2">-->
+<!--                    <h3 class="text-sm font-bold text-slate-900 mb-4 tracking-tight">Application Volume Over Time</h3>-->
+<!--                    <div class="h-64 relative w-full"><canvas id="trendChart"></canvas></div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">-->
+<!--                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">-->
+<!--                    <h3 class="text-sm font-bold text-slate-900 mb-4 tracking-tight">Applications by Status</h3>-->
+<!--                    <div class="h-64 relative w-full flex items-center justify-center"><canvas id="statusChart"></canvas></div>-->
+<!--                </div>-->
+<!--                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">-->
+<!--                    <h3 class="text-sm font-bold text-slate-900 mb-4 tracking-tight">Success Rates by Platform</h3>-->
+<!--                    <div class="h-64 relative w-full"><canvas id="platformChart"></canvas></div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 4. DOCUMENT MANAGER CONTENT HUB LAYOUT PANEL (Fixed ID template hook) &ndash;&gt;-->
+<!--        <div id="documents-view" class="view-container p-6 sm:p-8">-->
+<!--            <div class="mb-6">-->
+<!--                <h1 class="font-display text-2xl font-bold text-slate-900 tracking-tight">Document Manager</h1>-->
+<!--                <p class="text-sm text-slate-500 mt-0.5">Organize resumes, cover letters, and transcripts cleanly</p>-->
+<!--            </div>-->
+
+<!--            <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 items-start">-->
+<!--                <div class="xl:col-span-1 space-y-4">-->
+<!--                    <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">-->
+<!--                        <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-4 flex items-center gap-2"><i data-lucide="upload-cloud" class="w-4 h-4 text-indigo-600"></i> Upload New File</h3>-->
+<!--                        <form id="docUploadForm" class="space-y-4">-->
+<!--                            <div>-->
+<!--                                <label for="docTypeSelect" class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Document Type</label>-->
+<!--                                <select id="docTypeSelect" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800" required>-->
+<!--                                    <option value="RESUME">Resume</option>-->
+<!--                                    <option value="COVER_LETTER">Cover Letter</option>-->
+<!--                                    <option value="TRANSCRIPT">Transcript</option>-->
+<!--                                    <option value="OTHER">Other</option>-->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                            <div class="border-2 border-dashed border-slate-200 rounded-2xl p-6 text-center cursor-pointer hover:bg-slate-50 hover:border-indigo-500 transition-all" id="docDragZone">-->
+<!--                                <i data-lucide="file-up" class="w-8 h-8 text-indigo-500 mx-auto mb-2"></i>-->
+<!--                                <p class="text-xs font-medium text-slate-600">Drag files here or <span class="text-indigo-600 font-bold">browse</span></p>-->
+<!--                                <p class="text-[10px] text-slate-400 font-medium mt-1">Supports PDF, DOC, DOCX files up to 5MB</p>-->
+<!--                                <input type="file" id="docFileInput" class="hidden" accept=".pdf,.doc,.docx">-->
+<!--                            </div>-->
+<!--                            <button type="submit" class="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold shadow-sm transition-all">Upload Document</button>-->
+<!--                        </form>-->
+<!--                    </div>-->
+
+<!--                    <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">-->
+<!--                        <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-4 flex items-center gap-2"><i data-lucide="link-2" class="w-4 h-4 text-indigo-600"></i> Link Record to Application</h3>-->
+<!--                        <form id="docLinkForm" class="space-y-4" onsubmit="handleLinkSubmit(event)">-->
+<!--                            <div>-->
+<!--                                <label for="linkDocSelect" class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Select Target File</label>-->
+<!--                                <select id="linkDocSelect" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800" required>-->
+<!--                                    <option value="">&#45;&#45; Choose File &#45;&#45;</option>-->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                            <div>-->
+<!--                                <label for="linkAppSelect" class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Target Application</label>-->
+<!--                                <select id="linkAppSelect" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800" required>-->
+<!--                                    <option value="">&#45;&#45; Choose Job Application &#45;&#45;</option>-->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                            <button type="submit" class="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold shadow-sm transition-all">Link Document</button>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="xl:col-span-2 space-y-6">-->
+<!--                    <div class="border-b border-slate-200 pb-4"><h3 class="text-sm font-bold text-slate-900 tracking-tight mb-2">Resumes</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="docs-resumes"></div></div>-->
+<!--                    <div class="border-b border-slate-200 pb-4"><h3 class="text-sm font-bold text-slate-900 tracking-tight mb-2">Cover Letters</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="docs-covers"></div></div>-->
+<!--                    <div class="border-b border-slate-200 pb-4"><h3 class="text-sm font-bold text-slate-900 tracking-tight mb-2">Transcripts</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="docs-transcripts"></div></div>-->
+<!--                    <div><h3 class="text-sm font-bold text-slate-900 tracking-tight mb-2">Other Documents</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="docs-others"></div></div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 4b. RESUME BUILDER VIEW (Fixed ID template hook) &ndash;&gt;-->
+<!--        <div id="resume-builder-view" class="view-container p-6 sm:p-8">-->
+<!--            <div class="mb-6">-->
+<!--                <h1 class="font-display text-2xl font-bold text-slate-900 tracking-tight">Resume Builder</h1>-->
+<!--                <p class="text-sm text-slate-500 mt-0.5">Maintain one content bank of experience and bullets, then assemble tailored resume versions</p>-->
+<!--            </div>-->
+
+<!--            <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 items-start mb-6">-->
+<!--                &lt;!&ndash; Resume version selector &ndash;&gt;-->
+<!--                <div class="xl:col-span-1 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">-->
+<!--                    <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">-->
+<!--                        <i data-lucide="file-text" class="w-3.5 h-3.5 text-indigo-600"></i> Resume Version-->
+<!--                    </h3>-->
+<!--                    <select id="resumeSelect" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 cursor-pointer">-->
+<!--                        <option value="">&#45;&#45; Select a resume &#45;&#45;</option>-->
+<!--                    </select>-->
+<!--                    <div class="flex gap-2">-->
+<!--                        <button type="button" id="newResumeBtn" class="flex-1 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all shadow-sm">New</button>-->
+<!--                        <button type="button" id="duplicateResumeBtn" disabled class="flex-1 py-2 bg-slate-100 hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed text-slate-700 rounded-xl text-xs font-bold transition-all">Duplicate</button>-->
+<!--                        <button type="button" id="deleteResumeBtn" disabled class="flex-1 py-2 bg-rose-50 hover:bg-rose-100 disabled:opacity-40 disabled:cursor-not-allowed text-rose-600 rounded-xl text-xs font-bold transition-all">Delete</button>-->
+<!--                    </div>-->
+<!--                    <div id="noResumeNote" class="bg-slate-50 border border-dashed border-slate-200 rounded-xl p-3 text-[11px] text-slate-400 font-medium text-center">-->
+<!--                        Select or create a resume version to choose which bullets appear on it and check its match score.-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Match score panel &ndash;&gt;-->
+<!--                <div id="matchScorePanel" class="hidden xl:col-span-2 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">-->
+<!--                    <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">-->
+<!--                        <i data-lucide="target" class="w-3.5 h-3.5 text-indigo-600"></i> Match Score Checker-->
+<!--                    </h3>-->
+<!--                    <textarea id="jdText" rows="4" placeholder="Paste a job description here to score this resume version against it..." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-500 focus:bg-white resize-none"></textarea>-->
+<!--                    <button type="button" id="checkScoreBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all shadow-sm">Check Match Score</button>-->
+
+<!--                    <div id="matchScoreResult" class="hidden pt-3 border-t border-slate-100 space-y-3">-->
+<!--                        <div class="flex items-center gap-2">-->
+<!--                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Score:</span>-->
+<!--                            <span id="scoreValue" class="font-display text-3xl font-bold text-slate-900">0%</span>-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">Matched Keywords</span>-->
+<!--                            <div id="matchedKeywords" class="flex flex-wrap gap-1.5"></div>-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">Missing Keywords</span>-->
+<!--                            <div id="missingKeywords" class="flex flex-wrap gap-1.5"></div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash; CV Template & Preview &ndash;&gt;-->
+<!--            <div id="cvBuilderPanel" class="hidden bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-5 mb-6">-->
+<!--                <div class="flex items-center justify-between">-->
+<!--                    <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">-->
+<!--                        <i data-lucide="layout-template" class="w-3.5 h-3.5 text-indigo-600"></i> CV Template & Preview-->
+<!--                    </h3>-->
+<!--                    <button type="button" id="downloadCvBtn" class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-sm">-->
+<!--                        <i data-lucide="download" class="w-3.5 h-3.5"></i> Download PDF-->
+<!--                    </button>-->
+<!--                </div>-->
+
+<!--                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">-->
+<!--                    <input type="text" id="cvFullName" placeholder="Full Name" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-500 focus:bg-white">-->
+<!--                    <input type="email" id="cvEmail" placeholder="Email" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-500 focus:bg-white">-->
+<!--                    <input type="text" id="cvPhone" placeholder="Phone" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-500 focus:bg-white">-->
+<!--                    <input type="text" id="cvLocation" placeholder="City, Country" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-500 focus:bg-white">-->
+<!--                    <input type="text" id="cvLinkedin" placeholder="LinkedIn / Portfolio URL" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-500 focus:bg-white">-->
+<!--                    <input type="text" id="cvTargetTitle" placeholder="Target Title (e.g. Senior Backend Engineer)" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-500 focus:bg-white">-->
+<!--                    <input type="text" id="cvSummary" placeholder="One-line professional summary (optional)" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-500 focus:bg-white">-->
+<!--                    <input type="text" id="cvInterests" placeholder="Interests (e.g. Chess, Open Source, Hiking)" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-500 focus:bg-white">-->
+<!--                </div>-->
+
+<!--                <div>-->
+<!--                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">Choose a Template</span>-->
+<!--                    <div id="cvTemplateGallery" class="grid grid-cols-1 sm:grid-cols-3 gap-3"></div>-->
+<!--                </div>-->
+
+<!--                <div>-->
+<!--                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">Live Preview</span>-->
+<!--                    <div class="border border-slate-200 rounded-2xl bg-slate-100 p-4 overflow-auto" style="max-height:640px;">-->
+<!--                        <div id="cvPreviewContainer" class="mx-auto"></div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash; Skills & Education &ndash;&gt;-->
+<!--            <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">-->
+<!--                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">-->
+<!--                    <div class="flex items-center justify-between mb-4">-->
+<!--                        <h3 class="text-sm font-bold text-slate-900 tracking-tight">Skills</h3>-->
+<!--                        <button type="button" id="addSkillBtn" class="inline-flex items-center gap-1.5 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl transition-all shadow-sm">-->
+<!--                            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Skill-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                    <div id="addSkillForm" class="hidden bg-slate-50 border border-slate-200 rounded-xl p-3 mb-3 space-y-2">-->
+<!--                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">-->
+<!--                            <input type="text" id="skillName" placeholder="e.g. Java" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">-->
+<!--                            <select id="skillCategory" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium text-slate-800">-->
+<!--                                <option value="Technical">Technical</option>-->
+<!--                                <option value="Soft">Soft</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                        <div class="flex gap-2">-->
+<!--                            <button type="button" id="saveSkillBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition-all">Save</button>-->
+<!--                            <button type="button" id="cancelSkillBtn" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all">Cancel</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div id="skillsList" class="flex flex-wrap gap-2"></div>-->
+<!--                </div>-->
+
+<!--                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">-->
+<!--                    <div class="flex items-center justify-between mb-4">-->
+<!--                        <h3 class="text-sm font-bold text-slate-900 tracking-tight">Education</h3>-->
+<!--                        <button type="button" id="addEducationBtn" class="inline-flex items-center gap-1.5 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl transition-all shadow-sm">-->
+<!--                            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Education-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                    <div id="addEducationForm" class="hidden bg-slate-50 border border-slate-200 rounded-xl p-3 mb-3 space-y-2">-->
+<!--                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">-->
+<!--                            <input type="text" id="eduInstitution" placeholder="Institution" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">-->
+<!--                            <input type="text" id="eduDegree" placeholder="Degree" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">-->
+<!--                        </div>-->
+<!--                        <input type="text" id="eduFieldOfStudy" placeholder="Field of Study (optional)" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">-->
+<!--                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">-->
+<!--                            <input type="date" id="eduStart" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none">-->
+<!--                            <input type="date" id="eduEnd" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none">-->
+<!--                        </div>-->
+<!--                        <div class="flex gap-2">-->
+<!--                            <button type="button" id="saveEducationBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition-all">Save</button>-->
+<!--                            <button type="button" id="cancelEducationBtn" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all">Cancel</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div id="educationList" class="space-y-2"></div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash; Extra content-bank cards &ndash;&gt;-->
+<!--            <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">-->
+<!--                &lt;!&ndash; Certifications &ndash;&gt;-->
+<!--                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">-->
+<!--                    <div class="flex items-center justify-between mb-4">-->
+<!--                        <h3 class="text-sm font-bold text-slate-900 tracking-tight">Certifications</h3>-->
+<!--                        <button type="button" id="addCertificationBtn" class="inline-flex items-center gap-1.5 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl transition-all shadow-sm">-->
+<!--                            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Certification-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                    <div id="addCertificationForm" class="hidden bg-slate-50 border border-slate-200 rounded-xl p-3 mb-3 space-y-2">-->
+<!--                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">-->
+<!--                            <input type="text" id="certName" placeholder="e.g. AWS Certified Developer" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">-->
+<!--                            <input type="text" id="certOrg" placeholder="Issuing Organization" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">-->
+<!--                        </div>-->
+<!--                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">-->
+<!--                            <input type="date" id="certIssueDate" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none">-->
+<!--                            <input type="date" id="certExpDate" placeholder="Expiration (optional)" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none">-->
+<!--                        </div>-->
+<!--                        <input type="url" id="certUrl" placeholder="Credential URL (optional)" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">-->
+<!--                        <div class="flex gap-2">-->
+<!--                            <button type="button" id="saveCertificationBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition-all">Save</button>-->
+<!--                            <button type="button" id="cancelCertificationBtn" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all">Cancel</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div id="certificationsList" class="space-y-2"></div>-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Awards &ndash;&gt;-->
+<!--                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">-->
+<!--                    <div class="flex items-center justify-between mb-4">-->
+<!--                        <h3 class="text-sm font-bold text-slate-900 tracking-tight">Awards & Scholarships</h3>-->
+<!--                        <button type="button" id="addAwardBtn" class="inline-flex items-center gap-1.5 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl transition-all shadow-sm">-->
+<!--                            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Award-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                    <div id="addAwardForm" class="hidden bg-slate-50 border border-slate-200 rounded-xl p-3 mb-3 space-y-2">-->
+<!--                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">-->
+<!--                            <input type="text" id="awardTitle" placeholder="e.g. Dean's List" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">-->
+<!--                            <input type="text" id="awardIssuer" placeholder="Issuer" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">-->
+<!--                        </div>-->
+<!--                        <input type="date" id="awardDate" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none">-->
+<!--                        <textarea id="awardDescription" rows="2" placeholder="Description (optional)" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 resize-none"></textarea>-->
+<!--                        <div class="flex gap-2">-->
+<!--                            <button type="button" id="saveAwardBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition-all">Save</button>-->
+<!--                            <button type="button" id="cancelAwardBtn" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all">Cancel</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div id="awardsList" class="space-y-2"></div>-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Projects &ndash;&gt;-->
+<!--                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">-->
+<!--                    <div class="flex items-center justify-between mb-4">-->
+<!--                        <h3 class="text-sm font-bold text-slate-900 tracking-tight">Projects</h3>-->
+<!--                        <button type="button" id="addProjectBtn" class="inline-flex items-center gap-1.5 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl transition-all shadow-sm">-->
+<!--                            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Project-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                    <div id="addProjectForm" class="hidden bg-slate-50 border border-slate-200 rounded-xl p-3 mb-3 space-y-2">-->
+<!--                        <input type="text" id="projectName" placeholder="Project name" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">-->
+<!--                        <textarea id="projectDescription" rows="2" placeholder="Description (optional)" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 resize-none"></textarea>-->
+<!--                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">-->
+<!--                            <input type="text" id="projectTech" placeholder="Technologies (optional)" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">-->
+<!--                            <input type="url" id="projectUrl" placeholder="Project URL (optional)" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">-->
+<!--                        </div>-->
+<!--                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">-->
+<!--                            <input type="date" id="projectStart" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none">-->
+<!--                            <input type="date" id="projectEnd" placeholder="End (blank = ongoing)" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none">-->
+<!--                        </div>-->
+<!--                        <div class="flex gap-2">-->
+<!--                            <button type="button" id="saveProjectBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition-all">Save</button>-->
+<!--                            <button type="button" id="cancelProjectBtn" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all">Cancel</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div id="projectsList" class="space-y-2"></div>-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Volunteering &ndash;&gt;-->
+<!--                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">-->
+<!--                    <div class="flex items-center justify-between mb-4">-->
+<!--                        <h3 class="text-sm font-bold text-slate-900 tracking-tight">Volunteering & Leadership</h3>-->
+<!--                        <button type="button" id="addVolunteerBtn" class="inline-flex items-center gap-1.5 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl transition-all shadow-sm">-->
+<!--                            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Volunteering-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                    <div id="addVolunteerForm" class="hidden bg-slate-50 border border-slate-200 rounded-xl p-3 mb-3 space-y-2">-->
+<!--                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">-->
+<!--                            <input type="text" id="volOrg" placeholder="Organization" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">-->
+<!--                            <input type="text" id="volRole" placeholder="Role" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">-->
+<!--                        </div>-->
+<!--                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">-->
+<!--                            <input type="date" id="volStart" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none">-->
+<!--                            <input type="date" id="volEnd" placeholder="End (blank = current)" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none">-->
+<!--                        </div>-->
+<!--                        <textarea id="volDescription" rows="2" placeholder="Description (optional)" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 resize-none"></textarea>-->
+<!--                        <div class="flex gap-2">-->
+<!--                            <button type="button" id="saveVolunteerBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition-all">Save</button>-->
+<!--                            <button type="button" id="cancelVolunteerBtn" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all">Cancel</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div id="volunteeringList" class="space-y-2"></div>-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Publications &ndash;&gt;-->
+<!--                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm xl:col-span-2">-->
+<!--                    <div class="flex items-center justify-between mb-4">-->
+<!--                        <h3 class="text-sm font-bold text-slate-900 tracking-tight">Publications</h3>-->
+<!--                        <button type="button" id="addPublicationBtn" class="inline-flex items-center gap-1.5 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl transition-all shadow-sm">-->
+<!--                            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Publication-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                    <div id="addPublicationForm" class="hidden bg-slate-50 border border-slate-200 rounded-xl p-3 mb-3 space-y-2">-->
+<!--                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">-->
+<!--                            <input type="text" id="pubTitle" placeholder="Title" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">-->
+<!--                            <input type="text" id="pubPublisher" placeholder="Publisher" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">-->
+<!--                        </div>-->
+<!--                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">-->
+<!--                            <input type="date" id="pubDate" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none">-->
+<!--                            <input type="url" id="pubUrl" placeholder="URL (optional)" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">-->
+<!--                        </div>-->
+<!--                        <textarea id="pubDescription" rows="2" placeholder="Description (optional)" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 resize-none"></textarea>-->
+<!--                        <div class="flex gap-2">-->
+<!--                            <button type="button" id="savePublicationBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition-all">Save</button>-->
+<!--                            <button type="button" id="cancelPublicationBtn" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all">Cancel</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div id="publicationsList" class="space-y-2"></div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash; Work experience & bullet content bank &ndash;&gt;-->
+<!--            <div class="flex items-center justify-between mb-4">-->
+<!--                <h3 class="text-sm font-bold text-slate-900 tracking-tight">Work Experience & Bullets</h3>-->
+<!--                <button type="button" id="addExpBtn" class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl transition-all shadow-sm">-->
+<!--                    <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Work Experience-->
+<!--                </button>-->
+<!--            </div>-->
+
+<!--            <div id="addExpForm" class="hidden bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-4 mb-4">-->
+<!--                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">-->
+<!--                    <div>-->
+<!--                        <label for="expCompany" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Company</label>-->
+<!--                        <input type="text" id="expCompany" placeholder="Google" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 focus:bg-white">-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <label for="expTitle" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Job Title</label>-->
+<!--                        <input type="text" id="expTitle" placeholder="Software Engineer" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 focus:bg-white">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">-->
+<!--                    <div>-->
+<!--                        <label for="expStart" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Start Date</label>-->
+<!--                        <input type="date" id="expStart" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none">-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <label for="expEnd" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">End Date <span class="text-slate-300 font-normal">(blank = current)</span></label>-->
+<!--                        <input type="date" id="expEnd" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none">-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <label for="expLocation" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Location</label>-->
+<!--                        <input type="text" id="expLocation" placeholder="Remote / New York" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 focus:bg-white">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="flex justify-end gap-2 pt-2 border-t border-slate-100">-->
+<!--                    <button type="button" id="cancelExpBtn" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all">Cancel</button>-->
+<!--                    <button type="button" id="saveExpBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all">Save Experience</button>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div id="workExpList" class="space-y-4"></div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; NEW: AI COVER LETTER BUILDER VIEW PANEL CONTAINER &ndash;&gt;-->
+<!--        <div id="cover-letter-view" class="view-container p-6 sm:p-8 hidden">-->
+<!--            <div class="mb-6">-->
+<!--                <h1 class="font-display text-2xl font-bold text-slate-900 tracking-tight">AI Cover Letter Builder</h1>-->
+<!--                <p class="text-sm text-slate-500 mt-0.5">Generate customized cover letters using your profile information and target descriptions</p>-->
+<!--            </div>-->
+
+<!--            <div class="grid grid-cols-1 xl:grid-cols-5 gap-6 items-start">-->
+<!--                <div class="xl:col-span-2 space-y-4">-->
+<!--                    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">-->
+<!--                        <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider border-b border-slate-100 pb-2 flex items-center gap-2">-->
+<!--                            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-600"></i> Generation Parameters-->
+<!--                        </h3>-->
+<!--                        <div class="space-y-3">-->
+<!--                            <div>-->
+<!--                                <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Target Job Description</label>-->
+<!--                                <textarea id="clJobDescription" rows="8" placeholder="Paste the text requirements stack or description of the role here..." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-indigo-600 focus:bg-white text-slate-900 font-medium resize-none"></textarea>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <button onclick="generateCoverLetterDraft()" id="clGenerateBtn" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2">-->
+<!--                            Generate Cover Letter-->
+<!--                        </button>-->
+<!--                    </div>-->
+
+<!--                    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-3">-->
+<!--                        <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider border-b border-slate-100 pb-2">-->
+<!--                            Saved AI Drafts Collection-->
+<!--                        </h3>-->
+<!--                        <div id="clSavedDraftsContainer" class="space-y-2 max-h-[220px] overflow-y-auto text-xs"></div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="xl:col-span-3 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm min-h-[500px] flex flex-col gap-4">-->
+<!--                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">-->
+<!--                        <h3 class="font-display font-bold text-sm text-slate-900">Document Editor Workspace</h3>-->
+<!--                        <div class="flex items-center gap-2">-->
+<!--                            <button onclick="saveCoverLetterDraftText()" class="px-3 py-1.5 bg-slate-100 text-slate-700 font-bold text-xs rounded-xl hover:bg-slate-200 transition-all">Save Version</button>-->
+<!--                            <button onclick="downloadCoverLetterAsPdf()" class="px-3 py-1.5 bg-indigo-600 text-white font-bold text-xs rounded-xl hover:bg-indigo-700 transition-all shadow-sm">Download as PDF</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div id="clEditorContent" contenteditable="true" class="flex-1 w-full p-4 bg-slate-50/50 border border-dashed border-slate-200 rounded-xl text-xs font-mono leading-relaxed focus:outline-none focus:bg-white overflow-y-auto max-h-[600px] min-h-[400px]">-->
+<!--                        <p class="text-slate-400 font-sans italic">Your custom tailored cover letter will populate here after you click "Generate Cover Letter"...</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 5. CALENDAR SCHEDULING INTERFACE (Fixed ID template hook) &ndash;&gt;-->
+<!--        <div id="calendar-view" class="view-container p-6 sm:p-8">-->
+<!--            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">-->
+<!--                <div>-->
+<!--                    <h1 class="font-display text-2xl font-bold text-slate-900 tracking-tight">Interview & Event Calendar</h1>-->
+<!--                    <p class="text-sm text-slate-500 mt-0.5">Track interview dates, coding runs, and review loops</p>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <button class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm rounded-xl transition-all shadow-sm" onclick="openEventModal()">-->
+<!--                        <i data-lucide="calendar-plus" class="w-4 h-4"></i> Add Event-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 items-start">-->
+<!--                <div class="xl:col-span-2 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">-->
+<!--                    <div class="flex items-center justify-between mb-4">-->
+<!--                        <h3 class="font-display font-bold text-base text-slate-900" id="calendarMonthYear">July 2026</h3>-->
+<!--                        <div class="flex gap-1.5">-->
+<!--                            <button class="p-2 border border-slate-200 bg-slate-50 rounded-xl text-slate-600 hover:bg-slate-100 transition-all" onclick="prevMonth()"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>-->
+<!--                            <button class="p-2 border border-slate-200 bg-slate-50 rounded-xl text-slate-600 hover:bg-slate-100 transition-all" onclick="nextMonth()"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="grid grid-cols-7 text-center text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">-->
+<!--                        <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>-->
+<!--                    </div>-->
+<!--                    <div class="grid grid-cols-7 gap-px bg-slate-200 border border-slate-200 rounded-xl overflow-hidden" id="calendarGrid"></div>-->
+<!--                </div>-->
+
+<!--                <div class="xl:col-span-1 space-y-4">-->
+<!--                    <div class="flex items-center justify-between">-->
+<!--                        <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider">Event Details</h3>-->
+<!--                        <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 border border-indigo-100 px-2.5 py-0.5 rounded-full" id="selectedDateLabel">All Month Events</span>-->
+<!--                    </div>-->
+<!--                    <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm min-h-[300px] max-h-[500px] overflow-y-auto space-y-3" id="dayEventsList"></div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 6. ACCOUNT PROFILE PARAMETERS CONFIGURATION PANEL (Fixed ID template hook) &ndash;&gt;-->
+<!--        <div id="settings-view" class="view-container p-6 sm:p-8">-->
+<!--            <div class="mb-6">-->
+<!--                <h1 class="font-display text-2xl font-bold text-slate-900 tracking-tight">Account Settings</h1>-->
+<!--                <p class="text-sm text-slate-500 mt-0.5">Configure performance metrics baseline profiles</p>-->
+<!--            </div>-->
+
+<!--            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm max-w-xl">-->
+<!--                <h3 class="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3 mb-5">Job Search Optimization Goals</h3>-->
+<!--                <form id="settingsForm" class="space-y-4" onsubmit="handleSettingsSubmit(event)">-->
+<!--                    <div>-->
+<!--                        <label for="settingsWeeklyGoal" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Weekly Target Metric</label>-->
+<!--                        <input type="number" id="settingsWeeklyGoal" min="0" placeholder="e.g. 5" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-indigo-600 focus:bg-white text-slate-900">-->
+<!--                        <span class="text-[10px] font-medium text-slate-400 block mt-1">Target submission goal logs metric for each weekly window run</span>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <label for="settingsMonthlyGoal" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Monthly Target Metric</label>-->
+<!--                        <input type="number" id="settingsMonthlyGoal" min="0" placeholder="e.g. 20" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-indigo-600 focus:bg-white text-slate-900">-->
+<!--                        <span class="text-[10px] font-medium text-slate-400 block mt-1">Target submission goal logs metric for each full monthly cycle run</span>-->
+<!--                    </div>-->
+<!--                    <div class="pt-2">-->
+<!--                        <button type="submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl transition-all shadow-sm">Save Parameters Changes</button>-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 7. ADMIN MANAGEMENT VIEW PANEL (Fixed ID template hook) &ndash;&gt;-->
+<!--        <div id="admin-view" class="view-container p-6 sm:p-8">-->
+<!--            <div class="mb-6">-->
+<!--                <h1 class="font-display text-2xl font-bold text-slate-900 tracking-tight">Admin Management Panel</h1>-->
+<!--                <p class="text-sm text-slate-500 mt-0.5">Post and manage dynamic global job listings for candidates</p>-->
+<!--            </div>-->
+
+<!--            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm max-w-xl">-->
+<!--                <h3 class="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3 mb-5">Post a New Global Job Opening</h3>-->
+<!--                <form id="adminJobForm" class="space-y-4" onsubmit="handleAdminJobSubmit(event)">-->
+<!--                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">-->
+<!--                        <div>-->
+<!--                            <label for="adminJobRole" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Position Title</label>-->
+<!--                            <input type="text" id="adminJobRole" required placeholder="e.g. Software Engineer" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-indigo-600 focus:bg-white text-slate-900">-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <label for="adminCompanyName" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Company Name</label>-->
+<!--                            <input type="text" id="adminCompanyName" required placeholder="e.g. Tech Corp" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-indigo-600 focus:bg-white text-slate-900">-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">-->
+<!--                        <div>-->
+<!--                            <label for="adminLocation" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Location</label>-->
+<!--                            <input type="text" id="adminLocation" required placeholder="e.g. Remote / New York" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-indigo-600 focus:bg-white text-slate-900">-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <label for="adminWorkload" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Workload %</label>-->
+<!--                            <input type="text" id="adminWorkload" required placeholder="e.g. 100%" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-indigo-600 focus:bg-white text-slate-900">-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">-->
+<!--                        <div class="sm:col-span-1">-->
+<!--                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Display Salary Text</label>-->
+<!--                            <input type="text" id="adminSalaryRange" required placeholder="e.g. $90k - $120k" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-indigo-600 focus:bg-white text-slate-900">-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <label for="adminSalaryMin" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Min Numeric</label>-->
+<!--                            <input type="number" id="adminSalaryMin" placeholder="90000" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-indigo-600 focus:bg-white text-slate-900">-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <label for="adminSalaryMax" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Max Numeric</label>-->
+<!--                            <input type="number" id="adminSalaryMax" placeholder="120000" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-indigo-600 focus:bg-white text-slate-900">-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div>-->
+<!--                        <label for="adminJobLink" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Job Application Link URL</label>-->
+<!--                        <input type="url" id="adminJobLink" required placeholder="https://company.com/careers/job" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-indigo-600 focus:bg-white text-slate-900">-->
+<!--                    </div>-->
+
+<!--                    <div class="pt-2">-->
+<!--                        <button type="submit" class="w-full sm:w-auto px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl transition-all shadow-sm shadow-indigo-100">Publish to Stream</button>-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--    </main>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; =========================================================-->
+<!--     MODAL LAYOUT OVERLAYS-->
+<!--     ========================================================= &ndash;&gt;-->
+
+<!--&lt;!&ndash; Add/Edit Application Staging Input Modal Frame &ndash;&gt;-->
+<!--<div class="modal-overlay hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 items-center justify-center p-4 transition-all duration-150" id="modalOverlay">-->
+<!--    <div class="bg-white border border-slate-200 w-full max-w-lg rounded-2xl shadow-2xl p-6 max-h-[90vh] overflow-y-auto">-->
+<!--        <h3 class="font-display font-bold text-lg text-slate-900 border-b border-slate-100 pb-3 mb-4" id="modalTitle">Add Application</h3>-->
+<!--        <form id="appForm" class="space-y-4">-->
+<!--            <input type="hidden" id="appId">-->
+
+<!--            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">-->
+<!--                <div>-->
+<!--                    <label for="companyName" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Company</label>-->
+<!--                    <input type="text" id="companyName" placeholder="Google" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 focus:bg-white">-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label for="jobRole" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Role / Position Title</label>-->
+<!--                    <input type="text" id="jobRole" placeholder="Frontend Engineer" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 focus:bg-white">-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">-->
+<!--                <div>-->
+<!--                    <label for="status" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Pipeline State</label>-->
+<!--                    <select id="status" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800">-->
+<!--                        <option value="WISHLIST">Wishlist</option>-->
+<!--                        <option value="APPLIED">Applied</option>-->
+<!--                        <option value="ASSESSMENT">Assessment</option>-->
+<!--                        <option value="INTERVIEW">Interview</option>-->
+<!--                        <option value="OFFER">Offer</option>-->
+<!--                        <option value="REJECTED">Rejected</option>-->
+<!--                        <option value="WITHDRAWN">Withdrawn</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label for="platform" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Sourcing Platform</label>-->
+<!--                    <select id="platform" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800">-->
+<!--                        <option value="LINKEDIN">LinkedIn</option>-->
+<!--                        <option value="INDEED">Indeed</option>-->
+<!--                        <option value="COMPANY_WEBSITE">Company Website</option>-->
+<!--                        <option value="REFERRAL">Referral</option>-->
+<!--                        <option value="GLASSDOOR">Glassdoor</option>-->
+<!--                        <option value="OTHER">Other</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">-->
+<!--                <div>-->
+<!--                    <label for="dateApplied" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Application Date</label>-->
+<!--                    <input type="date" id="dateApplied" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none text-slate-800">-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label for="location" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Location Scope</label>-->
+<!--                    <input type="text" id="location" placeholder="Remote / New York" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 focus:bg-white">-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">-->
+<!--                <div>-->
+<!--                    <label for="salaryMin" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Min Compensation Range</label>-->
+<!--                    <input type="number" id="salaryMin" placeholder="90000" min="0" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none">-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label for="salaryMax" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Max Compensation Range</label>-->
+<!--                    <input type="number" id="salaryMax" placeholder="120000" min="0" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none">-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div>-->
+<!--                <label for="jobLink" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Target Job Post Link Reference URL</label>-->
+<!--                <input type="url" id="jobLink" placeholder="https://careers.google.com/..." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 focus:bg-white">-->
+<!--            </div>-->
+
+<!--            <div>-->
+<!--                <label for="notes" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Context Descriptions / Application Notes</label>-->
+<!--                <textarea id="notes" rows="3" placeholder="Key tech requirements stack listed, callback data reminders..." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none resize-none"></textarea>-->
+<!--            </div>-->
+
+<!--            <div class="flex justify-end gap-2 pt-2 border-t border-slate-100">-->
+<!--                <button type="button" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all" id="cancelBtn">Cancel</button>-->
+<!--                <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all">Save Application</button>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Add Event Context Scheduling Calendar Modal Frame Overlay &ndash;&gt;-->
+<!--<div class="modal-overlay hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 items-center justify-center p-4 transition-all duration-150" id="eventModalOverlay">-->
+<!--    <div class="bg-white border border-slate-200 w-full max-w-lg rounded-2xl shadow-2xl p-6 max-h-[90vh] overflow-y-auto">-->
+<!--        <h3 class="font-display font-bold text-lg text-slate-900 border-b border-slate-100 pb-3 mb-4">Create Calendar Event</h3>-->
+<!--        <form id="eventForm" class="space-y-4" onsubmit="handleEventSubmit(event)">-->
+
+<!--            <div>-->
+<!--                <label for="eventTitle" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Event Title Description</label>-->
+<!--                <input type="text" id="eventTitle" placeholder="Technical Round Live Code Session" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 focus:bg-white">-->
+<!--            </div>-->
+
+<!--            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">-->
+<!--                <div>-->
+<!--                    <label for="eventTypeSelect" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Event Mode Class</label>-->
+<!--                    <select id="eventTypeSelect" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800" required>-->
+<!--                        <option value="INTERVIEW">Interview</option>-->
+<!--                        <option value="ASSESSMENT">Assessment</option>-->
+<!--                        <option value="FOLLOW_UP">Follow Up</option>-->
+<!--                        <option value="DEADLINE">Application Deadline</option>-->
+<!--                        <option value="OTHER">Other</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label for="eventDatetime" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Schedule Target Date & Time</label>-->
+<!--                    <input type="datetime-local" id="eventDatetime" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:outline-none">-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div>-->
+<!--                <label for="eventAppSelect" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Associate with Pipeline Application Record</label>-->
+<!--                <select id="eventAppSelect" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800">-->
+<!--                    <option value="">&#45;&#45; Standalone Event (None) &#45;&#45;</option>-->
+<!--                </select>-->
+<!--            </div>-->
+
+<!--            <div>-->
+<!--                <label for="eventLocation" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Location Context / Live Meeting Room Link</label>-->
+<!--                <input type="text" id="eventLocation" placeholder="Google Meet link reference or base HQ corporate address" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 focus:bg-white">-->
+<!--            </div>-->
+
+<!--            <div>-->
+<!--                <label for="eventDesc" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Agenda / Preparations Log Notes</label>-->
+<!--                <textarea id="eventDesc" rows="3" placeholder="Interviewer panel profiles details, checklist logs notes..." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none resize-none"></textarea>-->
+<!--            </div>-->
+
+<!--            <div class="flex justify-end gap-2 pt-2 border-t border-slate-100">-->
+<!--                <button type="button" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all" onclick="closeEventModal()">Cancel</button>-->
+<!--                <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all">Create Event</button>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Quick Add "Save Job" Modal Frame &ndash;&gt;-->
+<!--<div class="modal-overlay hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 items-center justify-center p-4 transition-all duration-150" id="quickAddModalOverlay">-->
+<!--    <div class="bg-white border border-slate-200 w-full max-w-lg rounded-2xl shadow-2xl p-6 max-h-[90vh] overflow-y-auto">-->
+<!--        <div class="flex items-center gap-3 border-b border-slate-100 pb-3 mb-4">-->
+<!--            <div class="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center">-->
+<!--                <i data-lucide="bookmark-plus" class="w-4 h-4 text-amber-600"></i>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <h3 class="font-display font-bold text-lg text-slate-900">Save Job</h3>-->
+<!--                <p class="text-[10px] text-slate-400 font-medium">Paste a job description to save it to your Wishlist</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <form id="quickAddForm" class="space-y-4">-->
+
+<!--            <div>-->
+<!--                <label for="qaJobLink" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Job Posting URL</label>-->
+<!--                <input type="url" id="qaJobLink" placeholder="https://careers.company.com/job/12345" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-amber-500 focus:bg-white transition-all">-->
+<!--            </div>-->
+
+<!--            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">-->
+<!--                <div>-->
+<!--                    <label for="qaCompanyName" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Company <span class="text-slate-300 font-normal">(optional)</span></label>-->
+<!--                    <input type="text" id="qaCompanyName" placeholder="e.g. Google" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-amber-500 focus:bg-white transition-all">-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label for="qaJobRole" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Role <span class="text-slate-300 font-normal">(optional)</span></label>-->
+<!--                    <input type="text" id="qaJobRole" placeholder="e.g. Software Engineer" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-amber-500 focus:bg-white transition-all">-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div>-->
+<!--                <label for="qaJobDescription" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Job Description <span class="text-rose-400">*</span></label>-->
+<!--                <textarea id="qaJobDescription" rows="10" required placeholder="Paste the full job description here..." class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium leading-relaxed focus:outline-none focus:border-amber-500 focus:bg-white resize-none transition-all"></textarea>-->
+<!--                <div class="flex items-center justify-between mt-1.5">-->
+<!--                    <span class="text-[10px] text-slate-400 font-medium">This text will be used for resume match scoring</span>-->
+<!--                    <span class="text-[10px] text-slate-400 font-medium tabular-nums" id="qaCharCount">0 chars</span>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="flex justify-end gap-2 pt-2 border-t border-slate-100">-->
+<!--                <button type="button" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all" id="qaCancel">Cancel</button>-->
+<!--                <button type="submit" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-xl shadow-sm transition-all inline-flex items-center gap-1.5">-->
+<!--                    <i data-lucide="bookmark-check" class="w-3.5 h-3.5"></i> Save to Wishlist-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; AI Improve Bullet Modal Frame &ndash;&gt;-->
+<!--<div class="modal-overlay hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 items-center justify-center p-4 transition-all duration-150" id="aiModalOverlay">-->
+<!--    <div class="bg-white border border-slate-200 w-full max-w-lg rounded-2xl shadow-2xl p-6 max-h-[90vh] overflow-y-auto">-->
+<!--        <div class="flex items-center gap-3 border-b border-slate-100 pb-3 mb-4">-->
+<!--            <div class="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center">-->
+<!--                <i data-lucide="sparkles" class="w-4 h-4 text-purple-600"></i>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <h3 class="font-display font-bold text-lg text-slate-900">Improve with AI</h3>-->
+<!--                <p class="text-[10px] text-slate-400 font-medium">Rewrite this bullet, optionally tailored to a job description</p>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div class="mb-4">-->
+<!--            <span class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Current Bullet</span>-->
+<!--            <div id="aiOriginalText" class="bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-600"></div>-->
+<!--        </div>-->
+
+<!--        <div class="mb-4">-->
+<!--            <label for="aiJobDescription" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Job Description <span class="text-slate-300 font-normal">(optional — tailors the suggestions)</span></label>-->
+<!--            <textarea id="aiJobDescription" rows="3" placeholder="Paste a job description to tailor suggestions to it..." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-purple-500 focus:bg-white resize-none"></textarea>-->
+<!--        </div>-->
+
+<!--        <button type="button" id="aiGetSuggestionsBtn" class="w-full py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-bold transition-all shadow-sm mb-4">Get AI Suggestions</button>-->
+
+<!--        <div id="aiSuggestions" class="space-y-2"></div>-->
+
+<!--        <div class="flex justify-end pt-4 border-t border-slate-100 mt-4">-->
+<!--            <button type="button" id="aiCloseBtn" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all">Close</button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<div class="toast-container fixed bottom-6 right-6 z-50 flex flex-col gap-2"></div>-->
+
+<!--&lt;!&ndash; Scripts &ndash;&gt;-->
+<!--<script src="js/api.js"></script>-->
+<!--<script src="js/toast.js"></script>-->
+<!--<script src="js/analytics.js"></script>-->
+<!--<script src="js/documents.js"></script>-->
+<!--<script src="js/resume-builder.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>-->
+<!--<script src="js/resume-templates.js"></script>-->
+<!--<script src="js/resume-sections-extra.js"></script>-->
+<!--<script src="js/cover-letter.js"></script>-->
+<!--<script src="js/calendar.js"></script>-->
+<!--<script src="js/settings.js"></script>-->
+<!--<script src="js/dashboard.js"></script>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application Tracker</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS Setup -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Sora', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Chart.js & Lucide Icons CDNs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+</head>
+<body class="bg-[#0B0F1A] font-sans text-white antialiased h-screen overflow-hidden selection:bg-indigo-500 selection:text-white">
+
+<div class="flex h-full w-full">
+
+    <!-- Mobile top display menu strip header links bar layout settings configurations -->
+    <header class="lg:hidden fixed top-0 left-0 right-0 h-16 bg-[#0B0F1A]/90 backdrop-blur-lg border-b border-white/5 z-40 flex items-center justify-between px-4">
+        <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-display font-extrabold text-xs">JT</div>
+            <h3 class="font-display font-bold text-sm tracking-tight">Job Tracker</h3>
+        </div>
+        <button class="p-2 text-slate-300 hover:text-white focus:outline-none" id="mobileMenuBtn">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+    </header>
+
+    <!-- Sidebar Master Layout Component -->
+    <aside class="fixed lg:static top-0 bottom-0 left-0 w-64 bg-slate-900 text-slate-500 flex flex-col h-full z-50 p-4 border-r border-slate-800 -translate-x-full lg:translate-x-0 transition-transform duration-200" id="sidebar">
+        <div class="flex items-center gap-3 px-2 py-3 border-b border-slate-800 mb-6">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-amber-400 to-amber-500 flex items-center justify-center text-slate-950 font-display font-extrabold text-xs">JT</div>
+            <h2 class="font-display font-bold text-base text-white tracking-tight">Job Tracker</h2>
+        </div>
+
+        <nav class="flex-1 space-y-1">
+            <a href="#/dashboard" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all hover:bg-slate-800/60 hover:text-white" data-view="dashboard">
+                <i data-lucide="layout-dashboard" class="w-4 h-4"></i><span>Dashboard</span>
+            </a>
+            <!-- Added Search Jobs Sidebar Menu Option Line -->
+            <a href="#/jobs" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all hover:bg-slate-800/60 hover:text-white" data-view="jobs">
+                <i data-lucide="search" class="w-4 h-4"></i><span>Search Jobs</span>
+            </a>
+            <!-- Added AI Job Search Sidebar Menu Option Line -->
+            <a href="#/ai-jobs" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all hover:bg-slate-800/60 hover:text-white" data-view="ai-jobs">
+                <i data-lucide="sparkles" class="w-4 h-4"></i><span>AI Job Search</span>
+            </a>
+            <a href="#/analytics" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all hover:bg-slate-800/60 hover:text-white" data-view="analytics">
+                <i data-lucide="line-chart" class="w-4 h-4"></i><span>Analytics</span>
+            </a>
+            <a href="#/documents" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all hover:bg-slate-800/60 hover:text-white" data-view="documents">
+                <i data-lucide="files" class="w-4 h-4"></i><span>Documents</span>
+            </a>
+            <!-- Added Resume Builder Sidebar Menu Option Line -->
+            <a href="#/resume-builder" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all hover:bg-slate-800/60 hover:text-white" data-view="resume-builder">
+                <i data-lucide="file-edit" class="w-4 h-4"></i><span>Resume Builder</span>
+            </a>
+            <!-- Added AI Cover Letter Builder Sidebar Menu Option Line -->
+            <a href="#/cover-letter" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all hover:bg-slate-800/60 hover:text-white" data-view="cover-letter">
+                <i data-lucide="file-signature" class="w-4 h-4"></i><span>Cover Letter Builder</span>
+            </a>
+            <a href="#/calendar" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all hover:bg-slate-800/60 hover:text-white" data-view="calendar">
+                <i data-lucide="calendar" class="w-4 h-4"></i><span>Calendar</span>
+            </a>
+            <a href="#/settings" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all hover:bg-slate-800/60 hover:text-white" data-view="settings">
+                <i data-lucide="settings" class="w-4 h-4"></i><span>Settings</span>
+            </a>
+            <!-- Added Admin Panel Option (Hidden Default to protect unauthorized candidates entry) -->
+            <a href="#/admin" class="nav-item hidden flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all hover:bg-slate-800/60 hover:text-white" data-view="admin" id="adminSidebarLink">
+                <i data-lucide="shield-check" class="w-4 h-4"></i><span>Admin Panel</span>
+            </a>
+        </nav>
+
+        <div class="border-t border-slate-800 pt-4 mt-auto space-y-3">
+            <div class="flex items-center gap-3 px-2 py-1">
+                <div class="w-9 h-9 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center font-bold text-sm text-indigo-400" id="userAvatar">U</div>
+                <div class="flex flex-col min-w-0 flex-1">
+                    <span class="text-xs font-semibold text-white truncate" id="userName">User Profile</span>
+                    <span class="text-[10px] text-slate-400 font-medium tracking-wide uppercase">Candidate</span>
+                </div>
+            </div>
+            <button class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-slate-800/40 hover:bg-rose-900/20 hover:text-rose-400 border border-slate-800 rounded-xl font-semibold text-xs transition-all" id="logoutBtn">
+                <i data-lucide="log-out" class="w-3.5 h-3.5"></i><span>Log Out</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Workspace Frame -->
+    <main class="flex-1 h-full overflow-y-auto pt-16 lg:pt-0 flex flex-col min-w-0">
+
+        <!-- 1. APPLICATION BOARD VIEW -->
+        <div id="dashboard-view" class="view-container p-6 sm:p-8 flex flex-col">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <div>
+                    <h1 class="font-display text-2xl font-bold text-white tracking-tight">Application Board</h1>
+                    <p class="text-sm text-slate-400 mt-0.5">Track pipeline velocity and application staging positions</p>
+                </div>
+                <div class="flex gap-2">
+                    <button class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-semibold text-sm rounded-xl transition-all shadow-sm" id="quickAddBtn">
+                        <i data-lucide="bookmark-plus" class="w-4 h-4"></i> Save Job
+                    </button>
+                    <button class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm rounded-xl transition-all shadow-sm" id="addBtn">
+                        <i data-lucide="plus" class="w-4 h-4"></i> Add Application
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filter Controls -->
+            <div class="bg-white/[0.03] p-4 rounded-2xl border border-white/10 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
+                <div class="w-full sm:max-w-xs relative">
+                    <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"></i>
+                    <input type="text" id="searchBar" placeholder="Search company or role..." class="w-full pl-9 pr-4 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-500 focus:bg-white/[0.03] transition-all text-white">
+                </div>
+                <div class="w-full sm:w-auto">
+                    <select id="filterPlatform" class="w-full sm:w-44 px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-semibold focus:outline-none text-slate-200 cursor-pointer">
+                        <option value="">All Platforms</option>
+                        <option value="LINKEDIN">LinkedIn</option>
+                        <option value="INDEED">Indeed</option>
+                        <option value="COMPANY_WEBSITE">Company Website</option>
+                        <option value="REFERRAL">Referral</option>
+                        <option value="GLASSDOOR">Glassdoor</option>
+                        <option value="OTHER">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Kanban Staging Pipeline System Column Arrays -->
+            <div class="overflow-x-auto pb-4 flex-1">
+                <div class="flex gap-4 h-full items-start min-w-max" id="board">
+
+                    <div class="bg-white/[0.02] border border-white/10 rounded-2xl p-3 w-72 flex flex-col" data-status="WISHLIST">
+                        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center justify-between mb-3 pb-2 border-b-2 border-slate-400/30">
+                            <span>Wishlist</span><span class="px-2 py-0.5 rounded-full bg-white/10 text-slate-300 font-extrabold text-[10px]" id="count-WISHLIST">0</span>
+                        </h3>
+                        <div class="space-y-2 overflow-y-auto min-h-[420px]" id="cards-WISHLIST"></div>
+                    </div>
+
+                    <div class="bg-white/[0.02] border border-white/10 rounded-2xl p-3 w-72 flex flex-col" data-status="APPLIED">
+                        <h3 class="text-xs font-bold text-blue-400 uppercase tracking-wider flex items-center justify-between mb-3 pb-2 border-b-2 border-blue-500/30">
+                            <span>Applied</span><span class="px-2 py-0.5 rounded-full bg-blue-500/15 text-blue-300 font-extrabold text-[10px]" id="count-APPLIED">0</span>
+                        </h3>
+                        <div class="space-y-2 overflow-y-auto min-h-[420px]" id="cards-APPLIED"></div>
+                    </div>
+
+                    <div class="bg-white/[0.02] border border-white/10 rounded-2xl p-3 w-72 flex flex-col" data-status="ASSESSMENT">
+                        <h3 class="text-xs font-bold text-purple-400 uppercase tracking-wider flex items-center justify-between mb-3 pb-2 border-b-2 border-purple-500/30">
+                            <span>Assessment</span><span class="px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-300 font-extrabold text-[10px]" id="count-ASSESSMENT">0</span>
+                        </h3>
+                        <div class="space-y-2 overflow-y-auto min-h-[420px]" id="cards-ASSESSMENT"></div>
+                    </div>
+
+                    <div class="bg-white/[0.02] border border-white/10 rounded-2xl p-3 w-72 flex flex-col" data-status="INTERVIEW">
+                        <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center justify-between mb-3 pb-2 border-b-2 border-amber-500/30">
+                            <span>Interview</span><span class="px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 font-extrabold text-[10px]" id="count-INTERVIEW">0</span>
+                        </h3>
+                        <div class="space-y-2 overflow-y-auto min-h-[420px]" id="cards-INTERVIEW"></div>
+                    </div>
+
+                    <div class="bg-white/[0.02] border border-white/10 rounded-2xl p-3 w-72 flex flex-col" data-status="OFFER">
+                        <h3 class="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center justify-between mb-3 pb-2 border-b-2 border-emerald-500/30">
+                            <span>Offer</span><span class="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 font-extrabold text-[10px]" id="count-OFFER">0</span>
+                        </h3>
+                        <div class="space-y-2 overflow-y-auto min-h-[420px]" id="cards-OFFER"></div>
+                    </div>
+
+                    <div class="bg-white/[0.02] border border-white/10 rounded-2xl p-3 w-72 flex flex-col" data-status="REJECTED">
+                        <h3 class="text-xs font-bold text-rose-400 uppercase tracking-wider flex items-center justify-between mb-3 pb-2 border-b-2 border-rose-500/30">
+                            <span>Rejected</span><span class="px-2 py-0.5 rounded-full bg-rose-500/15 text-rose-300 font-extrabold text-[10px]" id="count-REJECTED">0</span>
+                        </h3>
+                        <div class="space-y-2 overflow-y-auto min-h-[420px]" id="cards-REJECTED"></div>
+                    </div>
+
+                    <div class="bg-white/[0.02] border border-white/10 rounded-2xl p-3 w-72 flex flex-col" data-status="WITHDRAWN">
+                        <h3 class="text-xs font-bold text-zinc-500 uppercase tracking-wider flex items-center justify-between mb-3 pb-2 border-b-2 border-zinc-400/30">
+                            <span>Withdrawn</span><span class="px-2 py-0.5 rounded-full bg-zinc-500/15 text-zinc-400 font-extrabold text-[10px]" id="count-WITHDRAWN">0</span>
+                        </h3>
+                        <div class="space-y-2 overflow-y-auto min-h-[420px]" id="cards-WITHDRAWN"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. JOBS SEARCH & DISCOVERY ENGINE VIEW (Fixed ID template hook) -->
+        <div id="jobs-view" class="view-container p-6 sm:p-8 flex-1">
+            <div class="mb-6">
+                <h1 class="font-display text-2xl font-bold text-white tracking-tight">Job Search & Discovery</h1>
+                <p class="text-sm text-slate-400 mt-0.5">Explore active roles stream and connect applications automatically</p>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-4 gap-6 items-start">
+                <div class="xl:col-span-3 space-y-3" id="externalJobsFeedContainer">
+                    <!-- Cards populate dynamically -->
+                </div>
+
+                <div class="xl:col-span-1 bg-white/[0.03] border border-white/10 rounded-2xl p-5 shadow-sm space-y-4">
+                    <h3 class="text-xs font-bold text-slate-200 uppercase tracking-wider border-b border-white/5 pb-2 flex items-center gap-2">
+                        <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5 text-indigo-400"></i> Job Filters
+                    </h3>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Keywords</label>
+                            <input type="text" id="jobSearchKeywords" placeholder="Profession or title keywords" class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs focus:outline-none focus:border-indigo-600 focus:bg-white/[0.03] text-white font-medium">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Company</label>
+                            <input type="text" id="jobSearchCompany" placeholder="Company name" class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs focus:outline-none focus:border-indigo-600 focus:bg-white/[0.03] text-white font-medium">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Country Location</label>
+                            <input type="text" id="jobSearchCountry" placeholder="e.g. Germany, Remote" class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs focus:outline-none focus:border-indigo-600 focus:bg-white/[0.03] text-white font-medium">
+                        </div>
+                    </div>
+                    <div class="pt-1 flex gap-2">
+                        <button onclick="clearJobFilters()" class="flex-1 py-2 bg-white/10 hover:bg-white/10 text-slate-200 rounded-xl text-xs font-bold transition-all">Reset</button>
+                        <button onclick="fetchExternalJobsFeed()" class="flex-1 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all shadow-sm">Filter</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2b. AI JOB SEARCH VIEW (live web results via Gemini + Google Search grounding) -->
+        <div id="ai-jobs-view" class="view-container p-6 sm:p-8 flex-1">
+            <div class="mb-6">
+                <h1 class="font-display text-2xl font-bold text-white tracking-tight">AI Job Search</h1>
+                <p class="text-sm text-slate-400 mt-0.5">Describe what you want — Gemini searches the live web for real, current job postings</p>
+            </div>
+
+            <div class="bg-white/[0.03] border border-white/10 rounded-2xl p-5 shadow-sm mb-6">
+                <h3 class="text-xs font-bold text-slate-200 uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-400"></i> Search the web with AI
+                </h3>
+                <div class="flex flex-col sm:flex-row gap-2">
+                    <input type="text" id="aiLiveJobSearchInput" placeholder='Try &quot;java backend remote&quot; or &quot;marketing jobs at Google in Germany&quot;' class="flex-1 px-3 py-2.5 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-purple-500 focus:bg-white/[0.03] transition-all text-white">
+                    <button type="button" onclick="runLiveAiJobSearch()" id="aiLiveJobSearchBtn" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white font-bold text-xs rounded-xl transition-all shadow-sm">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> AI Search
+                    </button>
+                </div>
+                <p class="text-[10px] text-slate-500 font-medium mt-2">Describe the job you want in plain language — AI searches the live web and returns real postings, not just your saved listings.</p>
+            </div>
+
+            <div class="space-y-3" id="aiJobsResultsContainer">
+                <div class="bg-white/[0.03] border border-white/10 rounded-2xl p-8 text-center text-slate-500 text-xs font-medium">Search above to find real, current job postings from across the web.</div>
+            </div>
+        </div>
+
+        <!-- 3. ANALYTICS & INSIGHTS SHIELD LAYER (Fixed ID template hook) -->
+        <div id="analytics-view" class="view-container p-6 sm:p-8">
+            <div class="mb-6">
+                <h1 class="font-display text-2xl font-bold text-white tracking-tight">Analytics & Insights</h1>
+                <p class="text-sm text-slate-400 mt-0.5">Automated KPIs and conversion logging maps</p>
+            </div>
+
+            <div class="bg-amber-500/10 border border-amber-500/20 text-amber-300 p-4 rounded-2xl items-center justify-between gap-4 text-xs font-medium mb-6 flex" id="mockDataWarning">
+                <span>Showing <strong>Showcase Mock Data</strong> due to an empty data profile logs context list.</span>
+                <button onclick="toggleMockData(false)" class="bg-white/[0.05] border border-amber-500/30 text-amber-300 px-3 py-1.5 rounded-xl font-bold shadow-sm hover:bg-white/10 transition-all">Switch to Real Data</button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                <div class="bg-white/[0.03] p-5 rounded-2xl border border-white/10 shadow-sm relative overflow-hidden before:absolute before:top-0 before:left-0 before:right-0 before:h-1 before:bg-indigo-600">
+                    <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Total Applications</div>
+                    <div class="font-display text-2xl font-bold text-white" id="kpiTotal">0</div>
+                </div>
+                <div class="bg-white/[0.03] p-5 rounded-2xl border border-white/10 shadow-sm relative overflow-hidden before:absolute before:top-0 before:left-0 before:right-0 before:h-1 before:bg-amber-500">
+                    <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Active Pipeline</div>
+                    <div class="font-display text-2xl font-bold text-white" id="kpiActive">0</div>
+                </div>
+                <div class="bg-white/[0.03] p-5 rounded-2xl border border-white/10 shadow-sm relative overflow-hidden before:absolute before:top-0 before:left-0 before:right-0 before:h-1 before:bg-purple-500">
+                    <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Response Rate</div>
+                    <div class="font-display text-2xl font-bold text-white" id="kpiResponseRate">0%</div>
+                </div>
+                <div class="bg-white/[0.03] p-5 rounded-2xl border border-white/10 shadow-sm relative overflow-hidden before:absolute before:top-0 before:left-0 before:right-0 before:h-1 before:bg-emerald-500">
+                    <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Offer Success Rate</div>
+                    <div class="font-display text-2xl font-bold text-white" id="kpiOfferRate">0%</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-6">
+                <div class="bg-white/[0.03] p-5 rounded-2xl border border-white/10 shadow-sm">
+                    <h3 class="text-sm font-bold text-white mb-4 tracking-tight">Goals Tracker</h3>
+                    <div class="space-y-4">
+                        <div class="bg-white/[0.05] border border-white/5 p-4 rounded-xl">
+                            <div class="flex justify-between text-xs font-semibold text-slate-300 mb-2">
+                                <span>Weekly Goal</span><span id="weeklyGoalPercent" class="text-indigo-400">Progress</span>
+                            </div>
+                            <div class="h-4 bg-white/10 rounded-full overflow-hidden relative">
+                                <div class="h-full bg-indigo-600 font-bold text-[9px] text-white flex items-center justify-end pr-2 transition-all duration-500" id="weeklyGoalBar" style="width: 0%;"></div>
+                            </div>
+                            <p class="text-[11px] text-slate-400 font-medium mt-2" id="weeklyGoalText"></p>
+                        </div>
+                        <div class="bg-white/[0.05] border border-white/5 p-4 rounded-xl">
+                            <div class="flex justify-between text-xs font-semibold text-slate-300 mb-2">
+                                <span>Monthly Goal</span><span id="monthlyGoalPercent" class="text-indigo-400">Progress</span>
+                            </div>
+                            <div class="h-4 bg-white/10 rounded-full overflow-hidden relative">
+                                <div class="h-full bg-indigo-600 font-bold text-[9px] text-white flex items-center justify-end pr-2 transition-all duration-500" id="monthlyGoalBar" style="width: 0%;"></div>
+                            </div>
+                            <p class="text-[11px] text-slate-400 font-medium mt-2" id="monthlyGoalText"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white/[0.03] p-5 rounded-2xl border border-white/10 shadow-sm xl:col-span-2">
+                    <h3 class="text-sm font-bold text-white mb-4 tracking-tight">Application Volume Over Time</h3>
+                    <div class="h-64 relative w-full"><canvas id="trendChart"></canvas></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white/[0.03] p-5 rounded-2xl border border-white/10 shadow-sm">
+                    <h3 class="text-sm font-bold text-white mb-4 tracking-tight">Applications by Status</h3>
+                    <div class="h-64 relative w-full flex items-center justify-center"><canvas id="statusChart"></canvas></div>
+                </div>
+                <div class="bg-white/[0.03] p-5 rounded-2xl border border-white/10 shadow-sm">
+                    <h3 class="text-sm font-bold text-white mb-4 tracking-tight">Success Rates by Platform</h3>
+                    <div class="h-64 relative w-full"><canvas id="platformChart"></canvas></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. DOCUMENT MANAGER CONTENT HUB LAYOUT PANEL (Fixed ID template hook) -->
+        <div id="documents-view" class="view-container p-6 sm:p-8">
+            <div class="mb-6">
+                <h1 class="font-display text-2xl font-bold text-white tracking-tight">Document Manager</h1>
+                <p class="text-sm text-slate-400 mt-0.5">Organize resumes, cover letters, and transcripts cleanly</p>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 items-start">
+                <div class="xl:col-span-1 space-y-4">
+                    <div class="bg-white/[0.03] p-5 rounded-2xl border border-white/10 shadow-sm">
+                        <h3 class="text-xs font-bold text-slate-200 uppercase tracking-wider mb-4 flex items-center gap-2"><i data-lucide="upload-cloud" class="w-4 h-4 text-indigo-400"></i> Upload New File</h3>
+                        <form id="docUploadForm" class="space-y-4">
+                            <div>
+                                <label for="docTypeSelect" class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Document Type</label>
+                                <select id="docTypeSelect" class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium text-white" required>
+                                    <option value="RESUME">Resume</option>
+                                    <option value="COVER_LETTER">Cover Letter</option>
+                                    <option value="TRANSCRIPT">Transcript</option>
+                                    <option value="OTHER">Other</option>
+                                </select>
+                            </div>
+                            <div class="border-2 border-dashed border-white/10 rounded-2xl p-6 text-center cursor-pointer hover:bg-white/[0.05] hover:border-indigo-500 transition-all" id="docDragZone">
+                                <i data-lucide="file-up" class="w-8 h-8 text-indigo-500 mx-auto mb-2"></i>
+                                <p class="text-xs font-medium text-slate-300">Drag files here or <span class="text-indigo-400 font-bold">browse</span></p>
+                                <p class="text-[10px] text-slate-500 font-medium mt-1">Supports PDF, DOC, DOCX files up to 5MB</p>
+                                <input type="file" id="docFileInput" class="hidden" accept=".pdf,.doc,.docx">
+                            </div>
+                            <button type="submit" class="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold shadow-sm transition-all">Upload Document</button>
+                        </form>
+                    </div>
+
+                    <div class="bg-white/[0.03] p-5 rounded-2xl border border-white/10 shadow-sm">
+                        <h3 class="text-xs font-bold text-slate-200 uppercase tracking-wider mb-4 flex items-center gap-2"><i data-lucide="link-2" class="w-4 h-4 text-indigo-400"></i> Link Record to Application</h3>
+                        <form id="docLinkForm" class="space-y-4" onsubmit="handleLinkSubmit(event)">
+                            <div>
+                                <label for="linkDocSelect" class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Select Target File</label>
+                                <select id="linkDocSelect" class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium text-white" required>
+                                    <option value="">-- Choose File --</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="linkAppSelect" class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Target Application</label>
+                                <select id="linkAppSelect" class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium text-white" required>
+                                    <option value="">-- Choose Job Application --</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold shadow-sm transition-all">Link Document</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="xl:col-span-2 space-y-6">
+                    <div class="border-b border-white/10 pb-4"><h3 class="text-sm font-bold text-white tracking-tight mb-2">Resumes</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="docs-resumes"></div></div>
+                    <div class="border-b border-white/10 pb-4"><h3 class="text-sm font-bold text-white tracking-tight mb-2">Cover Letters</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="docs-covers"></div></div>
+                    <div class="border-b border-white/10 pb-4"><h3 class="text-sm font-bold text-white tracking-tight mb-2">Transcripts</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="docs-transcripts"></div></div>
+                    <div><h3 class="text-sm font-bold text-white tracking-tight mb-2">Other Documents</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="docs-others"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4b. RESUME BUILDER VIEW (Fixed ID template hook) -->
+        <div id="resume-builder-view" class="view-container p-6 sm:p-8">
+            <div class="mb-6">
+                <h1 class="font-display text-2xl font-bold text-white tracking-tight">Resume Builder</h1>
+                <p class="text-sm text-slate-400 mt-0.5">Maintain one content bank of experience and bullets, then assemble tailored resume versions</p>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 items-start mb-6">
+                <!-- Resume version selector -->
+                <div class="xl:col-span-1 bg-white/[0.03] p-5 rounded-2xl border border-white/10 shadow-sm space-y-4">
+                    <h3 class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                        <i data-lucide="file-text" class="w-3.5 h-3.5 text-indigo-400"></i> Resume Version
+                    </h3>
+                    <select id="resumeSelect" class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-semibold text-slate-200 cursor-pointer">
+                        <option value="">-- Select a resume --</option>
+                    </select>
+                    <div class="flex gap-2">
+                        <button type="button" id="newResumeBtn" class="flex-1 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all shadow-sm">New</button>
+                        <button type="button" id="duplicateResumeBtn" disabled class="flex-1 py-2 bg-white/10 hover:bg-white/10 disabled:opacity-40 disabled:cursor-not-allowed text-slate-200 rounded-xl text-xs font-bold transition-all">Duplicate</button>
+                        <button type="button" id="deleteResumeBtn" disabled class="flex-1 py-2 bg-rose-500/10 hover:bg-rose-500/15 disabled:opacity-40 disabled:cursor-not-allowed text-rose-400 rounded-xl text-xs font-bold transition-all">Delete</button>
+                    </div>
+                    <div id="noResumeNote" class="bg-white/[0.05] border border-dashed border-white/10 rounded-xl p-3 text-[11px] text-slate-500 font-medium text-center">
+                        Select or create a resume version to choose which bullets appear on it and check its match score.
+                    </div>
+                </div>
+
+                <!-- Match score panel -->
+                <div id="matchScorePanel" class="hidden xl:col-span-2 bg-white/[0.03] p-5 rounded-2xl border border-white/10 shadow-sm space-y-4">
+                    <h3 class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                        <i data-lucide="target" class="w-3.5 h-3.5 text-indigo-400"></i> Match Score Checker
+                    </h3>
+                    <textarea id="jdText" rows="4" placeholder="Paste a job description here to score this resume version against it..." class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-500 focus:bg-white/[0.03] resize-none"></textarea>
+                    <button type="button" id="checkScoreBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all shadow-sm">Check Match Score</button>
+
+                    <div id="matchScoreResult" class="hidden pt-3 border-t border-white/5 space-y-3">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Score:</span>
+                            <span id="scoreValue" class="font-display text-3xl font-bold text-white">0%</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Matched Keywords</span>
+                            <div id="matchedKeywords" class="flex flex-wrap gap-1.5"></div>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Missing Keywords</span>
+                            <div id="missingKeywords" class="flex flex-wrap gap-1.5"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CV Template & Preview -->
+            <div id="cvBuilderPanel" class="hidden bg-white/[0.03] p-5 rounded-2xl border border-white/10 shadow-sm space-y-5 mb-6">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                        <i data-lucide="layout-template" class="w-3.5 h-3.5 text-indigo-400"></i> CV Template & Preview
+                    </h3>
+                    <button type="button" id="downloadCvBtn" class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-sm">
+                        <i data-lucide="download" class="w-3.5 h-3.5"></i> Download PDF
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    <input type="text" id="cvFullName" placeholder="Full Name" class="px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-500 focus:bg-white/[0.03]">
+                    <input type="email" id="cvEmail" placeholder="Email" class="px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-500 focus:bg-white/[0.03]">
+                    <input type="text" id="cvPhone" placeholder="Phone" class="px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-500 focus:bg-white/[0.03]">
+                    <input type="text" id="cvLocation" placeholder="City, Country" class="px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-500 focus:bg-white/[0.03]">
+                    <input type="text" id="cvLinkedin" placeholder="LinkedIn / Portfolio URL" class="px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-500 focus:bg-white/[0.03]">
+                    <input type="text" id="cvTargetTitle" placeholder="Target Title (e.g. Senior Backend Engineer)" class="px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-500 focus:bg-white/[0.03]">
+                    <input type="text" id="cvSummary" placeholder="One-line professional summary (optional)" class="px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-500 focus:bg-white/[0.03]">
+                    <input type="text" id="cvInterests" placeholder="Interests (e.g. Chess, Open Source, Hiking)" class="px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-500 focus:bg-white/[0.03]">
+                </div>
+
+                <div>
+                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-2">Choose a Template</span>
+                    <div id="cvTemplateGallery" class="grid grid-cols-1 sm:grid-cols-3 gap-3"></div>
+                </div>
+
+                <div>
+                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-2">Live Preview</span>
+                    <div class="border border-white/10 rounded-2xl bg-white/10 p-4 overflow-auto" style="max-height:640px;">
+                        <div id="cvPreviewContainer" class="mx-auto"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills & Education -->
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
+                <div class="bg-white/[0.03] p-5 rounded-2xl border border-white/10 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-sm font-bold text-white tracking-tight">Skills</h3>
+                        <button type="button" id="addSkillBtn" class="inline-flex items-center gap-1.5 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl transition-all shadow-sm">
+                            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Skill
+                        </button>
+                    </div>
+                    <div id="addSkillForm" class="hidden bg-white/[0.05] border border-white/10 rounded-xl p-3 mb-3 space-y-2">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <input type="text" id="skillName" placeholder="e.g. Java" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">
+                            <select id="skillCategory" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium text-white">
+                                <option value="Technical">Technical</option>
+                                <option value="Soft">Soft</option>
+                            </select>
+                        </div>
+                        <div class="flex gap-2">
+                            <button type="button" id="saveSkillBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition-all">Save</button>
+                            <button type="button" id="cancelSkillBtn" class="px-4 py-2 bg-white/10 hover:bg-white/10 text-slate-200 font-bold text-xs rounded-xl transition-all">Cancel</button>
+                        </div>
+                    </div>
+                    <div id="skillsList" class="flex flex-wrap gap-2"></div>
+                </div>
+
+                <div class="bg-white/[0.03] p-5 rounded-2xl border border-white/10 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-sm font-bold text-white tracking-tight">Education</h3>
+                        <button type="button" id="addEducationBtn" class="inline-flex items-center gap-1.5 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl transition-all shadow-sm">
+                            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Education
+                        </button>
+                    </div>
+                    <div id="addEducationForm" class="hidden bg-white/[0.05] border border-white/10 rounded-xl p-3 mb-3 space-y-2">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <input type="text" id="eduInstitution" placeholder="Institution" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">
+                            <input type="text" id="eduDegree" placeholder="Degree" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">
+                        </div>
+                        <input type="text" id="eduFieldOfStudy" placeholder="Field of Study (optional)" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <input type="date" id="eduStart" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none">
+                            <input type="date" id="eduEnd" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none">
+                        </div>
+                        <div class="flex gap-2">
+                            <button type="button" id="saveEducationBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition-all">Save</button>
+                            <button type="button" id="cancelEducationBtn" class="px-4 py-2 bg-white/10 hover:bg-white/10 text-slate-200 font-bold text-xs rounded-xl transition-all">Cancel</button>
+                        </div>
+                    </div>
+                    <div id="educationList" class="space-y-2"></div>
+                </div>
+            </div>
+
+            <!-- Extra content-bank cards -->
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
+                <!-- Certifications -->
+                <div class="bg-white/[0.03] p-5 rounded-2xl border border-white/10 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-sm font-bold text-white tracking-tight">Certifications</h3>
+                        <button type="button" id="addCertificationBtn" class="inline-flex items-center gap-1.5 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl transition-all shadow-sm">
+                            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Certification
+                        </button>
+                    </div>
+                    <div id="addCertificationForm" class="hidden bg-white/[0.05] border border-white/10 rounded-xl p-3 mb-3 space-y-2">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <input type="text" id="certName" placeholder="e.g. AWS Certified Developer" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">
+                            <input type="text" id="certOrg" placeholder="Issuing Organization" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <input type="date" id="certIssueDate" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none">
+                            <input type="date" id="certExpDate" placeholder="Expiration (optional)" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none">
+                        </div>
+                        <input type="url" id="certUrl" placeholder="Credential URL (optional)" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">
+                        <div class="flex gap-2">
+                            <button type="button" id="saveCertificationBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition-all">Save</button>
+                            <button type="button" id="cancelCertificationBtn" class="px-4 py-2 bg-white/10 hover:bg-white/10 text-slate-200 font-bold text-xs rounded-xl transition-all">Cancel</button>
+                        </div>
+                    </div>
+                    <div id="certificationsList" class="space-y-2"></div>
+                </div>
+
+                <!-- Awards -->
+                <div class="bg-white/[0.03] p-5 rounded-2xl border border-white/10 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-sm font-bold text-white tracking-tight">Awards & Scholarships</h3>
+                        <button type="button" id="addAwardBtn" class="inline-flex items-center gap-1.5 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl transition-all shadow-sm">
+                            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Award
+                        </button>
+                    </div>
+                    <div id="addAwardForm" class="hidden bg-white/[0.05] border border-white/10 rounded-xl p-3 mb-3 space-y-2">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <input type="text" id="awardTitle" placeholder="e.g. Dean's List" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">
+                            <input type="text" id="awardIssuer" placeholder="Issuer" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">
+                        </div>
+                        <input type="date" id="awardDate" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none">
+                        <textarea id="awardDescription" rows="2" placeholder="Description (optional)" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 resize-none"></textarea>
+                        <div class="flex gap-2">
+                            <button type="button" id="saveAwardBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition-all">Save</button>
+                            <button type="button" id="cancelAwardBtn" class="px-4 py-2 bg-white/10 hover:bg-white/10 text-slate-200 font-bold text-xs rounded-xl transition-all">Cancel</button>
+                        </div>
+                    </div>
+                    <div id="awardsList" class="space-y-2"></div>
+                </div>
+
+                <!-- Projects -->
+                <div class="bg-white/[0.03] p-5 rounded-2xl border border-white/10 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-sm font-bold text-white tracking-tight">Projects</h3>
+                        <button type="button" id="addProjectBtn" class="inline-flex items-center gap-1.5 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl transition-all shadow-sm">
+                            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Project
+                        </button>
+                    </div>
+                    <div id="addProjectForm" class="hidden bg-white/[0.05] border border-white/10 rounded-xl p-3 mb-3 space-y-2">
+                        <input type="text" id="projectName" placeholder="Project name" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">
+                        <textarea id="projectDescription" rows="2" placeholder="Description (optional)" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 resize-none"></textarea>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <input type="text" id="projectTech" placeholder="Technologies (optional)" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">
+                            <input type="url" id="projectUrl" placeholder="Project URL (optional)" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <input type="date" id="projectStart" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none">
+                            <input type="date" id="projectEnd" placeholder="End (blank = ongoing)" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none">
+                        </div>
+                        <div class="flex gap-2">
+                            <button type="button" id="saveProjectBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition-all">Save</button>
+                            <button type="button" id="cancelProjectBtn" class="px-4 py-2 bg-white/10 hover:bg-white/10 text-slate-200 font-bold text-xs rounded-xl transition-all">Cancel</button>
+                        </div>
+                    </div>
+                    <div id="projectsList" class="space-y-2"></div>
+                </div>
+
+                <!-- Volunteering -->
+                <div class="bg-white/[0.03] p-5 rounded-2xl border border-white/10 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-sm font-bold text-white tracking-tight">Volunteering & Leadership</h3>
+                        <button type="button" id="addVolunteerBtn" class="inline-flex items-center gap-1.5 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl transition-all shadow-sm">
+                            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Volunteering
+                        </button>
+                    </div>
+                    <div id="addVolunteerForm" class="hidden bg-white/[0.05] border border-white/10 rounded-xl p-3 mb-3 space-y-2">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <input type="text" id="volOrg" placeholder="Organization" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">
+                            <input type="text" id="volRole" placeholder="Role" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <input type="date" id="volStart" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none">
+                            <input type="date" id="volEnd" placeholder="End (blank = current)" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none">
+                        </div>
+                        <textarea id="volDescription" rows="2" placeholder="Description (optional)" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 resize-none"></textarea>
+                        <div class="flex gap-2">
+                            <button type="button" id="saveVolunteerBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition-all">Save</button>
+                            <button type="button" id="cancelVolunteerBtn" class="px-4 py-2 bg-white/10 hover:bg-white/10 text-slate-200 font-bold text-xs rounded-xl transition-all">Cancel</button>
+                        </div>
+                    </div>
+                    <div id="volunteeringList" class="space-y-2"></div>
+                </div>
+
+                <!-- Publications -->
+                <div class="bg-white/[0.03] p-5 rounded-2xl border border-white/10 shadow-sm xl:col-span-2">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-sm font-bold text-white tracking-tight">Publications</h3>
+                        <button type="button" id="addPublicationBtn" class="inline-flex items-center gap-1.5 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl transition-all shadow-sm">
+                            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Publication
+                        </button>
+                    </div>
+                    <div id="addPublicationForm" class="hidden bg-white/[0.05] border border-white/10 rounded-xl p-3 mb-3 space-y-2">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <input type="text" id="pubTitle" placeholder="Title" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">
+                            <input type="text" id="pubPublisher" placeholder="Publisher" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <input type="date" id="pubDate" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none">
+                            <input type="url" id="pubUrl" placeholder="URL (optional)" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600">
+                        </div>
+                        <textarea id="pubDescription" rows="2" placeholder="Description (optional)" class="w-full px-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 resize-none"></textarea>
+                        <div class="flex gap-2">
+                            <button type="button" id="savePublicationBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition-all">Save</button>
+                            <button type="button" id="cancelPublicationBtn" class="px-4 py-2 bg-white/10 hover:bg-white/10 text-slate-200 font-bold text-xs rounded-xl transition-all">Cancel</button>
+                        </div>
+                    </div>
+                    <div id="publicationsList" class="space-y-2"></div>
+                </div>
+            </div>
+
+            <!-- Work experience & bullet content bank -->
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-sm font-bold text-white tracking-tight">Work Experience & Bullets</h3>
+                <button type="button" id="addExpBtn" class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl transition-all shadow-sm">
+                    <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Work Experience
+                </button>
+            </div>
+
+            <div id="addExpForm" class="hidden bg-white/[0.03] p-5 rounded-2xl border border-white/10 shadow-sm space-y-4 mb-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="expCompany" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Company</label>
+                        <input type="text" id="expCompany" placeholder="Google" class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 focus:bg-white/[0.03]">
+                    </div>
+                    <div>
+                        <label for="expTitle" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Job Title</label>
+                        <input type="text" id="expTitle" placeholder="Software Engineer" class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 focus:bg-white/[0.03]">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                        <label for="expStart" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Start Date</label>
+                        <input type="date" id="expStart" class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none">
+                    </div>
+                    <div>
+                        <label for="expEnd" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">End Date <span class="text-slate-500 font-normal">(blank = current)</span></label>
+                        <input type="date" id="expEnd" class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none">
+                    </div>
+                    <div>
+                        <label for="expLocation" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Location</label>
+                        <input type="text" id="expLocation" placeholder="Remote / New York" class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 focus:bg-white/[0.03]">
+                    </div>
+                </div>
+                <div class="flex justify-end gap-2 pt-2 border-t border-white/5">
+                    <button type="button" id="cancelExpBtn" class="px-4 py-2 bg-white/10 hover:bg-white/10 text-slate-200 font-bold text-xs rounded-xl transition-all">Cancel</button>
+                    <button type="button" id="saveExpBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all">Save Experience</button>
+                </div>
+            </div>
+
+            <div id="workExpList" class="space-y-4"></div>
+        </div>
+
+        <!-- NEW: AI COVER LETTER BUILDER VIEW PANEL CONTAINER -->
+        <div id="cover-letter-view" class="view-container p-6 sm:p-8 hidden">
+            <div class="mb-6">
+                <h1 class="font-display text-2xl font-bold text-white tracking-tight">AI Cover Letter Builder</h1>
+                <p class="text-sm text-slate-400 mt-0.5">Generate customized cover letters using your profile information and target descriptions</p>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-5 gap-6 items-start">
+                <div class="xl:col-span-2 space-y-4">
+                    <div class="bg-white/[0.03] border border-white/10 rounded-2xl p-5 shadow-sm space-y-4">
+                        <h3 class="text-xs font-bold text-slate-200 uppercase tracking-wider border-b border-white/5 pb-2 flex items-center gap-2">
+                            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-400"></i> Generation Parameters
+                        </h3>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Target Job Description</label>
+                                <textarea id="clJobDescription" rows="8" placeholder="Paste the text requirements stack or description of the role here..." class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs focus:outline-none focus:border-indigo-600 focus:bg-white/[0.03] text-white font-medium resize-none"></textarea>
+                            </div>
+                        </div>
+                        <button onclick="generateCoverLetterDraft()" id="clGenerateBtn" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2">
+                            Generate Cover Letter
+                        </button>
+                    </div>
+
+                    <div class="bg-white/[0.03] border border-white/10 rounded-2xl p-5 shadow-sm space-y-3">
+                        <h3 class="text-xs font-bold text-slate-200 uppercase tracking-wider border-b border-white/5 pb-2">
+                            Saved AI Drafts Collection
+                        </h3>
+                        <div id="clSavedDraftsContainer" class="space-y-2 max-h-[220px] overflow-y-auto text-xs"></div>
+                    </div>
+                </div>
+
+                <div class="xl:col-span-3 bg-white/[0.03] border border-white/10 rounded-2xl p-6 shadow-sm min-h-[500px] flex flex-col gap-4">
+                    <div class="flex items-center justify-between border-b border-white/5 pb-3">
+                        <h3 class="font-display font-bold text-sm text-white">Document Editor Workspace</h3>
+                        <div class="flex items-center gap-2">
+                            <button onclick="saveCoverLetterDraftText()" class="px-3 py-1.5 bg-white/10 text-slate-200 font-bold text-xs rounded-xl hover:bg-white/10 transition-all">Save Version</button>
+                            <button onclick="downloadCoverLetterAsPdf()" class="px-3 py-1.5 bg-indigo-600 text-white font-bold text-xs rounded-xl hover:bg-indigo-700 transition-all shadow-sm">Download as PDF</button>
+                        </div>
+                    </div>
+                    <div id="clEditorContent" contenteditable="true" class="flex-1 w-full p-4 bg-white/[0.04] border border-dashed border-white/10 rounded-xl text-xs font-mono leading-relaxed focus:outline-none focus:bg-white/[0.03] overflow-y-auto max-h-[600px] min-h-[400px]">
+                        <p class="text-slate-500 font-sans italic">Your custom tailored cover letter will populate here after you click "Generate Cover Letter"...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. CALENDAR SCHEDULING INTERFACE (Fixed ID template hook) -->
+        <div id="calendar-view" class="view-container p-6 sm:p-8">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <div>
+                    <h1 class="font-display text-2xl font-bold text-white tracking-tight">Interview & Event Calendar</h1>
+                    <p class="text-sm text-slate-400 mt-0.5">Track interview dates, coding runs, and review loops</p>
+                </div>
+                <div>
+                    <button class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm rounded-xl transition-all shadow-sm" onclick="openEventModal()">
+                        <i data-lucide="calendar-plus" class="w-4 h-4"></i> Add Event
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 items-start">
+                <div class="xl:col-span-2 bg-white/[0.03] border border-white/10 rounded-2xl p-4 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-display font-bold text-base text-white" id="calendarMonthYear">July 2026</h3>
+                        <div class="flex gap-1.5">
+                            <button class="p-2 border border-white/10 bg-white/[0.05] rounded-xl text-slate-300 hover:bg-white/10 transition-all" onclick="prevMonth()"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                            <button class="p-2 border border-white/10 bg-white/[0.05] rounded-xl text-slate-300 hover:bg-white/10 transition-all" onclick="nextMonth()"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-7 text-center text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">
+                        <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+                    </div>
+                    <div class="grid grid-cols-7 gap-px bg-white/10 border border-white/10 rounded-xl overflow-hidden" id="calendarGrid"></div>
+                </div>
+
+                <div class="xl:col-span-1 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xs font-bold text-slate-200 uppercase tracking-wider">Event Details</h3>
+                        <span class="text-xs font-semibold text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-0.5 rounded-full" id="selectedDateLabel">All Month Events</span>
+                    </div>
+                    <div class="bg-white/[0.03] border border-white/10 rounded-2xl p-4 shadow-sm min-h-[300px] max-h-[500px] overflow-y-auto space-y-3" id="dayEventsList"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. ACCOUNT PROFILE PARAMETERS CONFIGURATION PANEL (Fixed ID template hook) -->
+        <div id="settings-view" class="view-container p-6 sm:p-8">
+            <div class="mb-6">
+                <h1 class="font-display text-2xl font-bold text-white tracking-tight">Account Settings</h1>
+                <p class="text-sm text-slate-400 mt-0.5">Configure performance metrics baseline profiles</p>
+            </div>
+
+            <div class="bg-white/[0.03] border border-white/10 rounded-2xl p-6 shadow-sm max-w-xl">
+                <h3 class="text-sm font-bold text-white border-b border-white/5 pb-3 mb-5">Job Search Optimization Goals</h3>
+                <form id="settingsForm" class="space-y-4" onsubmit="handleSettingsSubmit(event)">
+                    <div>
+                        <label for="settingsWeeklyGoal" class="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">Weekly Target Metric</label>
+                        <input type="number" id="settingsWeeklyGoal" min="0" placeholder="e.g. 5" class="w-full px-4 py-2.5 bg-white/[0.05] border border-white/10 rounded-xl text-sm font-medium focus:outline-none focus:border-indigo-600 focus:bg-white/[0.03] text-white">
+                        <span class="text-[10px] font-medium text-slate-500 block mt-1">Target submission goal logs metric for each weekly window run</span>
+                    </div>
+                    <div>
+                        <label for="settingsMonthlyGoal" class="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">Monthly Target Metric</label>
+                        <input type="number" id="settingsMonthlyGoal" min="0" placeholder="e.g. 20" class="w-full px-4 py-2.5 bg-white/[0.05] border border-white/10 rounded-xl text-sm font-medium focus:outline-none focus:border-indigo-600 focus:bg-white/[0.03] text-white">
+                        <span class="text-[10px] font-medium text-slate-500 block mt-1">Target submission goal logs metric for each full monthly cycle run</span>
+                    </div>
+                    <div class="pt-2">
+                        <button type="submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl transition-all shadow-sm">Save Parameters Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- 7. ADMIN MANAGEMENT VIEW PANEL (Fixed ID template hook) -->
+        <div id="admin-view" class="view-container p-6 sm:p-8">
+            <div class="mb-6">
+                <h1 class="font-display text-2xl font-bold text-white tracking-tight">Admin Management Panel</h1>
+                <p class="text-sm text-slate-400 mt-0.5">Post and manage dynamic global job listings for candidates</p>
+            </div>
+
+            <div class="bg-white/[0.03] border border-white/10 rounded-2xl p-6 shadow-sm max-w-xl">
+                <h3 class="text-sm font-bold text-white border-b border-white/5 pb-3 mb-5">Post a New Global Job Opening</h3>
+                <form id="adminJobForm" class="space-y-4" onsubmit="handleAdminJobSubmit(event)">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="adminJobRole" class="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">Position Title</label>
+                            <input type="text" id="adminJobRole" required placeholder="e.g. Software Engineer" class="w-full px-4 py-2.5 bg-white/[0.05] border border-white/10 rounded-xl text-sm font-medium focus:outline-none focus:border-indigo-600 focus:bg-white/[0.03] text-white">
+                        </div>
+                        <div>
+                            <label for="adminCompanyName" class="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">Company Name</label>
+                            <input type="text" id="adminCompanyName" required placeholder="e.g. Tech Corp" class="w-full px-4 py-2.5 bg-white/[0.05] border border-white/10 rounded-xl text-sm font-medium focus:outline-none focus:border-indigo-600 focus:bg-white/[0.03] text-white">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="adminLocation" class="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">Location</label>
+                            <input type="text" id="adminLocation" required placeholder="e.g. Remote / New York" class="w-full px-4 py-2.5 bg-white/[0.05] border border-white/10 rounded-xl text-sm font-medium focus:outline-none focus:border-indigo-600 focus:bg-white/[0.03] text-white">
+                        </div>
+                        <div>
+                            <label for="adminWorkload" class="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">Workload %</label>
+                            <input type="text" id="adminWorkload" required placeholder="e.g. 100%" class="w-full px-4 py-2.5 bg-white/[0.05] border border-white/10 rounded-xl text-sm font-medium focus:outline-none focus:border-indigo-600 focus:bg-white/[0.03] text-white">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="sm:col-span-1">
+                            <label class="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">Display Salary Text</label>
+                            <input type="text" id="adminSalaryRange" required placeholder="e.g. $90k - $120k" class="w-full px-4 py-2.5 bg-white/[0.05] border border-white/10 rounded-xl text-sm font-medium focus:outline-none focus:border-indigo-600 focus:bg-white/[0.03] text-white">
+                        </div>
+                        <div>
+                            <label for="adminSalaryMin" class="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">Min Numeric</label>
+                            <input type="number" id="adminSalaryMin" placeholder="90000" class="w-full px-4 py-2.5 bg-white/[0.05] border border-white/10 rounded-xl text-sm font-medium focus:outline-none focus:border-indigo-600 focus:bg-white/[0.03] text-white">
+                        </div>
+                        <div>
+                            <label for="adminSalaryMax" class="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">Max Numeric</label>
+                            <input type="number" id="adminSalaryMax" placeholder="120000" class="w-full px-4 py-2.5 bg-white/[0.05] border border-white/10 rounded-xl text-sm font-medium focus:outline-none focus:border-indigo-600 focus:bg-white/[0.03] text-white">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="adminJobLink" class="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-1.5">Job Application Link URL</label>
+                        <input type="url" id="adminJobLink" required placeholder="https://company.com/careers/job" class="w-full px-4 py-2.5 bg-white/[0.05] border border-white/10 rounded-xl text-sm font-medium focus:outline-none focus:border-indigo-600 focus:bg-white/[0.03] text-white">
+                    </div>
+
+                    <div class="pt-2">
+                        <button type="submit" class="w-full sm:w-auto px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl transition-all shadow-sm shadow-indigo-500/20">Publish to Stream</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<!-- =========================================================
+     MODAL LAYOUT OVERLAYS
+     ========================================================= -->
+
+<!-- Add/Edit Application Staging Input Modal Frame -->
+<div class="modal-overlay hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 items-center justify-center p-4 transition-all duration-150" id="modalOverlay">
+    <div class="bg-white/[0.03] border border-white/10 w-full max-w-lg rounded-2xl shadow-2xl p-6 max-h-[90vh] overflow-y-auto">
+        <h3 class="font-display font-bold text-lg text-white border-b border-white/5 pb-3 mb-4" id="modalTitle">Add Application</h3>
+        <form id="appForm" class="space-y-4">
+            <input type="hidden" id="appId">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="companyName" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Company</label>
+                    <input type="text" id="companyName" placeholder="Google" required class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 focus:bg-white/[0.03]">
+                </div>
+                <div>
+                    <label for="jobRole" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Role / Position Title</label>
+                    <input type="text" id="jobRole" placeholder="Frontend Engineer" required class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 focus:bg-white/[0.03]">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="status" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Pipeline State</label>
+                    <select id="status" class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium text-white">
+                        <option value="WISHLIST">Wishlist</option>
+                        <option value="APPLIED">Applied</option>
+                        <option value="ASSESSMENT">Assessment</option>
+                        <option value="INTERVIEW">Interview</option>
+                        <option value="OFFER">Offer</option>
+                        <option value="REJECTED">Rejected</option>
+                        <option value="WITHDRAWN">Withdrawn</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="platform" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Sourcing Platform</label>
+                    <select id="platform" class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium text-white">
+                        <option value="LINKEDIN">LinkedIn</option>
+                        <option value="INDEED">Indeed</option>
+                        <option value="COMPANY_WEBSITE">Company Website</option>
+                        <option value="REFERRAL">Referral</option>
+                        <option value="GLASSDOOR">Glassdoor</option>
+                        <option value="OTHER">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="dateApplied" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Application Date</label>
+                    <input type="date" id="dateApplied" class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none text-white">
+                </div>
+                <div>
+                    <label for="location" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Location Scope</label>
+                    <input type="text" id="location" placeholder="Remote / New York" class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 focus:bg-white/[0.03]">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="salaryMin" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Min Compensation Range</label>
+                    <input type="number" id="salaryMin" placeholder="90000" min="0" class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none">
+                </div>
+                <div>
+                    <label for="salaryMax" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Max Compensation Range</label>
+                    <input type="number" id="salaryMax" placeholder="120000" min="0" class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none">
+                </div>
+            </div>
+
+            <div>
+                <label for="jobLink" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Target Job Post Link Reference URL</label>
+                <input type="url" id="jobLink" placeholder="https://careers.google.com/..." class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 focus:bg-white/[0.03]">
+            </div>
+
+            <div>
+                <label for="notes" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Context Descriptions / Application Notes</label>
+                <textarea id="notes" rows="3" placeholder="Key tech requirements stack listed, callback data reminders..." class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none resize-none"></textarea>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2 border-t border-white/5">
+                <button type="button" class="px-4 py-2 bg-white/10 hover:bg-white/10 text-slate-200 font-bold text-xs rounded-xl transition-all" id="cancelBtn">Cancel</button>
+                <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all">Save Application</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Add Event Context Scheduling Calendar Modal Frame Overlay -->
+<div class="modal-overlay hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 items-center justify-center p-4 transition-all duration-150" id="eventModalOverlay">
+    <div class="bg-white/[0.03] border border-white/10 w-full max-w-lg rounded-2xl shadow-2xl p-6 max-h-[90vh] overflow-y-auto">
+        <h3 class="font-display font-bold text-lg text-white border-b border-white/5 pb-3 mb-4">Create Calendar Event</h3>
+        <form id="eventForm" class="space-y-4" onsubmit="handleEventSubmit(event)">
+
+            <div>
+                <label for="eventTitle" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Event Title Description</label>
+                <input type="text" id="eventTitle" placeholder="Technical Round Live Code Session" required class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 focus:bg-white/[0.03]">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="eventTypeSelect" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Event Mode Class</label>
+                    <select id="eventTypeSelect" class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium text-white" required>
+                        <option value="INTERVIEW">Interview</option>
+                        <option value="ASSESSMENT">Assessment</option>
+                        <option value="FOLLOW_UP">Follow Up</option>
+                        <option value="DEADLINE">Application Deadline</option>
+                        <option value="OTHER">Other</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="eventDatetime" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Schedule Target Date & Time</label>
+                    <input type="datetime-local" id="eventDatetime" required class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium text-white focus:outline-none">
+                </div>
+            </div>
+
+            <div>
+                <label for="eventAppSelect" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Associate with Pipeline Application Record</label>
+                <select id="eventAppSelect" class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium text-white">
+                    <option value="">-- Standalone Event (None) --</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="eventLocation" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Location Context / Live Meeting Room Link</label>
+                <input type="text" id="eventLocation" placeholder="Google Meet link reference or base HQ corporate address" class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-indigo-600 focus:bg-white/[0.03]">
+            </div>
+
+            <div>
+                <label for="eventDesc" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Agenda / Preparations Log Notes</label>
+                <textarea id="eventDesc" rows="3" placeholder="Interviewer panel profiles details, checklist logs notes..." class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none resize-none"></textarea>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2 border-t border-white/5">
+                <button type="button" class="px-4 py-2 bg-white/10 hover:bg-white/10 text-slate-200 font-bold text-xs rounded-xl transition-all" onclick="closeEventModal()">Cancel</button>
+                <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all">Create Event</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Quick Add "Save Job" Modal Frame -->
+<div class="modal-overlay hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 items-center justify-center p-4 transition-all duration-150" id="quickAddModalOverlay">
+    <div class="bg-white/[0.03] border border-white/10 w-full max-w-lg rounded-2xl shadow-2xl p-6 max-h-[90vh] overflow-y-auto">
+        <div class="flex items-center gap-3 border-b border-white/5 pb-3 mb-4">
+            <div class="w-8 h-8 rounded-lg bg-amber-500/15 flex items-center justify-center">
+                <i data-lucide="bookmark-plus" class="w-4 h-4 text-amber-400"></i>
+            </div>
+            <div>
+                <h3 class="font-display font-bold text-lg text-white">Save Job</h3>
+                <p class="text-[10px] text-slate-500 font-medium">Paste a job description to save it to your Wishlist</p>
+            </div>
+        </div>
+        <form id="quickAddForm" class="space-y-4">
+
+            <div>
+                <label for="qaJobLink" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Job Posting URL</label>
+                <input type="url" id="qaJobLink" placeholder="https://careers.company.com/job/12345" class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-amber-500 focus:bg-white/[0.03] transition-all">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="qaCompanyName" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Company <span class="text-slate-500 font-normal">(optional)</span></label>
+                    <input type="text" id="qaCompanyName" placeholder="e.g. Google" class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-amber-500 focus:bg-white/[0.03] transition-all">
+                </div>
+                <div>
+                    <label for="qaJobRole" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Role <span class="text-slate-500 font-normal">(optional)</span></label>
+                    <input type="text" id="qaJobRole" placeholder="e.g. Software Engineer" class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-amber-500 focus:bg-white/[0.03] transition-all">
+                </div>
+            </div>
+
+            <div>
+                <label for="qaJobDescription" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Job Description <span class="text-rose-400">*</span></label>
+                <textarea id="qaJobDescription" rows="10" required placeholder="Paste the full job description here..." class="w-full px-3 py-2.5 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium leading-relaxed focus:outline-none focus:border-amber-500 focus:bg-white/[0.03] resize-none transition-all"></textarea>
+                <div class="flex items-center justify-between mt-1.5">
+                    <span class="text-[10px] text-slate-500 font-medium">This text will be used for resume match scoring</span>
+                    <span class="text-[10px] text-slate-500 font-medium tabular-nums" id="qaCharCount">0 chars</span>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2 border-t border-white/5">
+                <button type="button" class="px-4 py-2 bg-white/10 hover:bg-white/10 text-slate-200 font-bold text-xs rounded-xl transition-all" id="qaCancel">Cancel</button>
+                <button type="submit" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-xl shadow-sm transition-all inline-flex items-center gap-1.5">
+                    <i data-lucide="bookmark-check" class="w-3.5 h-3.5"></i> Save to Wishlist
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- AI Improve Bullet Modal Frame -->
+<div class="modal-overlay hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 items-center justify-center p-4 transition-all duration-150" id="aiModalOverlay">
+    <div class="bg-white/[0.03] border border-white/10 w-full max-w-lg rounded-2xl shadow-2xl p-6 max-h-[90vh] overflow-y-auto">
+        <div class="flex items-center gap-3 border-b border-white/5 pb-3 mb-4">
+            <div class="w-8 h-8 rounded-lg bg-purple-500/15 flex items-center justify-center">
+                <i data-lucide="sparkles" class="w-4 h-4 text-purple-400"></i>
+            </div>
+            <div>
+                <h3 class="font-display font-bold text-lg text-white">Improve with AI</h3>
+                <p class="text-[10px] text-slate-500 font-medium">Rewrite this bullet, optionally tailored to a job description</p>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Current Bullet</span>
+            <div id="aiOriginalText" class="bg-white/[0.05] border border-white/10 rounded-xl p-3 text-xs font-medium text-slate-300"></div>
+        </div>
+
+        <div class="mb-4">
+            <label for="aiJobDescription" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Job Description <span class="text-slate-500 font-normal">(optional — tailors the suggestions)</span></label>
+            <textarea id="aiJobDescription" rows="3" placeholder="Paste a job description to tailor suggestions to it..." class="w-full px-3 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-xs font-medium focus:outline-none focus:border-purple-500 focus:bg-white/[0.03] resize-none"></textarea>
+        </div>
+
+        <button type="button" id="aiGetSuggestionsBtn" class="w-full py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-bold transition-all shadow-sm mb-4">Get AI Suggestions</button>
+
+        <div id="aiSuggestions" class="space-y-2"></div>
+
+        <div class="flex justify-end pt-4 border-t border-white/5 mt-4">
+            <button type="button" id="aiCloseBtn" class="px-4 py-2 bg-white/10 hover:bg-white/10 text-slate-200 font-bold text-xs rounded-xl transition-all">Close</button>
+        </div>
+    </div>
+</div>
+
+<div class="toast-container fixed bottom-6 right-6 z-50 flex flex-col gap-2"></div>
+
+<!-- Scripts -->
+<script src="js/api.js"></script>
+<script src="js/toast.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/documents.js"></script>
+<script src="js/resume-builder.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="js/resume-templates.js"></script>
+<script src="js/resume-sections-extra.js"></script>
+<script src="js/cover-letter.js"></script>
+<script src="js/calendar.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/dashboard.js"></script>
+
+</body>
+</html>
+
+
+
+
+
+

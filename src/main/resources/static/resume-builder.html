@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resume Builder - Job Tracker</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ---- Resume Builder specific layout (append-friendly, namespaced) ---- */
+        .rb-layout {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 1.25rem;
+            padding: 1.5rem 2rem 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        @media (max-width: 1000px) {
+            .rb-layout { grid-template-columns: 1fr; }
+        }
+        .rb-panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+        .rb-panel h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .rb-work-exp {
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .rb-work-exp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+        .rb-work-exp-header h4 { font-size: 0.95rem; font-weight: 700; }
+        .rb-work-exp-header p { font-size: 0.78rem; color: var(--ink-muted); }
+        .rb-work-exp-actions button {
+            background: none; border: none; cursor: pointer;
+            font-size: 0.72rem; color: var(--primary); font-weight: 600;
+            margin-left: 0.6rem;
+        }
+        .rb-work-exp-actions button.delete { color: var(--stage-rejected); }
+
+        .rb-bullet-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            padding: 0.5rem 0;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+        }
+        .rb-bullet-row:first-of-type { border-top: none; }
+        .rb-bullet-row input[type="checkbox"] { margin-top: 0.25rem; flex-shrink: 0; }
+        .rb-bullet-text { flex: 1; }
+        .rb-bullet-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+        .rb-bullet-actions button {
+            background: none; border: none; cursor: pointer;
+            font-size: 0.7rem; color: var(--primary); font-weight: 600;
+        }
+        .rb-bullet-actions button.delete { color: var(--stage-rejected); }
+        .rb-bullet-actions button.ai {
+            color: var(--accent-dark);
+        }
+
+        .rb-add-bullet-form, .rb-add-exp-form {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.6rem;
+        }
+        .rb-add-bullet-form textarea {
+            flex: 1;
+            min-height: 44px;
+            padding: 0.5rem 0.7rem;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 0.85rem;
+            resize: vertical;
+        }
+        .rb-btn-small {
+            padding: 0.5rem 0.9rem;
+            border-radius: var(--radius-sm);
+            border: none;
+            background: var(--primary);
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .rb-btn-small:hover { background: var(--primary-dark); }
+        .rb-btn-outline {
+            padding: 0.5rem 0.9rem;
+            border-radius: var(--radius-sm);
+            border: 1.5px solid var(--border);
+            background: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .rb-resume-select {
+            width: 100%;
+            padding: 0.6rem 0.75rem;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+        .rb-resume-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+
+        .rb-match-score-value {
+            font-family: 'Sora', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 0.5rem 0;
+        }
+        .rb-keyword-chip {
+            display: inline-block;
+            background: var(--stage-rejected-bg);
+            color: var(--stage-rejected);
+            border-radius: 20px;
+            padding: 0.2rem 0.7rem;
+            font-size: 0.72rem;
+            font-weight: 600;
+            margin: 0.2rem 0.25rem 0.2rem 0;
+        }
+        .rb-keyword-chip.matched {
+            background: var(--stage-offer-bg);
+            color: var(--stage-offer);
+        }
+
+        .rb-empty-note {
+            font-size: 0.8rem;
+            color: var(--ink-faint);
+            font-style: italic;
+            padding: 0.75rem 0;
+        }
+
+        /* AI suggestions modal reuses .modal-overlay / .modal from style.css */
+        .rb-suggestion-item {
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 0.75rem;
+            margin-bottom: 0.6rem;
+            font-size: 0.85rem;
+        }
+        .rb-suggestion-item button {
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+<div class="topbar">
+    <div class="brand">
+        <div class="logo-mark">JT</div>
+        <h2>Resume Builder</h2>
+    </div>
+    <div class="topbar-actions">
+        <a href="dashboard.html" style="text-decoration:none;"><button class="btn-logout" type="button">← Dashboard</button></a>
+        <button class="btn-logout" id="logoutBtn" type="button">Log Out</button>
+    </div>
+</div>
+
+<div class="rb-layout">
+    <!-- ===================== LEFT: CONTENT BANK ===================== -->
+    <div>
+        <div class="rb-panel">
+            <h3>
+                Content Bank
+                <button class="rb-btn-small" id="addExpBtn" type="button">+ Add Work Experience</button>
+            </h3>
+            <p class="rb-empty-note" style="margin-bottom:0.75rem;">
+                Your full career history lives here. Bullets you write once can be reused
+                across multiple resume versions using the checkboxes on the right.
+            </p>
+
+            <div id="addExpForm" style="display:none; margin-bottom:1rem;">
+                <div class="form-group"><label>Company</label><input type="text" id="expCompany"></div>
+                <div class="form-group"><label>Job Title</label><input type="text" id="expTitle"></div>
+                <div class="form-group"><label>Start Date</label><input type="date" id="expStart"></div>
+                <div class="form-group"><label>End Date (leave blank if current)</label><input type="date" id="expEnd"></div>
+                <div class="form-group"><label>Location</label><input type="text" id="expLocation"></div>
+                <div style="display:flex; gap:0.5rem;">
+                    <button class="rb-btn-small" id="saveExpBtn" type="button">Save</button>
+                    <button class="rb-btn-outline" id="cancelExpBtn" type="button">Cancel</button>
+                </div>
+            </div>
+
+            <div id="workExpList"></div>
+        </div>
+    </div>
+
+    <!-- ===================== RIGHT: RESUME VERSIONS + MATCH SCORE ===================== -->
+    <div>
+        <div class="rb-panel">
+            <h3>Resume Versions</h3>
+            <select class="rb-resume-select" id="resumeSelect">
+                <option value="">-- Select a resume --</option>
+            </select>
+            <div class="rb-resume-actions">
+                <button class="rb-btn-outline" id="newResumeBtn" type="button">+ New</button>
+                <button class="rb-btn-outline" id="duplicateResumeBtn" type="button" disabled>Duplicate</button>
+                <button class="rb-btn-outline" id="deleteResumeBtn" type="button" disabled style="color:var(--stage-rejected); border-color:var(--stage-rejected);">Delete</button>
+            </div>
+            <p class="rb-empty-note" id="noResumeNote">
+                Select or create a resume version, then check the bullets on the left
+                you want included in it.
+            </p>
+        </div>
+
+        <div class="rb-panel" id="matchScorePanel" style="display:none;">
+            <h3>Match Score</h3>
+            <div class="form-group">
+                <label>Paste a job description</label>
+                <textarea id="jdText" rows="5" placeholder="Paste the job posting text here..."></textarea>
+            </div>
+            <button class="rb-btn-small" id="checkScoreBtn" type="button" style="width:100%;">Check Match Score</button>
+            <div id="matchScoreResult" style="margin-top:1rem; display:none;">
+                <div class="rb-match-score-value" id="scoreValue">--%</div>
+                <p style="font-size:0.78rem; font-weight:600; margin-bottom:0.3rem;">Missing keywords:</p>
+                <div id="missingKeywords"></div>
+                <p style="font-size:0.78rem; font-weight:600; margin:0.6rem 0 0.3rem;">Matched keywords:</p>
+                <div id="matchedKeywords"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== AI IMPROVE MODAL ===================== -->
+<div class="modal-overlay" id="aiModalOverlay">
+    <div class="modal">
+        <h3>Improve with AI</h3>
+        <p style="font-size:0.82rem; color:var(--ink-muted); margin-bottom:0.75rem;">Original: <em id="aiOriginalText"></em></p>
+        <div class="form-group">
+            <label>Job description (optional — tailors suggestions to a specific role)</label>
+            <textarea id="aiJobDescription" rows="4"></textarea>
+        </div>
+        <button class="rb-btn-small" id="aiGetSuggestionsBtn" type="button" style="width:100%;">Get Suggestions</button>
+        <div id="aiSuggestions" style="margin-top:1rem;"></div>
+        <div class="modal-actions">
+            <button type="button" class="btn-secondary" id="aiCloseBtn">Close</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/toast.js"></script>
+<script src="js/resume-builder.js"></script>
+</body>
+</html>
