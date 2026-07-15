@@ -22,8 +22,8 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    private Integer weeklyGoal;
-    private Integer monthlyGoal;
+    private Integer weeklyGoal = 5;
+    private Integer monthlyGoal = 20;
 
     @Column(nullable = false)
     private String password;

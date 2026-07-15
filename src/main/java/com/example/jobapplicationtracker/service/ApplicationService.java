@@ -124,7 +124,11 @@ public class ApplicationService {
     public ApplicationResponseDto updateStatus(Long id, String status, String email) {
         User currentUser = resolveUser(email);
         JobApplication app = findOwnedOrThrow(id, currentUser);
-        app.setStatus(ApplicationStatus.valueOf(status));
+        ApplicationStatus newStatus = ApplicationStatus.valueOf(status);
+        app.setStatus(newStatus);
+        if (newStatus == ApplicationStatus.APPLIED && app.getDateApplied() == null) {
+            app.setDateApplied(java.time.LocalDate.now());
+        }
         app.setUpdatedAt(LocalDateTime.now());
         return toResponseDto(applicationRepository.save(app));
     }

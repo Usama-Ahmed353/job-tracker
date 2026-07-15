@@ -57,6 +57,9 @@ public class AnalyticsService {
 
         for (JobApplication app : apps) {
             LocalDate date = app.getDateApplied();
+            if (date == null && app.getCreatedAt() != null) {
+                date = app.getCreatedAt().toLocalDate();
+            }
             if (date == null) continue;
 
             String label;
@@ -118,14 +121,29 @@ public class AnalyticsService {
         LocalDate startOfMonth = now.withDayOfMonth(1);
 
         long thisWeek = apps.stream()
-                .filter(a -> a.getDateApplied() != null && !a.getDateApplied().isBefore(startOfWeek))
+                .filter(a -> {
+                    LocalDate date = a.getDateApplied();
+                    if (date == null && a.getCreatedAt() != null) {
+                        date = a.getCreatedAt().toLocalDate();
+                    }
+                    return date != null && !date.isBefore(startOfWeek);
+                })
                 .count();
 
         long thisMonth = apps.stream()
-                .filter(a -> a.getDateApplied() != null && !a.getDateApplied().isBefore(startOfMonth))
+                .filter(a -> {
+                    LocalDate date = a.getDateApplied();
+                    if (date == null && a.getCreatedAt() != null) {
+                        date = a.getCreatedAt().toLocalDate();
+                    }
+                    return date != null && !date.isBefore(startOfMonth);
+                })
                 .count();
 
-        return new GoalsProgressDto(user.getWeeklyGoal(), thisWeek, user.getMonthlyGoal(), thisMonth);
+        Integer weeklyGoal = user.getWeeklyGoal() != null ? user.getWeeklyGoal() : 5;
+        Integer monthlyGoal = user.getMonthlyGoal() != null ? user.getMonthlyGoal() : 20;
+
+        return new GoalsProgressDto(weeklyGoal, thisWeek, monthlyGoal, thisMonth);
     }
 
     // ----- Helpers -----

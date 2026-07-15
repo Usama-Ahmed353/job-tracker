@@ -1,3 +1,4 @@
+//
 // let applications = [];
 // let discoveredExternalJobs = []; // Search engine feed array cache
 //
@@ -94,7 +95,7 @@
 // async function fetchExternalJobsFeed() {
 //     const container = document.getElementById("externalJobsFeedContainer");
 //     if (!container) return;
-//     container.innerHTML = `<div class="text-slate-400 font-medium text-xs p-4 animate-pulse">Querying internal vacancy indices...</div>`;
+//     container.innerHTML = `<div class="text-slate-500 font-medium text-xs p-4 animate-pulse">Querying internal vacancy indices...</div>`;
 //
 //     const queryParams = new URLSearchParams({
 //         keywords: document.getElementById("jobSearchKeywords")?.value || "",
@@ -107,7 +108,7 @@
 //         renderExternalJobsFeed();
 //     } catch (err) {
 //         console.error("Feed recovery sequence issue:", err);
-//         container.innerHTML = `<div class="text-rose-500 font-medium text-xs p-4 bg-rose-50 border border-rose-100 rounded-xl">Could not retrieve available database listings.</div>`;
+//         container.innerHTML = `<div class="text-rose-500 font-medium text-xs p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl">Could not retrieve available database listings.</div>`;
 //     }
 // }
 //
@@ -127,7 +128,7 @@
 //     const btn = document.getElementById("aiLiveJobSearchBtn");
 //     if (btn) btn.disabled = true;
 //     if (container) {
-//         container.innerHTML = `<div class="text-slate-400 font-medium text-xs p-4 animate-pulse">Searching the live web for real job postings...</div>`;
+//         container.innerHTML = `<div class="text-slate-500 font-medium text-xs p-4 animate-pulse">Searching the live web for real job postings...</div>`;
 //     }
 //
 //     try {
@@ -137,9 +138,18 @@
 //     } catch (err) {
 //         console.error("Live AI job search issue:", err);
 //         if (container) {
-//             container.innerHTML = `<div class="text-rose-500 font-medium text-xs p-4 bg-rose-50 border border-rose-100 rounded-xl">AI search failed. Try again in a moment.</div>`;
+//             container.innerHTML = `<div class="text-rose-500 font-medium text-xs p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl">AI search failed. Try again in a moment.</div>`;
 //         }
-//         showToast("AI search failed: " + err.message, "error");
+//         let cleanMsg = err.message || "Request failed";
+//         try {
+//             const parsed = JSON.parse(err.message);
+//             if (parsed && parsed.error) {
+//                 cleanMsg = parsed.error;
+//             }
+//         } catch (e) {
+//             // Not a JSON message
+//         }
+//         showToast("AI search failed: " + cleanMsg, "error");
 //     } finally {
 //         if (btn) btn.disabled = false;
 //     }
@@ -151,27 +161,27 @@
 //     container.innerHTML = "";
 //
 //     if (liveAiJobs.length === 0) {
-//         container.innerHTML = `<div class="bg-white border border-slate-200 rounded-2xl p-8 text-center text-slate-400 text-xs font-medium">No real postings found for that search. Try rephrasing or broadening it.</div>`;
+//         container.innerHTML = `<div class="bg-white/[0.03] border border-white/10 rounded-2xl p-8 text-center text-slate-500 text-xs font-medium">No real postings found for that search. Try rephrasing or broadening it.</div>`;
 //         return;
 //     }
 //
 //     liveAiJobs.forEach((job, index) => {
 //         const card = document.createElement("div");
-//         card.className = "bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col md:flex-row md:items-start justify-between gap-4";
+//         card.className = "job-card bg-white/[0.03] border border-white/10 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col md:flex-row md:items-start justify-between gap-4";
 //         card.innerHTML = `
 //             <div class="space-y-1 flex-1 min-w-0">
-//                 <h3 class="font-display font-bold text-base text-slate-900 leading-snug">${escapeHtml(job.jobRole || "Untitled role")}</h3>
-//                 <p class="text-xs font-bold text-indigo-600">${escapeHtml(job.companyName || "Unknown company")}</p>
-//                 <p class="text-xs text-slate-400 flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3 inline"></i> ${escapeHtml(job.location || "Not specified")}</p>
-//                 ${job.description ? `<p class="text-xs text-slate-500 leading-relaxed pt-1">${escapeHtml(job.description)}</p>` : ""}
-//                 ${job.sourceUrl ? `<a href="${escapeHtml(job.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[11px] font-bold text-purple-600 hover:text-purple-700 pt-1"><i data-lucide="external-link" class="w-3 h-3"></i> View posting</a>` : ""}
+//                 <h3 class="font-display font-bold text-base text-white leading-snug">${escapeHtml(job.jobRole || "Untitled role")}</h3>
+//                 <p class="text-xs font-bold text-indigo-400">${escapeHtml(job.companyName || "Unknown company")}</p>
+//                 <p class="text-xs text-slate-500 flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3 inline"></i> ${escapeHtml(job.location || "Not specified")}</p>
+//                 ${job.description ? `<p class="text-xs text-slate-400 leading-relaxed pt-1">${escapeHtml(job.description)}</p>` : ""}
+//                 ${job.sourceUrl ? `<a href="${escapeHtml(job.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[11px] font-bold text-purple-400 hover:text-purple-300 pt-1"><i data-lucide="external-link" class="w-3 h-3"></i> View posting</a>` : ""}
 //             </div>
-//             <div class="flex flex-row md:flex-col items-start md:items-end gap-4 md:gap-1 text-xs text-slate-500 font-medium shrink-0">
-//                 ${job.workload ? `<div><span class="text-[10px] text-slate-400 font-bold uppercase tracking-wide">Workload:</span> ${escapeHtml(job.workload)}</div>` : ""}
-//                 ${job.salaryRange ? `<div><span class="text-[10px] text-slate-400 font-bold uppercase tracking-wide">Salary:</span> ${escapeHtml(job.salaryRange)}</div>` : ""}
+//             <div class="flex flex-row md:flex-col items-start md:items-end gap-4 md:gap-1 text-xs text-slate-400 font-medium shrink-0">
+//                 ${job.workload ? `<div><span class="text-[10px] text-slate-500 font-bold uppercase tracking-wide">Workload:</span> ${escapeHtml(job.workload)}</div>` : ""}
+//                 ${job.salaryRange ? `<div><span class="text-[10px] text-slate-500 font-bold uppercase tracking-wide">Salary:</span> ${escapeHtml(job.salaryRange)}</div>` : ""}
 //             </div>
-//             <div class="flex gap-2 border-t md:border-t-0 pt-3 md:pt-0 border-slate-100 shrink-0">
-//                 <button onclick="dismissLiveAiJob(${index}, this)" class="px-4 py-2 bg-slate-100 hover:bg-rose-50 hover:text-rose-600 text-slate-700 font-bold text-xs rounded-xl transition-all">Dismiss</button>
+//             <div class="flex gap-2 border-t md:border-t-0 pt-3 md:pt-0 border-white/5 shrink-0">
+//                 <button onclick="dismissLiveAiJob(${index}, this)" class="px-4 py-2 bg-white/10 hover:bg-rose-500/10 hover:text-rose-400 text-slate-200 font-bold text-xs rounded-xl transition-all">Dismiss</button>
 //                 <button onclick="trackLiveAiJob(${index})" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all">Track Job</button>
 //             </div>
 //         `;
@@ -182,7 +192,7 @@
 // }
 //
 // function dismissLiveAiJob(index, buttonEl) {
-//     buttonEl.closest(".bg-white").remove();
+//     buttonEl.closest(".job-card").remove();
 //     showToast("Listing dismissed", "info");
 // }
 //
@@ -214,25 +224,25 @@
 //     container.innerHTML = "";
 //
 //     if (discoveredExternalJobs.length === 0) {
-//         container.innerHTML = `<div class="bg-white border border-slate-200 rounded-2xl p-8 text-center text-slate-400 text-xs font-medium">No job listings found in database matching specified filters.</div>`;
+//         container.innerHTML = `<div class="bg-white/[0.03] border border-white/10 rounded-2xl p-8 text-center text-slate-500 text-xs font-medium">No job listings found in database matching specified filters.</div>`;
 //         return;
 //     }
 //
 //     discoveredExternalJobs.forEach(job => {
 //         const card = document.createElement("div");
-//         card.className = "bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col md:flex-row md:items-center justify-between gap-4";
+//         card.className = "bg-white/[0.03] border border-white/10 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col md:flex-row md:items-center justify-between gap-4";
 //         card.innerHTML = `
 //             <div class="space-y-1">
-//                 <h3 class="font-display font-bold text-base text-slate-900 leading-snug">${escapeHtml(job.jobRole)}</h3>
-//                 <p class="text-xs font-bold text-indigo-600">${escapeHtml(job.companyName)}</p>
-//                 <p class="text-xs text-slate-400 flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3 inline"></i> ${escapeHtml(job.location || 'Remote')}</p>
+//                 <h3 class="font-display font-bold text-base text-white leading-snug">${escapeHtml(job.jobRole)}</h3>
+//                 <p class="text-xs font-bold text-indigo-400">${escapeHtml(job.companyName)}</p>
+//                 <p class="text-xs text-slate-500 flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3 inline"></i> ${escapeHtml(job.location || 'Remote')}</p>
 //             </div>
-//             <div class="flex flex-row md:flex-col items-start md:items-end gap-4 md:gap-1 text-xs text-slate-500 font-medium">
-//                 <div><span class="text-[10px] text-slate-400 font-bold uppercase tracking-wide">Workload:</span> ${job.workload || '100%'}</div>
-//                 <div><span class="text-[10px] text-slate-400 font-bold uppercase tracking-wide">Salary:</span> ${job.salaryRange || 'N/A'}</div>
+//             <div class="flex flex-row md:flex-col items-start md:items-end gap-4 md:gap-1 text-xs text-slate-400 font-medium">
+//                 <div><span class="text-[10px] text-slate-500 font-bold uppercase tracking-wide">Workload:</span> ${job.workload || '100%'}</div>
+//                 <div><span class="text-[10px] text-slate-500 font-bold uppercase tracking-wide">Salary:</span> ${job.salaryRange || 'N/A'}</div>
 //             </div>
-//             <div class="flex gap-2 border-t md:border-t-0 pt-3 md:pt-0 border-slate-100">
-//                 <button onclick="discardJobCard(${job.id}, this)" class="px-4 py-2 bg-slate-100 hover:bg-rose-50 hover:text-rose-600 text-slate-700 font-bold text-xs rounded-xl transition-all">Discard</button>
+//             <div class="flex gap-2 border-t md:border-t-0 pt-3 md:pt-0 border-white/5">
+//                 <button onclick="discardJobCard(${job.id}, this)" class="px-4 py-2 bg-white/10 hover:bg-rose-500/10 hover:text-rose-400 text-slate-200 font-bold text-xs rounded-xl transition-all">Discard</button>
 //                 <button onclick="convertListingToApplication(${job.id})" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all">Track Job</button>
 //             </div>
 //         `;
@@ -310,6 +320,7 @@
 //     try {
 //         applications = await apiRequest("/applications", "GET") || [];
 //         renderBoard();
+//         initDragAndDrop(); // Sync drag targets with container scopes natively
 //     } catch (err) {
 //         console.error("Failed to load applications:", err);
 //         showToast("Couldn't load applications. Try refreshing.", "error");
@@ -414,14 +425,9 @@
 //     return div.innerHTML;
 // }
 //
-// // Tailwind utility classes used to highlight the active drop-zone column
-// // while a card is being dragged over it (independent of any custom CSS,
-// // so the highlight always shows up regardless of what's in style.css).
-// const DROP_ZONE_HIGHLIGHT_CLASSES = ["ring-2", "ring-indigo-400", "bg-indigo-50/60"];
+// const DROP_ZONE_HIGHLIGHT_CLASSES = ["ring-2", "ring-indigo-400", "bg-indigo-500/10"];
 //
 // function initDragAndDrop() {
-//     // Card containers are rendered as #cards-WISHLIST, #cards-APPLIED, etc.
-//     // (there is no shared ".cards" class in the markup), so we select by id prefix.
 //     document.querySelectorAll('[id^="cards-"]').forEach(container => {
 //         const column = container.closest("[data-status]") || container.parentElement;
 //
@@ -433,8 +439,6 @@
 //         });
 //
 //         container.addEventListener("dragleave", (e) => {
-//             // Only clear the highlight once the pointer actually leaves the
-//             // column (not just moving between child elements inside it).
 //             if (column && column.contains(e.relatedTarget)) return;
 //             container.classList.remove("drag-over");
 //             if (column) column.classList.remove(...DROP_ZONE_HIGHLIGHT_CLASSES);
@@ -653,10 +657,29 @@
 //     clearToken();
 //     window.location.href = "/login.html";
 // });
+//
+// // ---------- Collapsible Kanban Staging Board Columns ----------
+// /**
+//  * Toggles the collapsed/expanded UI state of terminal pipeline archive columns.
+//  * Shifts target layout spacing and handles structural element typography transitions.
+//  * @param {string} status - Pipeline status matching the targeted column container markup block.
+//  */
+// function toggleColumn(status) {
+//     const column = document.getElementById(`col-${status}`);
+//     if (!column) return;
+//
+//     column.classList.toggle('collapsed');
+//
+//     // Explicit runtime hook to dynamically update arrow orientation vectors
+//     if (window.lucide) {
+//         window.lucide.createIcons();
+//     }
+// }
 
 
 let applications = [];
 let discoveredExternalJobs = []; // Search engine feed array cache
+let showArchivedPoolGlobal = false; // Toggle tracker state for hidden archive metrics
 
 // Redirect immediately if not logged in
 if (!getToken()) {
@@ -796,7 +819,16 @@ async function runLiveAiJobSearch() {
         if (container) {
             container.innerHTML = `<div class="text-rose-500 font-medium text-xs p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl">AI search failed. Try again in a moment.</div>`;
         }
-        showToast("AI search failed: " + err.message, "error");
+        let cleanMsg = err.message || "Request failed";
+        try {
+            const parsed = JSON.parse(err.message);
+            if (parsed && parsed.error) {
+                cleanMsg = parsed.error;
+            }
+        } catch (e) {
+            // Not a JSON message
+        }
+        showToast("AI search failed: " + cleanMsg, "error");
     } finally {
         if (btn) btn.disabled = false;
     }
@@ -967,6 +999,7 @@ async function loadApplications() {
     try {
         applications = await apiRequest("/applications", "GET") || [];
         renderBoard();
+        initDragAndDrop(); // Sync drag targets with container scopes natively
     } catch (err) {
         console.error("Failed to load applications:", err);
         showToast("Couldn't load applications. Try refreshing.", "error");
@@ -1055,6 +1088,13 @@ function createCard(app) {
             e.dataTransfer.setData("text/plain", String(app.id));
         }
     });
+    card.addEventListener("dragstart", (e) => {
+        card.classList.add("dragging", "opacity-50", "rotate-1");
+        if (e.dataTransfer) {
+            e.dataTransfer.effectAllowed = "move";
+            e.dataTransfer.setData("text/plain", String(app.id));
+        }
+    });
     card.addEventListener("dragend", () => {
         card.classList.remove("dragging", "opacity-50", "rotate-1");
     });
@@ -1071,14 +1111,9 @@ function escapeHtml(str) {
     return div.innerHTML;
 }
 
-// Tailwind utility classes used to highlight the active drop-zone column
-// while a card is being dragged over it (independent of any custom CSS,
-// so the highlight always shows up regardless of what's in style.css).
 const DROP_ZONE_HIGHLIGHT_CLASSES = ["ring-2", "ring-indigo-400", "bg-indigo-500/10"];
 
 function initDragAndDrop() {
-    // Card containers are rendered as #cards-WISHLIST, #cards-APPLIED, etc.
-    // (there is no shared ".cards" class in the markup), so we select by id prefix.
     document.querySelectorAll('[id^="cards-"]').forEach(container => {
         const column = container.closest("[data-status]") || container.parentElement;
 
@@ -1090,8 +1125,6 @@ function initDragAndDrop() {
         });
 
         container.addEventListener("dragleave", (e) => {
-            // Only clear the highlight once the pointer actually leaves the
-            // column (not just moving between child elements inside it).
             if (column && column.contains(e.relatedTarget)) return;
             container.classList.remove("drag-over");
             if (column) column.classList.remove(...DROP_ZONE_HIGHLIGHT_CLASSES);
@@ -1310,3 +1343,48 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
     clearToken();
     window.location.href = "/login.html";
 });
+
+// ---------- Horizontal Scroll Engine Navigation Controls ----------
+/**
+ * Triggers hardware-accelerated horizontal track movement across the main columns workflow.
+ * @param {string} direction - Target transition offset orientation ('left' or 'right').
+ */
+function scrollBoard(direction) {
+    const board = document.getElementById("board");
+    if (!board) return;
+    const scrollAmount = 320;
+    if (direction === 'left') {
+        board.scrollLeft -= scrollAmount;
+    } else {
+        board.scrollLeft += scrollAmount;
+    }
+}
+
+/**
+ * Programmatically alters visibility configurations hiding or rendering terminal storage vectors.
+ */
+function toggleArchiveView() {
+    showArchivedPoolGlobal = !showArchivedPoolGlobal;
+    const archiveBtnText = document.getElementById("archiveToggleText");
+    const columns = document.querySelectorAll(".archive-column");
+
+    columns.forEach(col => {
+        if (showArchivedPoolGlobal) {
+            col.classList.remove("hidden");
+        } else {
+            col.classList.add("hidden");
+        }
+    });
+
+    if (archiveBtnText) {
+        archiveBtnText.textContent = showArchivedPoolGlobal ? "Hide Archive Pool" : "Show Archive Pool";
+    }
+
+    // Auto-scroll track directly onto archive elements when activated
+    if (showArchivedPoolGlobal) {
+        setTimeout(() => {
+            const board = document.getElementById("board");
+            if (board) board.scrollLeft = board.scrollWidth;
+        }, 150);
+    }
+}

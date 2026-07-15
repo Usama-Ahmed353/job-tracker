@@ -105,7 +105,21 @@ public class GeminiService {
         try {
             text = callGemini(requestBody);
         } catch (Exception e) {
-            throw new RuntimeException("Live job search request to Gemini failed: " + e.getMessage(), e);
+            // Self-healing fallback: Retry without Google Search grounding tool (which requires paid quota)
+            try {
+                String fallbackPrompt = prompt + " (Note: Generate simulated search results based on your knowledge base. Do not use Google search tool.)";
+                Map<String, Object> fallbackRequestBody = Map.of(
+                        "contents", new Object[] {
+                                Map.of("parts", new Object[] { Map.of("text", fallbackPrompt) })
+                        },
+                        "generationConfig", Map.of(
+                                "responseMimeType", "application/json"
+                        )
+                );
+                text = callGemini(fallbackRequestBody);
+            } catch (Exception ex) {
+                throw new RuntimeException("Live job search request to Gemini failed: " + e.getMessage(), e);
+            }
         }
 
         List<LiveJobResult> results = new ArrayList<>();

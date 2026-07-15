@@ -64,6 +64,25 @@ public class ApplicationController {
             List<GeminiService.LiveJobResult> results = geminiService.searchLiveJobs(query);
             return ResponseEntity.ok(results);
         } catch (Exception e) {
+            try {
+                List<JobListing> dbListings = jobListingRepository.searchJobs(query, "", "");
+                if (dbListings != null && !dbListings.isEmpty()) {
+                    List<GeminiService.LiveJobResult> fallbackResults = dbListings.stream()
+                            .map(j -> new GeminiService.LiveJobResult(
+                                    j.getJobRole(),
+                                    j.getCompanyName(),
+                                    j.getLocation(),
+                                    j.getSalaryRange(),
+                                    j.getWorkload(),
+                                    "Showing local result due to AI service unavailability / quota limit.",
+                                    j.getJobLink()
+                            ))
+                            .toList();
+                    return ResponseEntity.ok(fallbackResults);
+                }
+            } catch (Exception fallbackEx) {
+                // Ignore fallback exception and throw original
+            }
             return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
                     .body(Map.of("error", "AI job search failed: " + e.getMessage()));
         }

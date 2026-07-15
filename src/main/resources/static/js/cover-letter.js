@@ -36,14 +36,14 @@ async function fetchSavedCoverLetterDraftsList() {
         clDraftsCache.forEach(draft => {
             const dateStr = new Date(draft.uploadedAt).toLocaleDateString(undefined, {month: 'short', day: 'numeric'});
             const div = document.createElement("div");
-            div.className = "p-2.5 bg-slate-50 border border-slate-200/80 rounded-xl flex items-center justify-between gap-2 hover:bg-slate-100 transition-all cursor-pointer";
+            div.className = "p-2.5 bg-white/[0.05] border border-white/10 rounded-xl flex items-center justify-between gap-2 hover:bg-white/[0.08] transition-all cursor-pointer text-white";
             div.onclick = () => loadDraftIntoWorkspace(draft.id);
             div.innerHTML = `
                 <div class="min-w-0 flex-1">
-                    <p class="font-bold text-slate-800 truncate">${escapeHtml(draft.fileName)}</p>
+                    <p class="font-bold text-slate-200 truncate">${escapeHtml(draft.fileName)}</p>
                     <p class="text-[10px] text-slate-400 font-semibold uppercase">${dateStr}</p>
                 </div>
-                <button onclick="deleteCoverLetterDraftVersion(${draft.id}, event)" class="text-slate-400 hover:text-rose-600 transition-all font-bold p-1">&times;</button>
+                <button onclick="deleteCoverLetterDraftVersion(${draft.id}, event)" class="text-slate-400 hover:text-rose-400 transition-all font-bold p-1">&times;</button>
             `;
             container.appendChild(div);
         });

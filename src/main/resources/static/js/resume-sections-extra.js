@@ -224,14 +224,14 @@ function rsRenderCertifications(items) {
     }
     items.forEach(cert => {
         const row = document.createElement("div");
-        row.className = "flex items-start justify-between gap-2 bg-slate-50 border border-slate-100 rounded-xl p-3";
+        row.className = "flex items-start justify-between gap-2 bg-white/[0.05] border border-white/5 rounded-xl p-3";
         row.innerHTML = `
             <div>
-                <p class="text-xs font-bold text-slate-900">${rsEscapeHtml(cert.name)}</p>
-                <p class="text-xs text-slate-500">${rsEscapeHtml(cert.issuingOrganization)}</p>
-                <p class="text-[10px] text-slate-400 font-medium mt-0.5">${rsFormatDateRange(cert.issueDate, cert.expirationDate)}</p>
+                <p class="text-xs font-bold text-white">${rsEscapeHtml(cert.name)}</p>
+                <p class="text-xs text-slate-400">${rsEscapeHtml(cert.issuingOrganization)}</p>
+                <p class="text-[10px] text-slate-500 font-medium mt-0.5">${rsFormatDateRange(cert.issueDate, cert.expirationDate)}</p>
             </div>
-            <button type="button" class="text-slate-400 hover:text-rose-600 text-xs font-bold flex-shrink-0" data-id="${cert.id}">Delete</button>
+            <button type="button" class="text-slate-500 hover:text-rose-400 text-xs font-bold flex-shrink-0" data-id="${cert.id}">Delete</button>
         `;
         row.querySelector("button").addEventListener("click", async () => {
             try {
@@ -270,14 +270,14 @@ function rsRenderAwards(items) {
     }
     items.forEach(award => {
         const row = document.createElement("div");
-        row.className = "flex items-start justify-between gap-2 bg-slate-50 border border-slate-100 rounded-xl p-3";
+        row.className = "flex items-start justify-between gap-2 bg-white/[0.05] border border-white/5 rounded-xl p-3";
         row.innerHTML = `
             <div>
-                <p class="text-xs font-bold text-slate-900">${rsEscapeHtml(award.title)}</p>
-                <p class="text-xs text-slate-500">${rsEscapeHtml(award.issuer)}</p>
-                <p class="text-[10px] text-slate-400 font-medium mt-0.5">${award.dateReceived ? String(award.dateReceived).substring(0, 7) : ""}</p>
+                <p class="text-xs font-bold text-white">${rsEscapeHtml(award.title)}</p>
+                <p class="text-xs text-slate-400">${rsEscapeHtml(award.issuer)}</p>
+                <p class="text-[10px] text-slate-500 font-medium mt-0.5">${award.dateReceived ? String(award.dateReceived).substring(0, 7) : ""}</p>
             </div>
-            <button type="button" class="text-slate-400 hover:text-rose-600 text-xs font-bold flex-shrink-0" data-id="${award.id}">Delete</button>
+            <button type="button" class="text-slate-500 hover:text-rose-400 text-xs font-bold flex-shrink-0" data-id="${award.id}">Delete</button>
         `;
         row.querySelector("button").addEventListener("click", async () => {
             try {
@@ -316,14 +316,14 @@ function rsRenderProjects(items) {
     }
     items.forEach(proj => {
         const row = document.createElement("div");
-        row.className = "flex items-start justify-between gap-2 bg-slate-50 border border-slate-100 rounded-xl p-3";
+        row.className = "flex items-start justify-between gap-2 bg-white/[0.05] border border-white/5 rounded-xl p-3";
         row.innerHTML = `
             <div>
-                <p class="text-xs font-bold text-slate-900">${rsEscapeHtml(proj.name)}</p>
-                ${proj.technologies ? `<p class="text-xs text-slate-500">${rsEscapeHtml(proj.technologies)}</p>` : ""}
-                <p class="text-[10px] text-slate-400 font-medium mt-0.5">${rsFormatDateRange(proj.startDate, proj.endDate)}</p>
+                <p class="text-xs font-bold text-white">${rsEscapeHtml(proj.name)}</p>
+                ${proj.technologies ? `<p class="text-xs text-slate-400">${rsEscapeHtml(proj.technologies)}</p>` : ""}
+                <p class="text-[10px] text-slate-500 font-medium mt-0.5">${rsFormatDateRange(proj.startDate, proj.endDate)}</p>
             </div>
-            <button type="button" class="text-slate-400 hover:text-rose-600 text-xs font-bold flex-shrink-0" data-id="${proj.id}">Delete</button>
+            <button type="button" class="text-slate-500 hover:text-rose-400 text-xs font-bold flex-shrink-0" data-id="${proj.id}">Delete</button>
         `;
         row.querySelector("button").addEventListener("click", async () => {
             try {
@@ -362,14 +362,14 @@ function rsRenderVolunteering(items) {
     }
     items.forEach(vol => {
         const row = document.createElement("div");
-        row.className = "flex items-start justify-between gap-2 bg-slate-50 border border-slate-100 rounded-xl p-3";
+        row.className = "flex items-start justify-between gap-2 bg-white/[0.05] border border-white/5 rounded-xl p-3";
         row.innerHTML = `
             <div>
-                <p class="text-xs font-bold text-slate-900">${rsEscapeHtml(vol.role)}</p>
-                <p class="text-xs text-slate-500">${rsEscapeHtml(vol.organization)}</p>
-                <p class="text-[10px] text-slate-400 font-medium mt-0.5">${rsFormatDateRange(vol.startDate, vol.endDate)}</p>
+                <p class="text-xs font-bold text-white">${rsEscapeHtml(vol.role)}</p>
+                <p class="text-xs text-slate-400">${rsEscapeHtml(vol.organization)}</p>
+                <p class="text-[10px] text-slate-500 font-medium mt-0.5">${rsFormatDateRange(vol.startDate, vol.endDate)}</p>
             </div>
-            <button type="button" class="text-slate-400 hover:text-rose-600 text-xs font-bold flex-shrink-0" data-id="${vol.id}">Delete</button>
+            <button type="button" class="text-slate-500 hover:text-rose-400 text-xs font-bold flex-shrink-0" data-id="${vol.id}">Delete</button>
         `;
         row.querySelector("button").addEventListener("click", async () => {
             try {
@@ -408,14 +408,14 @@ function rsRenderPublications(items) {
     }
     items.forEach(pub => {
         const row = document.createElement("div");
-        row.className = "flex items-start justify-between gap-2 bg-slate-50 border border-slate-100 rounded-xl p-3";
+        row.className = "flex items-start justify-between gap-2 bg-white/[0.05] border border-white/5 rounded-xl p-3";
         row.innerHTML = `
             <div>
-                <p class="text-xs font-bold text-slate-900">${rsEscapeHtml(pub.title)}</p>
-                <p class="text-xs text-slate-500">${rsEscapeHtml(pub.publisher)}</p>
-                <p class="text-[10px] text-slate-400 font-medium mt-0.5">${pub.publicationDate ? String(pub.publicationDate).substring(0, 7) : ""}</p>
+                <p class="text-xs font-bold text-white">${rsEscapeHtml(pub.title)}</p>
+                <p class="text-xs text-slate-400">${rsEscapeHtml(pub.publisher)}</p>
+                <p class="text-[10px] text-slate-500 font-medium mt-0.5">${pub.publicationDate ? String(pub.publicationDate).substring(0, 7) : ""}</p>
             </div>
-            <button type="button" class="text-slate-400 hover:text-rose-600 text-xs font-bold flex-shrink-0" data-id="${pub.id}">Delete</button>
+            <button type="button" class="text-slate-500 hover:text-rose-400 text-xs font-bold flex-shrink-0" data-id="${pub.id}">Delete</button>
         `;
         row.querySelector("button").addEventListener("click", async () => {
             try {

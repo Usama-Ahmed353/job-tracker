@@ -20,7 +20,9 @@ let rtCurrentTemplate = "clean";
 const rtTemplateList = [
     { id: "clean", label: "Clean", desc: "Classic single-column, ATS-friendly" },
     { id: "modern", label: "Modern", desc: "Dark sidebar, two-column layout" },
-    { id: "compact", label: "Compact", desc: "Dense spacing, fits more on one page" }
+    { id: "compact", label: "Compact", desc: "Dense spacing, fits more on one page" },
+    { id: "minimalist", label: "Minimalist", desc: "Centered, elegant, serif style" },
+    { id: "creative", label: "Creative", desc: "Colored header, bold accent lines" }
 ];
 
 const RT_CONTACT_STORAGE_KEY = "cv_contact_info_v1";
@@ -524,8 +526,84 @@ function rtRenderCompact(resume, contact) {
     `;
 }
 
+// ---------------------------------------------------------------
+// Template: MINIMALIST — centered, elegant, serif
+// ---------------------------------------------------------------
+function rtRenderMinimalist(resume, contact) {
+    return `
+        <div class="cv-doc cv-minimalist">
+            <div class="cv-header">
+                <h1 class="cv-name">${rtEscapeHtml(contact.fullName || "Your Name")}</h1>
+                ${contact.targetTitle ? `<p class="cv-target-title">${rtEscapeHtml(contact.targetTitle)}</p>` : ""}
+                <div class="cv-contact-line">${rtBuildContactLine(contact)}</div>
+            </div>
+            ${contact.summary ? `<p class="cv-summary">${rtEscapeHtml(contact.summary)}</p>` : ""}
+            <div class="cv-section">
+                <h2 class="cv-section-title">Experience</h2>
+                ${rtBuildExperienceHtml(resume.workExperiences)}
+            </div>
+            ${resume.education && resume.education.length ? `
+            <div class="cv-section">
+                <h2 class="cv-section-title">Education</h2>
+                ${rtBuildEducationHtml(resume.education)}
+            </div>` : ""}
+            ${resume.skills && resume.skills.length ? `
+            <div class="cv-section">
+                <h2 class="cv-section-title">Skills</h2>
+                ${rtBuildSkillsHtml(resume.skills)}
+            </div>` : ""}
+            ${rtBuildExtraSections(resume)}
+            ${contact.interests ? `
+            <div class="cv-section">
+                <h2 class="cv-section-title">Interests</h2>
+                <p class="cv-item-desc">${rtEscapeHtml(contact.interests)}</p>
+            </div>` : ""}
+        </div>
+    `;
+}
+
+// ---------------------------------------------------------------
+// Template: CREATIVE — colored header banner, accent-lined sections
+// ---------------------------------------------------------------
+function rtRenderCreative(resume, contact) {
+    return `
+        <div class="cv-doc cv-creative">
+            <div class="cv-creative-banner">
+                <h1 class="cv-name">${rtEscapeHtml(contact.fullName || "Your Name")}</h1>
+                ${contact.targetTitle ? `<p class="cv-target-title">${rtEscapeHtml(contact.targetTitle)}</p>` : ""}
+                <div class="cv-contact-line">${rtBuildContactLine(contact)}</div>
+            </div>
+            <div class="cv-creative-body">
+                ${contact.summary ? `<p class="cv-summary">${rtEscapeHtml(contact.summary)}</p>` : ""}
+                <div class="cv-section">
+                    <h2 class="cv-section-title">Experience</h2>
+                    ${rtBuildExperienceHtml(resume.workExperiences)}
+                </div>
+                ${resume.education && resume.education.length ? `
+                <div class="cv-section">
+                    <h2 class="cv-section-title">Education</h2>
+                    ${rtBuildEducationHtml(resume.education)}
+                </div>` : ""}
+                ${resume.skills && resume.skills.length ? `
+                <div class="cv-section">
+                    <h2 class="cv-section-title">Skills</h2>
+                    ${rtBuildSkillsHtml(resume.skills)}
+                </div>` : ""}
+                ${rtBuildExtraSections(resume)}
+                ${contact.interests ? `
+                <div class="cv-section">
+                    <h2 class="cv-section-title">Interests</h2>
+                    <p class="cv-item-desc">${rtEscapeHtml(contact.interests)}</p>
+                </div>` : ""}
+            </div>
+        </div>
+    `;
+}
+
 function rtRenderTemplate(templateId, resume, contact) {
     if (templateId === "modern") return rtRenderModern(resume, contact);
     if (templateId === "compact") return rtRenderCompact(resume, contact);
+    if (templateId === "minimalist") return rtRenderMinimalist(resume, contact);
+    if (templateId === "creative") return rtRenderCreative(resume, contact);
     return rtRenderClean(resume, contact);
 }
