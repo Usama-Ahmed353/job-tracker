@@ -3,6 +3,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!--    <script>-->
+<!--        // Include this snippet directly inside the <head> tags of index.html and login.html-->
+<!--        document.addEventListener("DOMContentLoaded", () => {-->
+<!--            if (localStorage.getItem("theme_preference") === "light") {-->
+<!--                document.documentElement.classList.add("light-theme");-->
+<!--                document.body.classList.add("light-theme");-->
+<!--            }-->
+<!--        });-->
+<!--    </script>-->
+    <script>
+        // Include this snippet directly within the <head> tags of index.html and login.html
+        (function () {
+            if (localStorage.getItem("theme_preference") === "light") {
+                document.documentElement.classList.add("light-theme");
+            }
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Job Tracker</title>

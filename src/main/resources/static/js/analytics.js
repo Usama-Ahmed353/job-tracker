@@ -1051,6 +1051,11 @@ function renderTrendChart(trends) {
         trendChartInstance.destroy();
     }
 
+    const isLight = document.body.classList.contains('light-theme');
+    const tickColor = isLight ? '#475569' : '#94a3b8';
+    const gridColor = isLight ? 'rgba(0,0,0,0.07)' : 'rgba(255,255,255,0.06)';
+    const pointBorder = isLight ? '#ffffff' : '#0B0F1A';
+
     const labels = trends.map(t => t.periodLabel);
     const data = trends.map(t => t.count);
 
@@ -1062,12 +1067,13 @@ function renderTrendChart(trends) {
                 label: 'Applications Submitted',
                 data: data,
                 borderColor: '#4f46e5',
-                backgroundColor: 'rgba(79, 70, 229, 0.05)',
+                backgroundColor: isLight ? 'rgba(79, 70, 229, 0.08)' : 'rgba(79, 70, 229, 0.05)',
                 borderWidth: 3,
                 fill: true,
                 tension: 0.35,
                 pointBackgroundColor: '#f59e0b',
-                pointBorderColor: '#0B0F1A',
+                pointBorderColor: pointBorder,
+                pointBorderWidth: 2,
                 pointHoverRadius: 7
             }]
         },
@@ -1080,11 +1086,11 @@ function renderTrendChart(trends) {
             scales: {
                 y: {
                     beginAtZero: true,
-                    ticks: { stepSize: 1, color: '#94a3b8' },
-                    grid: { color: 'rgba(255,255,255,0.06)' }
+                    ticks: { stepSize: 1, color: tickColor, font: { size: 11, weight: '500' } },
+                    grid: { color: gridColor }
                 },
                 x: {
-                    ticks: { color: '#94a3b8' },
+                    ticks: { color: tickColor, font: { size: 11 } },
                     grid: { display: false }
                 }
             }
@@ -1098,6 +1104,10 @@ function renderStatusChart(statusCounts) {
     if (statusChartInstance) {
         statusChartInstance.destroy();
     }
+
+    const isLight = document.body.classList.contains('light-theme');
+    const legendColor = isLight ? '#0f172a' : '#e2e8f0';
+    const borderColor = isLight ? '#f8fafc' : '#0B0F1A';
 
     const colorMap = {
         WISHLIST: '#94a3b8',
@@ -1120,9 +1130,9 @@ function renderStatusChart(statusCounts) {
             datasets: [{
                 data: data,
                 backgroundColor: backgroundColors,
-                borderWidth: 2,
-                borderColor: '#0B0F1A',
-                hoverOffset: 4
+                borderWidth: 3,
+                borderColor: borderColor,
+                hoverOffset: 6
             }]
         },
         options: {
@@ -1132,9 +1142,11 @@ function renderStatusChart(statusCounts) {
                 legend: {
                     position: 'right',
                     labels: {
-                        color: '#e2e8f0',
-                        font: { family: 'Inter', size: 11, weight: '500' },
-                        padding: 10
+                        color: legendColor,
+                        font: { family: 'Inter', size: 12, weight: '600' },
+                        padding: 14,
+                        usePointStyle: true,
+                        pointStyleWidth: 10
                     }
                 }
             },
@@ -1149,6 +1161,12 @@ function renderPlatformChart(platformStats) {
     if (platformChartInstance) {
         platformChartInstance.destroy();
     }
+
+    const isLight = document.body.classList.contains('light-theme');
+    const tickColor = isLight ? '#475569' : '#94a3b8';
+    const gridColor = isLight ? 'rgba(0,0,0,0.07)' : 'rgba(255,255,255,0.06)';
+    const legendColor = isLight ? '#0f172a' : '#e2e8f0';
+    const titleColor = isLight ? '#475569' : '#94a3b8';
 
     const labels = platformStats.map(p => p.platform.replace('_', ' ').toLowerCase().replace(/\b\w/g, c => c.toUpperCase()));
     const totalApps = platformStats.map(p => p.totalApplications);
@@ -1165,6 +1183,7 @@ function renderPlatformChart(platformStats) {
                     backgroundColor: 'rgba(79, 70, 229, 0.8)',
                     borderColor: '#4f46e5',
                     borderWidth: 1,
+                    borderRadius: 4,
                     yAxisID: 'y'
                 },
                 {
@@ -1173,6 +1192,7 @@ function renderPlatformChart(platformStats) {
                     backgroundColor: 'rgba(245, 158, 11, 0.8)',
                     borderColor: '#f59e0b',
                     borderWidth: 1,
+                    borderRadius: 4,
                     yAxisID: 'yPercent'
                 }
             ]
@@ -1181,27 +1201,27 @@ function renderPlatformChart(platformStats) {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: { position: 'top', labels: { color: '#e2e8f0', font: { size: 11, weight: '500' } } }
+                legend: { position: 'top', labels: { color: legendColor, font: { size: 12, weight: '600' }, usePointStyle: true } }
             },
             scales: {
                 y: {
                     type: 'linear',
                     display: true,
                     position: 'left',
-                    title: { display: true, text: 'Applications Count', color: '#94a3b8', font: { size: 10, weight: '600' } },
-                    ticks: { color: '#94a3b8', stepSize: 1 },
-                    grid: { color: 'rgba(255,255,255,0.06)' }
+                    title: { display: true, text: 'Applications Count', color: titleColor, font: { size: 11, weight: '600' } },
+                    ticks: { color: tickColor, stepSize: 1, font: { size: 11 } },
+                    grid: { color: gridColor }
                 },
                 yPercent: {
                     type: 'linear',
                     display: true,
                     position: 'right',
-                    title: { display: true, text: 'Success Rate %', color: '#94a3b8', font: { size: 10, weight: '600' } },
-                    ticks: { color: '#94a3b8', callback: value => value + "%" },
+                    title: { display: true, text: 'Success Rate %', color: titleColor, font: { size: 11, weight: '600' } },
+                    ticks: { color: tickColor, callback: value => value + "%", font: { size: 11 } },
                     grid: { drawOnChartArea: false }
                 },
                 x: {
-                    ticks: { color: '#94a3b8', font: { size: 10 } },
+                    ticks: { color: tickColor, font: { size: 11 } },
                     grid: { display: false }
                 }
             }
