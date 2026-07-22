@@ -1,0 +1,623 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Job Tracker - Optimize & Automate Your Job Search</title>-->
+<!--    &lt;!&ndash; Fonts & Tailwind Configuration &ndash;&gt;-->
+<!--    <link rel="preconnect" href="https://fonts.googleapis.com">-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">-->
+<!--    <script src="https://cdn.tailwindcss.com"></script>-->
+<!--    <script>-->
+<!--        tailwind.config = {-->
+<!--            theme: {-->
+<!--                extend: {-->
+<!--                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Sora', 'sans-serif'] },-->
+<!--                    animation: { 'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite' }-->
+<!--                }-->
+<!--            }-->
+<!--        }-->
+<!--    </script>-->
+<!--    <script>-->
+<!--        if (sessionStorage.getItem("jwt_token")) { window.location.href = "/dashboard.html"; }-->
+<!--    </script>-->
+<!--</head>-->
+<!--<body class="bg-slate-50 font-sans text-slate-900 antialiased selection:bg-indigo-500 selection:text-white">-->
+
+<!--&lt;!&ndash; Glowing Background Decorative Flares &ndash;&gt;-->
+<!--<div class="absolute top-0 left-1/4 w-96 h-96 bg-indigo-200/40 rounded-full blur-3xl pointer-events-none animate-pulse-slow"></div>-->
+<!--<div class="absolute top-20 right-1/4 w-96 h-96 bg-violet-200/30 rounded-full blur-3xl pointer-events-none animate-pulse-slow"></div>-->
+
+<!--&lt;!&ndash; Navigation Bar &ndash;&gt;-->
+<!--<header class="sticky top-0 z-50 backdrop-blur-lg bg-white/70 border-b border-slate-200/60">-->
+<!--    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">-->
+<!--        <div class="flex items-center gap-3">-->
+<!--            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-600 flex items-center justify-center text-white font-display font-extrabold text-sm shadow-md shadow-indigo-100">JT</div>-->
+<!--            <span class="font-display font-bold text-xl tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">Job Tracker</span>-->
+<!--        </div>-->
+<!--        <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-600">-->
+<!--            <a href="#features" class="hover:text-indigo-600 transition-colors">Features</a>-->
+<!--            <a href="#pricing" class="hover:text-indigo-600 transition-colors">Pricing</a>-->
+<!--        </nav>-->
+<!--        <div class="flex items-center gap-4">-->
+<!--            <a href="login.html" class="text-sm font-semibold text-slate-600 hover:text-slate-900 px-4 py-2 transition-colors">Sign In</a>-->
+<!--            <a href="register.html" class="text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 px-5 py-2.5 rounded-xl transition-all shadow-sm">Get Started Free</a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</header>-->
+
+<!--&lt;!&ndash; Hero Content Section &ndash;&gt;-->
+<!--<section class="relative overflow-hidden pt-24 pb-20">-->
+<!--    <div class="absolute inset-0 bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-40"></div>-->
+
+<!--    <div class="max-w-5xl mx-auto px-6 text-center relative z-10">-->
+<!--        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-indigo-50 to-violet-50 border border-indigo-100/80 text-xs font-bold text-indigo-700 mb-6 uppercase tracking-wider shadow-sm">-->
+<!--            🚀 Version 2.0 Is Live-->
+<!--        </div>-->
+<!--        <h1 class="font-display text-4xl sm:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.12] mb-6">-->
+<!--            Organize your job search. <br/>-->
+<!--            <span class="bg-gradient-to-r from-indigo-600 via-violet-600 to-amber-500 bg-clip-text text-transparent">Land your dream offer.</span>-->
+<!--        </h1>-->
+<!--        <p class="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed mb-10">-->
+<!--            Stop tracking applications with cluttered spreadsheets. Manage application statuses, compile interview notes, save resumes, and view analytics charts in one central interface.-->
+<!--        </p>-->
+<!--        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-24">-->
+<!--            <a href="register.html" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl transition-all shadow-md group">-->
+<!--                Start Your Pipeline <span class="ml-2 group-hover:translate-x-1 transition-transform">→</span>-->
+<!--            </a>-->
+<!--            <a href="#features" class="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 border border-slate-200 text-slate-600 font-semibold rounded-xl transition-all shadow-sm">-->
+<!--                Explore Features-->
+<!--            </a>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Dashboard Mockup Layout Shell &ndash;&gt;-->
+<!--        <div class="relative mx-auto max-w-4xl rounded-2xl bg-slate-900/5 p-2 ring-1 ring-inset ring-slate-900/10 lg:rounded-3xl shadow-xl">-->
+<!--            <div class="rounded-xl bg-slate-900 shadow-2xl overflow-hidden border border-slate-800 aspect-[16/9] flex flex-col p-4 text-left">-->
+<!--                <div class="flex items-center justify-between border-b border-slate-800/60 pb-3 mb-4">-->
+<!--                    <div class="flex items-center gap-1.5">-->
+<!--                        <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>-->
+<!--                        <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>-->
+<!--                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>-->
+<!--                    </div>-->
+<!--                    <div class="h-4 w-40 bg-slate-800 rounded-md opacity-60"></div>-->
+<!--                    <div class="w-4 h-4 rounded bg-slate-800"></div>-->
+<!--                </div>-->
+<!--                <div class="grid grid-cols-3 gap-4 flex-1">-->
+<!--                    <div class="bg-slate-950/40 rounded-xl p-3 border border-slate-800/50 flex flex-col gap-2">-->
+<!--                        <div class="h-4 w-14 bg-indigo-500/20 rounded border border-indigo-500/30 text-[9px] text-indigo-400 font-bold px-1.5 py-0.5">WISHLIST</div>-->
+<!--                        <div class="bg-slate-800/80 p-2.5 rounded-lg border border-slate-700/30 space-y-2">-->
+<!--                            <div class="h-3 w-2/3 bg-slate-700 rounded"></div>-->
+<!--                            <div class="h-2 w-1/3 bg-slate-700/50 rounded"></div>-->
+<!--                        </div>-->
+<!--                        <div class="bg-slate-800/80 p-2.5 rounded-lg border border-slate-700/30 space-y-2">-->
+<!--                            <div class="h-3 w-3/4 bg-slate-700 rounded"></div>-->
+<!--                            <div class="h-2 w-1/4 bg-slate-700/50 rounded"></div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="bg-slate-950/40 rounded-xl p-3 border border-slate-800/50 flex flex-col gap-2">-->
+<!--                        <div class="h-4 w-14 bg-amber-500/20 rounded border border-amber-500/30 text-[9px] text-amber-400 font-bold px-1.5 py-0.5">INTERVIEW</div>-->
+<!--                        <div class="bg-slate-800/80 p-2.5 rounded-lg border border-slate-700/30 space-y-2">-->
+<!--                            <div class="h-3 w-3/4 bg-slate-700 rounded"></div>-->
+<!--                            <div class="h-2 w-1/2 bg-slate-700/50 rounded"></div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="bg-slate-950/40 rounded-xl p-3 border border-slate-800/50 flex flex-col gap-2">-->
+<!--                        <div class="h-4 w-12 bg-emerald-500/20 rounded border border-emerald-500/30 text-[9px] text-emerald-400 font-bold px-1.5 py-0.5">OFFER</div>-->
+<!--                        <div class="bg-slate-800/80 p-2.5 rounded-lg border border-slate-700/30 space-y-2">-->
+<!--                            <div class="h-3 w-1/2 bg-slate-700 rounded"></div>-->
+<!--                            <div class="h-2 w-1/4 bg-slate-700/50 rounded"></div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
+
+<!--&lt;!&ndash; Features Section Grid &ndash;&gt;-->
+<!--<section id="features" class="py-24 bg-white border-t border-b border-slate-200/60">-->
+<!--    <div class="max-w-6xl mx-auto px-6">-->
+<!--        <div class="text-center max-w-2xl mx-auto mb-16">-->
+<!--            <h2 class="font-display text-3xl font-bold tracking-tight text-slate-900 mb-3">Engineered for modern application management</h2>-->
+<!--            <p class="text-sm text-slate-500">Everything you need to systematically advance your tech job search pipeline.</p>-->
+<!--        </div>-->
+<!--        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">-->
+<!--            <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200/50">-->
+<!--                <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white mb-4 shadow-sm text-lg">📊</div>-->
+<!--                <h3 class="font-display font-bold text-base text-slate-900 mb-2">Visual Metrics Panel</h3>-->
+<!--                <p class="text-sm text-slate-600 leading-relaxed">Monitor interview volumes, active pipelines, and historical success rates by sourcing metrics natively.</p>-->
+<!--            </div>-->
+<!--            <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200/50">-->
+<!--                <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white mb-4 shadow-sm text-lg">📁</div>-->
+<!--                <h3 class="font-display font-bold text-base text-slate-900 mb-2">Document Catalog</h3>-->
+<!--                <p class="text-sm text-slate-600 leading-relaxed">Link explicit versions of resumes, transcripts, and custom tailored cover letters directly to company profiles.</p>-->
+<!--            </div>-->
+<!--            <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200/50">-->
+<!--                <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white mb-4 shadow-sm text-lg">📅</div>-->
+<!--                <h3 class="font-display font-bold text-base text-slate-900 mb-2">Interview Calendar</h3>-->
+<!--                <p class="text-sm text-slate-600 leading-relaxed">Integrated tracking metrics log grid calendars designed to block callback parameters and evaluation sessions.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
+
+<!--&lt;!&ndash; Pricing Blocks Section &ndash;&gt;-->
+<!--<section id="pricing" class="py-24 bg-slate-50">-->
+<!--    <div class="max-w-4xl mx-auto px-6 text-center">-->
+<!--        <div class="max-w-xl mx-auto mb-12">-->
+<!--            <h2 class="font-display text-3xl font-bold tracking-tight text-slate-900 mb-3">Transparent, simple access pricing</h2>-->
+<!--            <p class="text-sm text-slate-500">Everything open-source, deployable, and accessible out-of-the-box.</p>-->
+<!--        </div>-->
+<!--        <div class="bg-white border border-slate-200 rounded-3xl p-8 max-w-sm mx-auto shadow-xl flex flex-col relative overflow-hidden before:absolute before:top-0 before:left-0 before:right-0 before:h-1.5 before:bg-indigo-600">-->
+<!--            <div class="text-xs font-bold text-indigo-600 uppercase tracking-widest mb-2">Community Developer Edition</div>-->
+<!--            <div class="font-display text-4xl font-extrabold text-slate-900 mb-4">$0 <span class="text-sm font-semibold text-slate-400">/ forever</span></div>-->
+<!--            <p class="text-xs text-slate-500 leading-relaxed mb-6">Fully integrated pipeline limits tracking dashboard with complete features unlocked natively.</p>-->
+<!--            <a href="register.html" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all shadow-md">Create Free Account</a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
+
+<!--&lt;!&ndash; Footer Area Section &ndash;&gt;-->
+<!--<footer class="bg-slate-900 text-slate-500 py-12 text-center text-xs font-medium border-t border-slate-800">-->
+<!--    <p>&copy; 2026 Job Tracker Application Architecture Stack. All Rights Reserved.</p>-->
+<!--</footer>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Job Tracker - Optimize & Automate Your Job Search</title>-->
+<!--    &lt;!&ndash; Fonts & Tailwind Configuration &ndash;&gt;-->
+<!--    <link rel="preconnect" href="https://fonts.googleapis.com">-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">-->
+<!--    <script src="https://cdn.tailwindcss.com"></script>-->
+<!--    <script>-->
+<!--        tailwind.config = {-->
+<!--            theme: {-->
+<!--                extend: {-->
+<!--                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Sora', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] }-->
+<!--                }-->
+<!--            }-->
+<!--        }-->
+<!--    </script>-->
+<!--    <script>-->
+<!--        if (sessionStorage.getItem("jwt_token")) { window.location.href = "/dashboard.html"; }-->
+<!--    </script>-->
+<!--    <style>-->
+<!--        /* &#45;&#45;&#45;&#45; Signature element: cards drifting through the real pipeline stages &#45;&#45;&#45;&#45; */-->
+<!--        @keyframes pipelineDrift {-->
+<!--            0%   { left: 1%;  opacity: 0; transform: translateY(-50%) scale(0.92); }-->
+<!--            8%   { opacity: 1; transform: translateY(-50%) scale(1); }-->
+<!--            24%  { left: 24.5%; }-->
+<!--            26%  { left: 24.5%; }-->
+<!--            48%  { left: 49.5%; }-->
+<!--            50%  { left: 49.5%; }-->
+<!--            72%  { left: 74.5%; }-->
+<!--            74%  { left: 74.5%; }-->
+<!--            92%  { left: 92%; opacity: 1; }-->
+<!--            100% { left: 98%; opacity: 0; transform: translateY(-50%) scale(0.92); }-->
+<!--        }-->
+<!--        .pipeline-card {-->
+<!--            position: absolute;-->
+<!--            top: 50%;-->
+<!--            animation: pipelineDrift 9s cubic-bezier(0.65,0,0.35,1) infinite;-->
+<!--        }-->
+<!--        .pipeline-card.delay-1 { animation-delay: 3s; }-->
+<!--        .pipeline-card.delay-2 { animation-delay: 6s; }-->
+
+<!--        @keyframes softFloat {-->
+<!--            0%, 100% { transform: translateY(0); }-->
+<!--            50% { transform: translateY(-6px); }-->
+<!--        }-->
+<!--        .float-slow { animation: softFloat 6s ease-in-out infinite; }-->
+
+<!--        @media (prefers-reduced-motion: reduce) {-->
+<!--            .pipeline-card, .float-slow { animation: none !important; }-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body class="bg-white font-sans text-slate-900 antialiased selection:bg-indigo-500 selection:text-white">-->
+
+<!--&lt;!&ndash; Navigation Bar &ndash;&gt;-->
+<!--<header class="sticky top-0 z-50 backdrop-blur-lg bg-[#0B0F1A]/90 border-b border-white/5">-->
+<!--    <div class="max-w-7xl mx-auto px-6 h-18 py-4 flex items-center justify-between">-->
+<!--        <div class="flex items-center gap-3">-->
+<!--            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-violet-500 flex items-center justify-center text-white font-display font-extrabold text-sm shadow-md shadow-indigo-500/20">JT</div>-->
+<!--            <span class="font-display font-bold text-xl tracking-tight text-white">Job Tracker</span>-->
+<!--        </div>-->
+<!--        <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-400">-->
+<!--            <a href="#features" class="hover:text-white transition-colors">Features</a>-->
+<!--            <a href="#pipeline" class="hover:text-white transition-colors">How it works</a>-->
+<!--            <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>-->
+<!--        </nav>-->
+<!--        <div class="flex items-center gap-2">-->
+<!--            <a href="login.html" class="text-sm font-semibold text-slate-300 hover:text-white px-4 py-2 transition-colors">Sign In</a>-->
+<!--            <a href="register.html" class="text-sm font-semibold text-[#0B0F1A] bg-white hover:bg-slate-100 px-5 py-2.5 rounded-xl transition-all shadow-sm">Get Started Free</a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</header>-->
+
+<!--&lt;!&ndash; ============================================================-->
+<!--     HERO — dark, oversized type, live pipeline signature strip-->
+<!--     ============================================================ &ndash;&gt;-->
+<!--<section class="relative overflow-hidden bg-[#0B0F1A] pt-20 pb-28">-->
+<!--    <div class="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_-10%,rgba(79,70,229,0.25),transparent)]"></div>-->
+<!--    <div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_65%_50%_at_50%_0%,#000_60%,transparent_100%)]"></div>-->
+
+<!--    <div class="max-w-5xl mx-auto px-6 text-center relative z-10">-->
+<!--        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono font-medium text-indigo-300 mb-8 tracking-wide">-->
+<!--            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Now tracking pipelines for job seekers everywhere-->
+<!--        </div>-->
+<!--        <h1 class="font-display text-5xl sm:text-7xl font-extrabold tracking-tight text-white leading-[1.05] mb-6">-->
+<!--            Your job search,<br/>-->
+<!--            <span class="font-light text-slate-400">run like a</span> pipeline.-->
+<!--        </h1>-->
+<!--        <p class="text-lg text-slate-400 max-w-xl mx-auto leading-relaxed mb-10">-->
+<!--            Every application moves through real stages. Job Tracker gives that pipeline a home — board, resume builder, analytics, and calendar, in one place.-->
+<!--        </p>-->
+<!--        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-24">-->
+<!--            <a href="register.html" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-white hover:bg-slate-100 text-[#0B0F1A] font-bold rounded-xl transition-all shadow-lg shadow-black/20 group">-->
+<!--                Start Your Pipeline <span class="ml-2 group-hover:translate-x-1 transition-transform">→</span>-->
+<!--            </a>-->
+<!--            <a href="#features" class="w-full sm:w-auto px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold rounded-xl transition-all">-->
+<!--                Explore Features-->
+<!--            </a>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; &#45;&#45;&#45;&#45; Signature: live pipeline strip &#45;&#45;&#45;&#45; &ndash;&gt;-->
+<!--        <div id="pipeline" class="relative mx-auto max-w-4xl rounded-2xl bg-white/[0.03] border border-white/10 p-6 shadow-2xl shadow-black/40 float-slow">-->
+<!--            <div class="flex items-center justify-between mb-5">-->
+<!--                <span class="text-[11px] font-mono font-medium text-slate-500 tracking-wider uppercase">Live Pipeline Preview</span>-->
+<!--                <div class="flex items-center gap-1.5">-->
+<!--                    <span class="w-2 h-2 rounded-full bg-rose-500/70"></span>-->
+<!--                    <span class="w-2 h-2 rounded-full bg-amber-500/70"></span>-->
+<!--                    <span class="w-2 h-2 rounded-full bg-emerald-500/70"></span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="relative grid grid-cols-4 gap-3 h-32">-->
+<!--                <div class="rounded-xl bg-slate-500/[0.06] border border-slate-500/20 flex flex-col items-center justify-start pt-3 gap-1">-->
+<!--                    <span class="text-[10px] font-mono font-semibold text-slate-400 tracking-wider">WISHLIST</span>-->
+<!--                </div>-->
+<!--                <div class="rounded-xl bg-indigo-500/[0.08] border border-indigo-500/20 flex flex-col items-center justify-start pt-3 gap-1">-->
+<!--                    <span class="text-[10px] font-mono font-semibold text-indigo-300 tracking-wider">APPLIED</span>-->
+<!--                </div>-->
+<!--                <div class="rounded-xl bg-amber-500/[0.08] border border-amber-500/20 flex flex-col items-center justify-start pt-3 gap-1">-->
+<!--                    <span class="text-[10px] font-mono font-semibold text-amber-300 tracking-wider">INTERVIEW</span>-->
+<!--                </div>-->
+<!--                <div class="rounded-xl bg-emerald-500/[0.08] border border-emerald-500/20 flex flex-col items-center justify-start pt-3 gap-1">-->
+<!--                    <span class="text-[10px] font-mono font-semibold text-emerald-300 tracking-wider">OFFER</span>-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Drifting cards representing an application moving through the real stages &ndash;&gt;-->
+<!--                <div class="pipeline-card w-28 -translate-x-1/2 -translate-y-1/2 bg-white text-[#0B0F1A] rounded-lg shadow-lg px-3 py-2 text-left">-->
+<!--                    <div class="h-2 w-3/4 bg-slate-300 rounded mb-1.5"></div>-->
+<!--                    <div class="h-1.5 w-1/2 bg-slate-200 rounded"></div>-->
+<!--                </div>-->
+<!--                <div class="pipeline-card delay-1 w-28 -translate-x-1/2 -translate-y-1/2 bg-white text-[#0B0F1A] rounded-lg shadow-lg px-3 py-2 text-left">-->
+<!--                    <div class="h-2 w-2/3 bg-slate-300 rounded mb-1.5"></div>-->
+<!--                    <div class="h-1.5 w-1/3 bg-slate-200 rounded"></div>-->
+<!--                </div>-->
+<!--                <div class="pipeline-card delay-2 w-28 -translate-x-1/2 -translate-y-1/2 bg-white text-[#0B0F1A] rounded-lg shadow-lg px-3 py-2 text-left">-->
+<!--                    <div class="h-2 w-3/5 bg-slate-300 rounded mb-1.5"></div>-->
+<!--                    <div class="h-1.5 w-2/5 bg-slate-200 rounded"></div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
+
+<!--&lt;!&ndash; ============================================================-->
+<!--     FEATURES — matches the app's real capabilities-->
+<!--     ============================================================ &ndash;&gt;-->
+<!--<section id="features" class="py-28 bg-white">-->
+<!--    <div class="max-w-6xl mx-auto px-6">-->
+<!--        <div class="max-w-2xl mb-16">-->
+<!--            <span class="text-xs font-mono font-semibold text-indigo-600 tracking-widest uppercase">What's inside</span>-->
+<!--            <h2 class="font-display text-4xl font-bold tracking-tight text-slate-900 mt-3 mb-4">Everything the search needs, nothing it doesn't</h2>-->
+<!--            <p class="text-base text-slate-500 leading-relaxed">Six tools built around one pipeline — not six separate apps stitched together.</p>-->
+<!--        </div>-->
+<!--        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">-->
+<!--            <div class="group p-7 bg-white rounded-2xl border border-slate-200 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-100/50 transition-all duration-300 hover:-translate-y-1">-->
+<!--                <div class="w-11 h-11 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 mb-5 text-xl group-hover:bg-indigo-600 group-hover:text-white transition-colors">◨</div>-->
+<!--                <h3 class="font-display font-bold text-base text-slate-900 mb-2">Kanban Pipeline Board</h3>-->
+<!--                <p class="text-sm text-slate-500 leading-relaxed">Drag applications from Wishlist through Offer. See exactly where every search stands, at a glance.</p>-->
+<!--            </div>-->
+<!--            <div class="group p-7 bg-white rounded-2xl border border-slate-200 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-100/50 transition-all duration-300 hover:-translate-y-1">-->
+<!--                <div class="w-11 h-11 rounded-xl bg-violet-50 flex items-center justify-center text-violet-600 mb-5 text-xl group-hover:bg-violet-600 group-hover:text-white transition-colors">✦</div>-->
+<!--                <h3 class="font-display font-bold text-base text-slate-900 mb-2">AI Job Search</h3>-->
+<!--                <p class="text-sm text-slate-500 leading-relaxed">Describe the role you want in plain language — get real, current postings pulled from across the web.</p>-->
+<!--            </div>-->
+<!--            <div class="group p-7 bg-white rounded-2xl border border-slate-200 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-100/50 transition-all duration-300 hover:-translate-y-1">-->
+<!--                <div class="w-11 h-11 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 mb-5 text-xl group-hover:bg-amber-600 group-hover:text-white transition-colors">▤</div>-->
+<!--                <h3 class="font-display font-bold text-base text-slate-900 mb-2">Resume Builder</h3>-->
+<!--                <p class="text-sm text-slate-500 leading-relaxed">One content bank of experience and bullets. Toggle what's relevant, pick a template, export a tailored CV.</p>-->
+<!--            </div>-->
+<!--            <div class="group p-7 bg-white rounded-2xl border border-slate-200 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-100/50 transition-all duration-300 hover:-translate-y-1">-->
+<!--                <div class="w-11 h-11 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 mb-5 text-xl group-hover:bg-emerald-600 group-hover:text-white transition-colors">◔</div>-->
+<!--                <h3 class="font-display font-bold text-base text-slate-900 mb-2">Analytics & Insights</h3>-->
+<!--                <p class="text-sm text-slate-500 leading-relaxed">Response rates, offer rates, and volume trends — know what's actually working before you send another application.</p>-->
+<!--            </div>-->
+<!--            <div class="group p-7 bg-white rounded-2xl border border-slate-200 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-100/50 transition-all duration-300 hover:-translate-y-1">-->
+<!--                <div class="w-11 h-11 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600 mb-5 text-xl group-hover:bg-rose-600 group-hover:text-white transition-colors">▦</div>-->
+<!--                <h3 class="font-display font-bold text-base text-slate-900 mb-2">Interview Calendar</h3>-->
+<!--                <p class="text-sm text-slate-500 leading-relaxed">Every interview, assessment, and deadline mapped against your pipeline — never miss a callback again.</p>-->
+<!--            </div>-->
+<!--            <div class="group p-7 bg-white rounded-2xl border border-slate-200 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-100/50 transition-all duration-300 hover:-translate-y-1">-->
+<!--                <div class="w-11 h-11 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600 mb-5 text-xl group-hover:bg-sky-600 group-hover:text-white transition-colors">▧</div>-->
+<!--                <h3 class="font-display font-bold text-base text-slate-900 mb-2">Document Catalog</h3>-->
+<!--                <p class="text-sm text-slate-500 leading-relaxed">Resumes, cover letters, and transcripts — linked to the exact applications they were sent to.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
+
+<!--&lt;!&ndash; ============================================================-->
+<!--     PRICING-->
+<!--     ============================================================ &ndash;&gt;-->
+<!--<section id="pricing" class="py-28 bg-slate-50 border-t border-slate-200/60">-->
+<!--    <div class="max-w-4xl mx-auto px-6 text-center">-->
+<!--        <span class="text-xs font-mono font-semibold text-indigo-600 tracking-widest uppercase">Pricing</span>-->
+<!--        <h2 class="font-display text-4xl font-bold tracking-tight text-slate-900 mt-3 mb-4">Transparent, simple access</h2>-->
+<!--        <p class="text-base text-slate-500 mb-14">Everything open-source, deployable, and accessible out-of-the-box.</p>-->
+<!--        <div class="bg-[#0B0F1A] rounded-3xl p-10 max-w-sm mx-auto shadow-2xl shadow-slate-300/50 flex flex-col relative overflow-hidden text-left">-->
+<!--            <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 via-violet-500 to-emerald-400"></div>-->
+<!--            <div class="text-xs font-mono font-semibold text-indigo-300 uppercase tracking-widest mb-3">Community Edition</div>-->
+<!--            <div class="font-display text-5xl font-extrabold text-white mb-1">$0</div>-->
+<!--            <div class="text-sm font-medium text-slate-500 mb-6">forever, no card required</div>-->
+<!--            <p class="text-sm text-slate-400 leading-relaxed mb-8">Full pipeline board, resume builder, analytics, and calendar — every feature unlocked from day one.</p>-->
+<!--            <a href="register.html" class="w-full py-3.5 bg-white hover:bg-slate-100 text-[#0B0F1A] rounded-xl text-sm font-bold transition-all text-center">Create Free Account</a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
+
+<!--&lt;!&ndash; Footer &ndash;&gt;-->
+<!--<footer class="bg-[#0B0F1A] text-slate-500 py-12 text-center text-xs font-medium border-t border-white/5">-->
+<!--    <p>&copy; 2026 Job Tracker. All Rights Reserved.</p>-->
+<!--</footer>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--    <script>-->
+<!--        // Include this snippet directly inside the <head> tags of index.html and login.html-->
+<!--        document.addEventListener("DOMContentLoaded", () => {-->
+<!--            if (localStorage.getItem("theme_preference") === "light") {-->
+<!--                document.documentElement.classList.add("light-theme");-->
+<!--                document.body.classList.add("light-theme");-->
+<!--            }-->
+<!--        });-->
+<!--    </script>-->
+    <script>
+        // Include this snippet directly within the <head> tags of index.html and login.html
+        (function () {
+            if (localStorage.getItem("theme_preference") === "light") {
+                document.documentElement.classList.add("light-theme");
+            }
+        })();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Tracker - Optimize & Automate Your Job Search</title>
+    <!-- Fonts & Tailwind Configuration -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Sora', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] }
+                }
+            }
+        }
+    </script>
+    <script>
+        if (sessionStorage.getItem("jwt_token")) { window.location.href = "/dashboard.html"; }
+    </script>
+    <style>
+        /* ---- Signature element: cards drifting through the real pipeline stages ---- */
+        @keyframes pipelineDrift {
+            0%   { left: 1%;  opacity: 0; transform: translateY(-50%) scale(0.92); }
+            8%   { opacity: 1; transform: translateY(-50%) scale(1); }
+            24%  { left: 24.5%; }
+            26%  { left: 24.5%; }
+            48%  { left: 49.5%; }
+            50%  { left: 49.5%; }
+            72%  { left: 74.5%; }
+            74%  { left: 74.5%; }
+            92%  { left: 92%; opacity: 1; }
+            100% { left: 98%; opacity: 0; transform: translateY(-50%) scale(0.92); }
+        }
+        .pipeline-card {
+            position: absolute;
+            top: 50%;
+            animation: pipelineDrift 9s cubic-bezier(0.65,0,0.35,1) infinite;
+        }
+        .pipeline-card.delay-1 { animation-delay: 3s; }
+        .pipeline-card.delay-2 { animation-delay: 6s; }
+
+        @keyframes softFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        .float-slow { animation: softFloat 6s ease-in-out infinite; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .pipeline-card, .float-slow { animation: none !important; }
+        }
+    </style>
+</head>
+<body class="bg-[#0B0F1A] font-sans text-white antialiased selection:bg-indigo-500 selection:text-white">
+
+<!-- Navigation Bar -->
+<header class="sticky top-0 z-50 backdrop-blur-lg bg-[#0B0F1A]/90 border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-6 h-18 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-violet-500 flex items-center justify-center text-white font-display font-extrabold text-sm shadow-md shadow-indigo-500/20">JT</div>
+            <span class="font-display font-bold text-xl tracking-tight text-white">Job Tracker</span>
+        </div>
+        <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-400">
+            <a href="#features" class="hover:text-white transition-colors">Features</a>
+            <a href="#pipeline" class="hover:text-white transition-colors">How it works</a>
+            <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
+        </nav>
+        <div class="flex items-center gap-2">
+            <a href="login.html" class="text-sm font-semibold text-slate-300 hover:text-white px-4 py-2 transition-colors">Sign In</a>
+            <a href="register.html" class="text-sm font-semibold text-[#0B0F1A] bg-white hover:bg-slate-100 px-5 py-2.5 rounded-xl transition-all shadow-sm">Get Started Free</a>
+        </div>
+    </div>
+</header>
+
+<!-- ============================================================
+     HERO — dark, oversized type, live pipeline signature strip
+     ============================================================ -->
+<section class="relative overflow-hidden bg-[#0B0F1A] pt-20 pb-28">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_-10%,rgba(79,70,229,0.25),transparent)]"></div>
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_65%_50%_at_50%_0%,#000_60%,transparent_100%)]"></div>
+
+    <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono font-medium text-indigo-300 mb-8 tracking-wide">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Now tracking pipelines for job seekers everywhere
+        </div>
+        <h1 class="font-display text-5xl sm:text-7xl font-extrabold tracking-tight text-white leading-[1.05] mb-6">
+            Your job search,<br/>
+            <span class="font-light text-slate-400">run like a</span> pipeline.
+        </h1>
+        <p class="text-lg text-slate-400 max-w-xl mx-auto leading-relaxed mb-10">
+            Every application moves through real stages. Job Tracker gives that pipeline a home — board, resume builder, analytics, and calendar, in one place.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-24">
+            <a href="register.html" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-white hover:bg-slate-100 text-[#0B0F1A] font-bold rounded-xl transition-all shadow-lg shadow-black/20 group">
+                Start Your Pipeline <span class="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+            </a>
+            <a href="#features" class="w-full sm:w-auto px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold rounded-xl transition-all">
+                Explore Features
+            </a>
+        </div>
+
+        <!-- ---- Signature: live pipeline strip ---- -->
+        <div id="pipeline" class="relative mx-auto max-w-4xl rounded-2xl bg-white/[0.03] border border-white/10 p-6 shadow-2xl shadow-black/40 float-slow">
+            <div class="flex items-center justify-between mb-5">
+                <span class="text-[11px] font-mono font-medium text-slate-500 tracking-wider uppercase">Live Pipeline Preview</span>
+                <div class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-rose-500/70"></span>
+                    <span class="w-2 h-2 rounded-full bg-amber-500/70"></span>
+                    <span class="w-2 h-2 rounded-full bg-emerald-500/70"></span>
+                </div>
+            </div>
+            <div class="relative grid grid-cols-4 gap-3 h-32">
+                <div class="rounded-xl bg-slate-500/[0.06] border border-slate-500/20 flex flex-col items-center justify-start pt-3 gap-1">
+                    <span class="text-[10px] font-mono font-semibold text-slate-400 tracking-wider">WISHLIST</span>
+                </div>
+                <div class="rounded-xl bg-indigo-500/[0.08] border border-indigo-500/20 flex flex-col items-center justify-start pt-3 gap-1">
+                    <span class="text-[10px] font-mono font-semibold text-indigo-300 tracking-wider">APPLIED</span>
+                </div>
+                <div class="rounded-xl bg-amber-500/[0.08] border border-amber-500/20 flex flex-col items-center justify-start pt-3 gap-1">
+                    <span class="text-[10px] font-mono font-semibold text-amber-300 tracking-wider">INTERVIEW</span>
+                </div>
+                <div class="rounded-xl bg-emerald-500/[0.08] border border-emerald-500/20 flex flex-col items-center justify-start pt-3 gap-1">
+                    <span class="text-[10px] font-mono font-semibold text-emerald-300 tracking-wider">OFFER</span>
+                </div>
+
+                <!-- Drifting cards representing an application moving through the real stages -->
+                <div class="pipeline-card w-28 -translate-x-1/2 -translate-y-1/2 bg-white text-[#0B0F1A] rounded-lg shadow-lg px-3 py-2 text-left">
+                    <div class="h-2 w-3/4 bg-slate-300 rounded mb-1.5"></div>
+                    <div class="h-1.5 w-1/2 bg-slate-200 rounded"></div>
+                </div>
+                <div class="pipeline-card delay-1 w-28 -translate-x-1/2 -translate-y-1/2 bg-white text-[#0B0F1A] rounded-lg shadow-lg px-3 py-2 text-left">
+                    <div class="h-2 w-2/3 bg-slate-300 rounded mb-1.5"></div>
+                    <div class="h-1.5 w-1/3 bg-slate-200 rounded"></div>
+                </div>
+                <div class="pipeline-card delay-2 w-28 -translate-x-1/2 -translate-y-1/2 bg-white text-[#0B0F1A] rounded-lg shadow-lg px-3 py-2 text-left">
+                    <div class="h-2 w-3/5 bg-slate-300 rounded mb-1.5"></div>
+                    <div class="h-1.5 w-2/5 bg-slate-200 rounded"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     FEATURES — matches the app's real capabilities
+     ============================================================ -->
+<section id="features" class="py-28 bg-[#0B0F1A] border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="max-w-2xl mb-16">
+            <span class="text-xs font-mono font-semibold text-indigo-400 tracking-widest uppercase">What's inside</span>
+            <h2 class="font-display text-4xl font-bold tracking-tight text-white mt-3 mb-4">Everything the search needs, nothing it doesn't</h2>
+            <p class="text-base text-slate-400 leading-relaxed">Six tools built around one pipeline — not six separate apps stitched together.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div class="group p-7 bg-white/[0.03] rounded-2xl border border-white/10 hover:border-indigo-500/40 hover:bg-white/[0.05] transition-all duration-300 hover:-translate-y-1">
+                <div class="w-11 h-11 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-5 text-xl group-hover:bg-indigo-500 group-hover:text-white transition-colors">◨</div>
+                <h3 class="font-display font-bold text-base text-white mb-2">Kanban Pipeline Board</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">Drag applications from Wishlist through Offer. See exactly where every search stands, at a glance.</p>
+            </div>
+            <div class="group p-7 bg-white/[0.03] rounded-2xl border border-white/10 hover:border-violet-500/40 hover:bg-white/[0.05] transition-all duration-300 hover:-translate-y-1">
+                <div class="w-11 h-11 rounded-xl bg-violet-500/10 flex items-center justify-center text-violet-400 mb-5 text-xl group-hover:bg-violet-500 group-hover:text-white transition-colors">✦</div>
+                <h3 class="font-display font-bold text-base text-white mb-2">AI Job Search</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">Describe the role you want in plain language — get real, current postings pulled from across the web.</p>
+            </div>
+            <div class="group p-7 bg-white/[0.03] rounded-2xl border border-white/10 hover:border-amber-500/40 hover:bg-white/[0.05] transition-all duration-300 hover:-translate-y-1">
+                <div class="w-11 h-11 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 mb-5 text-xl group-hover:bg-amber-500 group-hover:text-white transition-colors">▤</div>
+                <h3 class="font-display font-bold text-base text-white mb-2">Resume Builder</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">One content bank of experience and bullets. Toggle what's relevant, pick a template, export a tailored CV.</p>
+            </div>
+            <div class="group p-7 bg-white/[0.03] rounded-2xl border border-white/10 hover:border-emerald-500/40 hover:bg-white/[0.05] transition-all duration-300 hover:-translate-y-1">
+                <div class="w-11 h-11 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 mb-5 text-xl group-hover:bg-emerald-500 group-hover:text-white transition-colors">◔</div>
+                <h3 class="font-display font-bold text-base text-white mb-2">Analytics & Insights</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">Response rates, offer rates, and volume trends — know what's actually working before you send another application.</p>
+            </div>
+            <div class="group p-7 bg-white/[0.03] rounded-2xl border border-white/10 hover:border-rose-500/40 hover:bg-white/[0.05] transition-all duration-300 hover:-translate-y-1">
+                <div class="w-11 h-11 rounded-xl bg-rose-500/10 flex items-center justify-center text-rose-400 mb-5 text-xl group-hover:bg-rose-500 group-hover:text-white transition-colors">▦</div>
+                <h3 class="font-display font-bold text-base text-white mb-2">Interview Calendar</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">Every interview, assessment, and deadline mapped against your pipeline — never miss a callback again.</p>
+            </div>
+            <div class="group p-7 bg-white/[0.03] rounded-2xl border border-white/10 hover:border-sky-500/40 hover:bg-white/[0.05] transition-all duration-300 hover:-translate-y-1">
+                <div class="w-11 h-11 rounded-xl bg-sky-500/10 flex items-center justify-center text-sky-400 mb-5 text-xl group-hover:bg-sky-500 group-hover:text-white transition-colors">▧</div>
+                <h3 class="font-display font-bold text-base text-white mb-2">Document Catalog</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">Resumes, cover letters, and transcripts — linked to the exact applications they were sent to.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     PRICING
+     ============================================================ -->
+<section id="pricing" class="py-28 bg-[#0B0F1A] border-t border-white/5">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+        <span class="text-xs font-mono font-semibold text-indigo-400 tracking-widest uppercase">Pricing</span>
+        <h2 class="font-display text-4xl font-bold tracking-tight text-white mt-3 mb-4">Transparent, simple access</h2>
+        <p class="text-base text-slate-400 mb-14">Everything open-source, deployable, and accessible out-of-the-box.</p>
+        <div class="bg-white/[0.04] rounded-3xl p-10 max-w-sm mx-auto border border-white/10 shadow-2xl shadow-black/40 flex flex-col relative overflow-hidden text-left">
+            <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 via-violet-500 to-emerald-400"></div>
+            <div class="text-xs font-mono font-semibold text-indigo-300 uppercase tracking-widest mb-3">Community Edition</div>
+            <div class="font-display text-5xl font-extrabold text-white mb-1">$0</div>
+            <div class="text-sm font-medium text-slate-500 mb-6">forever, no card required</div>
+            <p class="text-sm text-slate-400 leading-relaxed mb-8">Full pipeline board, resume builder, analytics, and calendar — every feature unlocked from day one.</p>
+            <a href="register.html" class="w-full py-3.5 bg-white hover:bg-slate-100 text-[#0B0F1A] rounded-xl text-sm font-bold transition-all text-center">Create Free Account</a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-[#0B0F1A] text-slate-500 py-12 text-center text-xs font-medium border-t border-white/5">
+    <p>&copy; 2026 Job Tracker. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
