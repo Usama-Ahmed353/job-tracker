@@ -1,5 +1,4 @@
-const API_BASE = "http://localhost:8080/api";
-
+const API_BASE = "/api";
 // Stores/retrieves the JWT from the browser session
 function saveToken(token) {
     sessionStorage.setItem("jwt_token", token);
@@ -90,4 +89,4 @@ async function apiDownloadFile(endpoint, fileName) {
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
-}
+}
